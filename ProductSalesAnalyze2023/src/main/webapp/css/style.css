@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+footer{
+	background-color: #4F9D9D;
+}
+.navbar{
+	background-color: #4F9D9D;
+}
+
+.serch-form-control{
+	border-radius:0 0.25rem 0.25rem 0 ;
+}
