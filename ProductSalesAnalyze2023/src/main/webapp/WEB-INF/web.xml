@@ -29,7 +29,7 @@
         <url-pattern>/mvc/*</url-pattern>
     </filter-mapping>
     
-    <!-- 在JSP中include指令引入html中文支援 -->
+    <!-- 在JSP中include指令引入html中文支援
 	<jsp-config>
 		<jsp-property-group>
 			<description>html encoding</description>
@@ -42,7 +42,7 @@
 			<include-coda></include-coda>
 		</jsp-property-group>
 	</jsp-config>
-    
+     -->
   
   <!-- 部署 DispatcherServlet - XML 配置版 -->
 	<servlet>

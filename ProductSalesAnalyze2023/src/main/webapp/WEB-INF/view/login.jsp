@@ -33,8 +33,8 @@
 	<body>
 	
 		<div class="d-flex justify-content-center align-items-center vh-100">
-		<form class="needs-validation " novalidate>
-		  <h4 class="text-center" method="post" action="./login">MyAnalyze</h4>
+		<form class="needs-validation" method="post" action="./login" novalidate>
+		  <h4 class="text-center">MyAnalyze</h4>
 		  <div class="mt-3">
 		    <label for="username" class="form-label">帳號</label>
 		    <div class="input-group has-validation">

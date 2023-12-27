@@ -111,19 +111,21 @@
     <!-- 開啟註解驅動，對事務相關的註解進行掃描與解析 -->
     <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
 	
-	<!-- 定義攔截器 Bean -->
-    <bean id="loginInterceptor" class="spring.mvc.group_buy.interceptor.LoginInterceptor"/>
-
-    <!-- 配置攔截器 -->
+	<!-- 定義攔截器 Bean 
+    <bean id="loginInterceptor" class="spring.mvc.analyze.interceptor.LoginInterceptor"/>
+	-->
+	
+    <!-- 配置攔截器 
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/group_buy/**"/> <!-- group_buy(*包含子目錄)下的檔案都會被攔截(代表要登入才可以看到) -->
-            <mvc:exclude-mapping path="/group_buy/getcode"/>
-            <mvc:exclude-mapping path="/group_buy/login_backend"/>
-            <mvc:exclude-mapping path="/group_buy/login"/> <!-- 排外條款：代表 login 頁面不會被攔截-->
-            <mvc:exclude-mapping path="/group_buy/login/*"/> <!-- 排外條款：代表 login 資料夾下的頁面都不會被攔截-->
-            <bean class="spring.mvc.group_buy.interceptor.LoginInterceptor"/>
+            <mvc:mapping path="/analyze/**"/> 
+            <mvc:exclude-mapping path="/analyze/getcode"/>
+            <mvc:exclude-mapping path="/analyze/login_backend"/>
+            <mvc:exclude-mapping path="/analyze/login"/> 
+            <mvc:exclude-mapping path="/analyze/login/*"/> 
+            <bean class="spring.mvc.analyze.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
-
+	-->
+	
 </beans>		
