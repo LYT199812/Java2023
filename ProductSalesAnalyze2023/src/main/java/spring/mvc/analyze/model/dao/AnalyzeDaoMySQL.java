@@ -38,7 +38,7 @@ public class AnalyzeDaoMySQL implements AnalyzeDao{
 
 	@Override
 	public Optional<User> findUserByUsername(String username) {
-		String sql  = "select userId, username, password, level from user where username = ?";
+		String sql  = "select userId, username, password, level from User where username = ?";
 		// 若找不到會發生例外，所以看要不要寫try catch，這裡有寫
 		try {
 			User user =  jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), username);

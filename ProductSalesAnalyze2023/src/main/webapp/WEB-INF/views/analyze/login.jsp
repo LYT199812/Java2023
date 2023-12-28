@@ -7,8 +7,8 @@
 		<title>登入頁面</title>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
 	    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-	    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 	    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+	    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 		
 	<style>
     	body {
@@ -60,7 +60,7 @@
 		  
 		  <div class="mt-3">
 		    <label for="verificationCode">驗證碼</label>
-		    <input type="text" class="form-control" id="verificationCode" name="verificationCode" required>
+		    <input type="text" class="form-control" id="verificationCode" name="verificationCode" >
 		    <div class="invalid-feedback">
 		      請輸入驗證碼!
 		    </div>
