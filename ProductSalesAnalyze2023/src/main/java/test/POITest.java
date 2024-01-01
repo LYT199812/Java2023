@@ -1,7 +1,20 @@
 package test;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.IOException;
+import java.util.Iterator;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class POITest {
 
@@ -25,17 +38,18 @@ public class POITest {
 			{
 				cell=(HSSFCell) cells.next();
 		
-				if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING)
+				if (cell.getCellType() == CellType.STRING)
 				{
 					System.out.print(cell.getStringCellValue()+" ");
 				}
-				else if(cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC)
+				else if(cell.getCellType() == CellType.NUMERIC)
 				{
 					System.out.print(cell.getNumericCellValue()+" ");
 				}
 				else
 				{
 					//U Can Handel Boolean, Formula, Errors
+					System.out.println("Unhandled Cell Type");
 				}
 			}
 			System.out.println();
@@ -95,17 +109,18 @@ public class POITest {
 			{
 				cell=(XSSFCell) cells.next();
 		
-				if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING)
+				if (cell.getCellType() == CellType.STRING)
 				{
 					System.out.print(cell.getStringCellValue()+" ");
 				}
-				else if(cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC)
+				else if(cell.getCellType() == CellType.NUMERIC)
 				{
 					System.out.print(cell.getNumericCellValue()+" ");
 				}
 				else
 				{
 					//U Can Handel Boolean, Formula, Errors
+					System.out.println("Unhandled Cell Type");
 				}
 			}
 			System.out.println();
@@ -144,7 +159,7 @@ public class POITest {
 		fileOut.close();
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		writeXLSFile();
 		readXLSFile();
 		

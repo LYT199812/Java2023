@@ -84,3 +84,51 @@ function clearFilters() {
 
 // 初始載入時顯示所有資料
 initTable(salesData);
+
+//-----------------------------------------------------------------------------------------
+// POI 
+/*
+document.getElementById('inputGroupFileAddon04').addEventListener('click', function () {
+    var fileInput = document.getElementById('uploadFile');
+    var file = fileInput.files[0];
+
+    if (file) {
+        var formData = new FormData();
+        formData.append('uploadFile', uploadFile);
+
+        fetch('../upload', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(result => {
+            alert(result);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    } else {
+        alert('Please choose a file.');
+    }
+});
+*/
+
+//POI2
+document.getElementById('excelForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var form = e.target;
+    var formData = new FormData(form);
+
+    fetch(form.action, {
+        method: form.method,
+        body: formData
+    })
+    .then(response => response.text())
+    .then(result => {
+        alert(result); // 顯示從後端接收到的訊息
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
+

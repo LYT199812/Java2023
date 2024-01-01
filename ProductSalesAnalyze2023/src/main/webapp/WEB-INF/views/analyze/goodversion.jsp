@@ -18,12 +18,15 @@
 	<div class="d-flex bd-highlight">
 	  <div class="p-2 flex-grow-1 bd-highlight"><h2 class="d-flex">MOMO Sales Analysis</h2></div>
 	  
+	  
+	  <form id="excelForm" method="post" action="../upload" enctype="multipart/form-data">
 	  <div class="p-2 bd-highlight">
 	  	<div class="input-group d-flex">
-		  <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-		  <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04"><i class="bi bi-upload"></i></button>
+		  <input type="file" class="form-control" id="uploadFile" name="uploadFile" accept=".xlsx" required aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+		  <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04" name="inputGroupFileAddon04" ><i class="bi bi-upload"></i></button>
 		</div>
 	  </div>
+	  </form>
 	  
 	  <div class="p-2 bd-highlight">
 	  	<button class="btn btn-outline-secondary  d-flex" type="submit" onclick="window.location.href='./download?filename=456.docx'">匯出<i class="bi bi-download"></i></button>
@@ -123,6 +126,54 @@
     <script src="components/script.js"></script>
      -->
     <script type="text/javascript" src="<%= request.getContextPath() %>/components/script.js"></script>
+	<!-- 
+	<script type="text/javascript">
+		document.getElementById('inputGroupFileAddon04').addEventListener('click', function () {
+		    var fileInput = document.getElementById('uploadFile');
+		    var file = fileInput.files[0];
+	
+		    if (file) {
+		        var formData = new FormData();
+		        formData.append('uploadFile', uploadFile);
+	
+		        fetch('../upload', {
+		            method: 'POST',
+		            body: formData
+		        })
+		        .then(response => response.text())
+		        .then(result => {
+		            alert(result);
+		        })
+		        .catch(error => {
+		            console.error('Error:', error);
+		        });
+		    } else {
+		        alert('Please choose a file.');
+		    }
+		});
+	</script>
+	  -->
+	 <!-- 
+	<script>
+	    document.getElementById('excelForm').addEventListener('submit', function (e) {
+	        e.preventDefault();
+	        var form = e.target;
+	        var formData = new FormData(form);
+	
+	        fetch(form.action, {
+	            method: form.method,
+	            body: formData
+	        })
+	        .then(response => response.text())
+	        .then(result => {
+	            alert(result); // 顯示從後端接收到的訊息
+	        })
+	        .catch(error => {
+	            console.error('Error:', error);
+	        });
+	    });
+	</script>
+	 -->
 </body>
 
 </html>

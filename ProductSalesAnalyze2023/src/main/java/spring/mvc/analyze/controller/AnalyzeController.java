@@ -1,11 +1,20 @@
 package spring.mvc.analyze.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +22,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import spring.mvc.analyze.model.dao.AnalyzeDao;
 import spring.mvc.analyze.model.entity.User;
@@ -129,5 +140,88 @@ public class AnalyzeController {
 		*/
 		return "analyze/ecWebsite/momo2"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
 	}
+	
+	//---------------------------------------------------------------------------------------------------
+	// POI EXCEL 檔案匯入
+	/* 4.2.5版本
+	@PostMapping("upload")
+	@ResponseBody
+	public String handleFileUpload(@RequestParam("uploadFile") MultipartFile uploadFile) {
+        if (!uploadFile.isEmpty()) {
+            try (InputStream inputStream = uploadFile.getInputStream()) {
+                Workbook workbook = WorkbookFactory.create(inputStream);
+                Sheet sheet = workbook.getSheetAt(0); // 假設只有一個工作表，根據實際情況調整索引
+
+                // 遍歷每一行
+                for (Row row : sheet) {
+                    // 遍歷每一列
+                    for (Cell cell : row) {
+                        // 根據單元格類型進行相應的處理
+                        switch (cell.getCellType()) {
+                            case STRING:
+                                System.out.print(cell.getStringCellValue() + "\t");
+                                break;
+                            case NUMERIC:
+                                System.out.print(cell.getNumericCellValue() + "\t");
+                                break;
+                            // 其他類型的處理可以根據需要添加
+                            default:
+                                System.out.print("Unsupported Cell Type\t");
+                        }
+                    }
+                    System.out.println(); // 換行
+                }
+
+                return "File uploaded and processed successfully.";
+            } catch (IOException | EncryptedDocumentException ex) {
+                ex.printStackTrace();
+                return "Error processing the file.";
+            }
+        } else {
+            return "File is empty.";
+        }
+    }
+	*/
+	
+	@PostMapping("/upload")
+    @ResponseBody
+    public String handleFileUpload(@RequestParam("uploadFile") MultipartFile uploadFile, Model model) {
+        if (!uploadFile.isEmpty()) {
+            try (InputStream inputStream = uploadFile.getInputStream()) {
+                Workbook workbook = new XSSFWorkbook(inputStream); // 使用XSSFWorkbook處理xlsx格式的Excel
+
+                Sheet sheet = workbook.getSheetAt(0); // 假設只有一個工作表，根據實際情況調整索引
+
+                // 遍歷每一行
+                for (Row row : sheet) {
+                    // 遍歷每一列
+                    for (Cell cell : row) {
+                        // 根據單元格類型進行相應的處理
+                        switch (cell.getCellType()) {
+                            case Cell.CELL_TYPE_STRING:
+                                System.out.print(cell.getStringCellValue() + "\t");
+                                break;
+                            case Cell.CELL_TYPE_NUMERIC:
+                                System.out.print(cell.getNumericCellValue() + "\t");
+                                break;
+                            // 其他類型的處理可以根據需要添加
+                            default:
+                                System.out.print("Unsupported Cell Type\t");
+                        }
+                    }
+                    System.out.println(); // 換行
+                }
+
+                return "File uploaded and processed successfully.";
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                return "Error processing the file.";
+            }
+        } else {
+            return "File is empty.";
+        }
+    }
+	
+	
 	
 }
