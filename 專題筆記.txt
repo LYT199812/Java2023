@@ -1,0 +1,56 @@
+filter table：
+助教幫找：
+1. https://www.jqueryscript.net/blog/best-table-filtering.html
+2. https://www.jqueryscript.net/table/jQuery-Plugin-To-Filter-Html-Table-with-Multiple-Criteria-multifilter.html
+3. https://www.jqueryscript.net/demo/jQuery-Plugin-To-Filter-Html-Table-with-Multiple-Criteria-multifilter/
+4. https://github.com/tommyp/multifilter
+
+另外有篩選功能的：
+1. https://front.id/en/articles/vuetify-achieve-multiple-filtering-data-table-component
+2. https://frontid.github.io/vuetify-data-table-multi-filter/
+3. https://github.com/frontid/vuetify-data-table-multi-filter
+
+段老師推薦的內部企業系統可用js排版
+●extjs web desktop：
+https://examples.sencha.com/extjs/6.0.0/examples/classic/desktop/index.html
+--------------------------------------------------------------------------------------------------------------------
+
+使用Apache POI讀取EXCEL：
+1. https://four-bots.com/?p=1407
+2. https://www.tpisoftware.com/tpu/articleDetails/1768
+3. https://blog.fileformat.com/zh-hant/spreadsheet/create-excel-workbook-in-java-using-apache-poi/
+4. https://gist.github.com/madan712/3912272
+5. https://blog.csdn.net/huzecom/article/details/100172934
+
+How to use onClick() or onSelect() on option tag in a JSP page?：
+https://stackoverflow.com/questions/3487263/how-to-use-onclick-or-onselect-on-option-tag-in-a-jsp-page
+
+finereport
+https://medium.com/%E6%95%B8%E6%93%9A%E5%88%86%E6%9E%90%E4%B8%8D%E6%98%AF%E5%80%8B%E4%BA%8B/%E6%8B%AF%E6%95%91it%E4%BA%BA%E7%9A%84%E5%A0%B1%E8%A1%A8%E7%A5%9E%E5%99%A8%E4%BE%86%E4%BA%86-%E4%B8%8D%E7%94%A8%E5%AF%AB%E7%A8%8B%E5%BC%8F%E7%A2%BC-%E9%82%84%E5%85%8D%E8%B2%BB-be170cede251
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+●JasperReport
+1. 开发者使用JasperReport——报表输出到网页：  
+   https://blog.csdn.net/dandan8866/article/details/8619419
+2. java web报表，jasperReport使用简介：
+   https://blog.csdn.net/weiqiang915/article/details/111165998
+3. https://www.ptt.cc/bbs/Soft_Job/M.1468135517.A.58F.html
+   ※jasperreports4dotnet：
+   https://github.com/Jenli-Chen/jasperreports4dotnet
+4. JasperReport環境設置：
+   https://tw.gitbook.net/jasper_reports/jasper_environment_setup.html
+5. [JR01] 用Jaspersoft Studio輕鬆掌握JasperReports報表引擎｜拖拉式報表工具教學 ~iReport (CC字幕)：
+   https://www.youtube.com/watch?v=fNb2a492t0U 
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+●股票專題：
+抓爬蟲位置(20分鐘延遲的資料，非最即時)：https://query1.finance.yahoo.com/v8/finance/chart/0050.TW
+匯率爬蟲：https://query1.finance.yahoo.com/v8/finance/chart/USDTWD=X
+USDTWD=X(美金換台幣匯率)
+GC=F(黃金期貨)
+回測
+
+
+
