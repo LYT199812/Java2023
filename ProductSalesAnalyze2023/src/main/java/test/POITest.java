@@ -10,6 +10,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -38,11 +39,11 @@ public class POITest {
 			{
 				cell=(HSSFCell) cells.next();
 		
-				if (cell.getCellType() == CellType.STRING)
+				if (cell.getCellType() == Cell.CELL_TYPE_STRING)
 				{
 					System.out.print(cell.getStringCellValue()+" ");
 				}
-				else if(cell.getCellType() == CellType.NUMERIC)
+				else if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
 				{
 					System.out.print(cell.getNumericCellValue()+" ");
 				}
@@ -109,11 +110,11 @@ public class POITest {
 			{
 				cell=(XSSFCell) cells.next();
 		
-				if (cell.getCellType() == CellType.STRING)
+				if (cell.getCellType() == Cell.CELL_TYPE_STRING)
 				{
 					System.out.print(cell.getStringCellValue()+" ");
 				}
-				else if(cell.getCellType() == CellType.NUMERIC)
+				else if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
 				{
 					System.out.print(cell.getNumericCellValue()+" ");
 				}
