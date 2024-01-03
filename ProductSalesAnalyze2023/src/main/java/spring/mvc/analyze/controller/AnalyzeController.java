@@ -183,6 +183,7 @@ public class AnalyzeController {
     }
 	*/
 	
+	// 3.17版本 (為了可以支援commons-io 2.6的版本)
 	@PostMapping("/upload")
     @ResponseBody
     public String handleFileUpload(@RequestParam("uploadFile") MultipartFile uploadFile, Model model) {
