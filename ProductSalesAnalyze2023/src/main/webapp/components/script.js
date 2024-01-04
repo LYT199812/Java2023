@@ -113,6 +113,7 @@ document.getElementById('inputGroupFileAddon04').addEventListener('click', funct
 });
 */
 
+/*
 //POI2
 document.getElementById('excelForm').addEventListener('submit', function (e) {
     e.preventDefault();
@@ -131,4 +132,4 @@ document.getElementById('excelForm').addEventListener('submit', function (e) {
         console.error('Error:', error);
     });
 });
-
+*/

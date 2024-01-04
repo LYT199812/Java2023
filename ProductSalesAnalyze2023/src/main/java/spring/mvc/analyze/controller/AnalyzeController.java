@@ -200,7 +200,13 @@ public class AnalyzeController {
                 List<SalesData> dataList = new ArrayList<>();
                 
                 // 遍歷每一行
+                int rowIndex = 0;  // 用於追蹤行索引
                 for (Row row : sheet) {
+                	// 跳過第一行（表頭）
+                    if (rowIndex == 0) {
+                        rowIndex++;
+                        continue;}
+                	
                 	SalesData salesData = new SalesData();
                     
                 	// 遍歷每一列
@@ -209,31 +215,39 @@ public class AnalyzeController {
                         // 根據單元格的索引將資料映射到對應的屬性
                         switch (columnIndex) {
                             case 0:
+                            	//強制設定單元格cell類型
+                            	cell.setCellType(CellType.STRING);
                             	salesData.setOrderNumber(cell.getStringCellValue());
                                 break;
                             case 1:
+                            	cell.setCellType(CellType.STRING);
                             	salesData.setProductCodeMomo(cell.getStringCellValue());
                                 break;
                             case 2:
+                            	cell.setCellType(CellType.STRING);
                             	salesData.setProductName(cell.getStringCellValue());
                                 break;    
                             case 3:
+                            	cell.setCellType(CellType.STRING);
                             	salesData.setProductId(cell.getStringCellValue());
                                 break;
                             case 4:
+                            	cell.setCellType(CellType.STRING);
                             	salesData.setProductDepartment(cell.getStringCellValue());
                                 break;
                             case 5:
+                            	cell.setCellType(CellType.STRING);
                             	salesData.setProductType(cell.getStringCellValue());
                                 break;
                             case 6:
+                            	cell.setCellType(CellType.STRING);
                             	salesData.setWarehouse(cell.getStringCellValue());
                                 break;
                             case 7:
                             	if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
                                     salesData.setSales((int) cell.getNumericCellValue());
                                 } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-                                    String salesStringValue = cell.getStringCellValue();
+                                    String salesStringValue = cell.getStringCellValue().trim();;
                                     try {
                                         salesData.setSales(Integer.parseInt(salesStringValue));
                                     } catch (NumberFormatException e) {
@@ -249,7 +263,7 @@ public class AnalyzeController {
                                 if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
                                     salesData.setPrice((int) cell.getNumericCellValue());
                                 } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-                                    String priceStringValue = cell.getStringCellValue();
+                                    String priceStringValue = cell.getStringCellValue().trim();
                                     try {
                                         salesData.setPrice(Integer.parseInt(priceStringValue));
                                     } catch (NumberFormatException e) {
@@ -262,9 +276,11 @@ public class AnalyzeController {
                             	//salesData.setPrice((int)(cell.getNumericCellValue()));
                                 //break;
                             case 9:
+                            	cell.setCellType(CellType.STRING);
                             	salesData.setSalesDate(cell.getStringCellValue());
                                 break;
                             case 10:
+                            	cell.setCellType(CellType.STRING);
                             	salesData.setSalesOrReturn(cell.getStringCellValue());
                                 break;                               
                             // 忽略不需要的列
