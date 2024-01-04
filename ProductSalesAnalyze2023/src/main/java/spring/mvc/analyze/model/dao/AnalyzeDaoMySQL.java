@@ -1,13 +1,17 @@
 package spring.mvc.analyze.model.dao;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import spring.mvc.analyze.model.entity.SalesData;
 import spring.mvc.analyze.model.entity.User;
 
 @Repository
@@ -15,6 +19,9 @@ public class AnalyzeDaoMySQL implements AnalyzeDao{
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	
 	@Override
 	public List<User> findAllUsers() {
@@ -59,7 +66,26 @@ public class AnalyzeDaoMySQL implements AnalyzeDao{
 			return Optional.empty();
 		}
 	}
+
+	@Override
+	public void saveExcelData(List<SalesData> dataList) {
+		String sql = "insert into salesdata(orderNumber, productCodeMomo, productName, productId, productDepartment, productType, warehouse, sales, price, salesDate, salesOrReturn) "
+				   + "value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
-	
+		jdbcTemplate.batchUpdate(sql, dataList, dataList.size(),
+                (ps, salesData) -> {
+                    ps.setString(1, salesData.getOrderNumber());
+                    ps.setString(2, salesData.getProductCodeMomo());
+                    ps.setString(3, salesData.getProductName());
+                    ps.setString(4, salesData.getProductId());
+                    ps.setString(5, salesData.getProductDepartment());
+                    ps.setString(6, salesData.getProductType());
+                    ps.setString(7, salesData.getWarehouse());
+                    ps.setInt(8, salesData.getSales());
+                    ps.setInt(9, salesData.getPrice());
+                    ps.setString(10, salesData.getSalesDate());
+                    ps.setString(11, salesData.getSalesOrReturn());
+                });
+	}
 	
 }

@@ -3,6 +3,7 @@ package spring.mvc.analyze.model.dao;
 import java.util.List;
 import java.util.Optional;
 
+import spring.mvc.analyze.model.entity.SalesData;
 import spring.mvc.analyze.model.entity.User;
 
 public interface AnalyzeDao {
@@ -22,5 +23,8 @@ public interface AnalyzeDao {
 	
 //	5. 根據使用者ID查找使用者(單筆)
 	Optional<User> findUserById(Integer userId);
+	
+	// 將匯入的 excel 寫入 MySQL
+	void saveExcelData(List<SalesData> dataList);
 	
 }
