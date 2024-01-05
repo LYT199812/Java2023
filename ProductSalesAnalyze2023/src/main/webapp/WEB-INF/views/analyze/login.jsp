@@ -60,7 +60,10 @@
 		  
 		  <div class="mt-3">
 		    <label for="verificationCode">驗證碼</label>
-		    <input type="text" class="form-control" id="verificationCode" name="verificationCode" >
+		    <div class="d-flex">
+		    <input type="text" class="form-control" id="code" name="code" >
+		    <img src="./getcode" alt="驗證碼" valign="middle" class="d-flex">
+		    </div>
 		    <div class="invalid-feedback">
 		      請輸入驗證碼!
 		    </div>

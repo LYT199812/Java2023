@@ -54,8 +54,8 @@
 	        </li>
 	      </ul>
 	    </div>
-	    <i class="bi bi-person-circle text-light h5 mb-0 d-none d-md-block">${sessionScope.username}</i>
-	    <i class="bi bi-box-arrow-right text-light ml-3" role="button" onclick="window.location.href='./logout'">Logout</i>
+	    <i class="bi bi-person-circle text-light h5 pe-4 mb-0 d-none d-md-block">${user.username}</i>
+	    <i class="bi bi-box-arrow-right text-light ml-3" role="button" onclick="window.location.href='./logout'">登出</i>
 	  </div>
 	</nav>
 	

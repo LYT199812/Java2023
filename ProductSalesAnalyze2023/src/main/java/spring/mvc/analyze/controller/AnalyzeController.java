@@ -1,12 +1,19 @@
 package spring.mvc.analyze.controller;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.poi.EncryptedDocumentException;
@@ -38,6 +45,53 @@ public class AnalyzeController {
 	
 	@Autowired
 	private AnalyzeDao dao;
+	
+	// 驗證碼
+	@GetMapping("/getcode")
+	@ResponseBody
+	private void getCodeImage(HttpSession session, HttpServletResponse response) throws IOException {
+		// 產生一個驗證碼 code
+		Random random = new Random();
+		//String code = String.format("%04d", random.nextInt(10000)); //0~9999
+		String code1 = String.format("%c", (char)(random.nextInt(122-65+1) + 65)); //random生成英文字元
+		String code2 = String.format("%c", (char)(random.nextInt(122-65+1) + 65)); //random生成英文字元
+		String code3 = String.format("%c", (char)(random.nextInt(122-65+1) + 65)); //random生成英文字元
+		String code4 = String.format("%c", (char)(random.nextInt(122-65+1) + 65)); //random生成英文字元
+		// 字元轉字串
+		String code = code1+code2+code3+code4;
+		// 將 code 存放到 session 變數中
+		session.setAttribute("code", code);
+		
+		// Java 2D圖像 產生圖檔
+		// 1. 建立圖像暫存區
+		BufferedImage img = new BufferedImage(80, 30, BufferedImage.TYPE_INT_BGR);
+		// 2. 建立畫布
+		Graphics g = img.getGraphics();
+		// 3. 設定顏色
+		g.setColor(Color.YELLOW);
+		// 4. 塗滿背景
+		g.fillRect(0, 0, 80, 30);
+		// 5. 設定顏色(字的)
+		g.setColor(Color.BLACK);
+		// 6. 設定字型
+		g.setFont(new Font("新細明體", Font.PLAIN, 30)); //Font.PLAIN細體、Font.BOLD粗體
+		// 7. 繪字串
+		g.drawString(code, 10, 23); // code, x, y chatAt(0)
+		// 8. 干擾線
+		g.setColor(Color.RED);
+		for(int i=0; i<10; i++) {
+			int x1 = random.nextInt(80);
+			int y1 = random.nextInt(30);
+			int x2 = random.nextInt(80);
+			int y2 = random.nextInt(30);
+			g.drawLine(x1, y1, x2, y2);
+		}
+		
+		// 設定回應類型
+		response.setContentType("image/png");
+		// 將影像串流回寫給 client
+		ImageIO.write(img, "PNG", response.getOutputStream());	
+	}
 	
 	
 	//登入首頁
