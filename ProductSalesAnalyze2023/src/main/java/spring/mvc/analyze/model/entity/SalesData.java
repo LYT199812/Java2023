@@ -4,7 +4,7 @@ package spring.mvc.analyze.model.entity;
 public class SalesData {
 
 	private String orderNumber;
-	private String productCodeMomo;
+	private String productCodeMO;
     private String productName;
     private String productId;
     private String productDepartment;
@@ -19,11 +19,11 @@ public class SalesData {
     	
     }
     
-	public SalesData(String orderNumber, String productCodeMomo, String productName, String productId,
+	public SalesData(String orderNumber, String productCodeMO, String productName, String productId,
 			String productDepartment, String productType, String warehouse, Integer sales, Integer price,
 			String salesOrReturn, String salesDate) {
 		this.orderNumber = orderNumber;
-		this.productCodeMomo = productCodeMomo;
+		this.productCodeMO = productCodeMO;
 		this.productName = productName;
 		this.productId = productId;
 		this.productDepartment = productDepartment;
@@ -42,10 +42,10 @@ public class SalesData {
 		this.orderNumber = orderNumber;
 	}
 	public String getProductCodeMomo() {
-		return productCodeMomo;
+		return productCodeMO;
 	}
 	public void setProductCodeMomo(String productCodeMomo) {
-		this.productCodeMomo = productCodeMomo;
+		this.productCodeMO = productCodeMomo;
 	}
 	public String getProductName() {
 		return productName;
@@ -104,7 +104,7 @@ public class SalesData {
 	
 	@Override
 	public String toString() {
-		return "SalesData [orderNumber=" + orderNumber + ", productCodeMomo=" + productCodeMomo + ", productName="
+		return "SalesData [orderNumber=" + orderNumber + ", productCodeMomo=" + productCodeMO + ", productName="
 				+ productName + ", productId=" + productId + ", productDepartment=" + productDepartment
 				+ ", productType=" + productType + ", warehouse=" + warehouse + ", sales=" + sales + ", price=" + price
 				+ ", salesOrReturn=" + salesOrReturn + ", salesDate=" + salesDate + "]";

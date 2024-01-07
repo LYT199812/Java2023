@@ -22,7 +22,7 @@
 	
 		<nav class="navbar navbar-expand-lg navbar-light ">
 	  <div class="container-fluid">
-	    <a class="navbar-brand text-light" href="#">MyAnalyze</a>
+	    <a class="navbar-brand text-light" href="..\main.jsp">MyAnalyze</a>
 	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	      <span class="navbar-toggler-icon"></span>
 	    </button>
@@ -45,15 +45,23 @@
 	        <li class="nav-item">
 	          <a class="nav-link active text-light" aria-current="page" href="./">庫存</a>
 	        </li>
-	        <li class="nav-item">
-	          <a class="nav-link text-light" href="./page1.jsp">商品</a>
-	        </li>
+	        
+	        <li class="nav-item dropdown">
+	          <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	            商品
+	          </a>
+	          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+	            <li><a class="dropdown-item" href="..\product\addProduct.jsp">商品新增</a></li>
+	            <li><a class="dropdown-item" href="#">商品管理</a></li>
+	          </ul>
+        	</li>
+        	
 	        <li class="nav-item">
 	          <a class="nav-link text-light" href="#">權限設定</a>
 	        </li>
 	      </ul>
 	    </div>
-	    <i class="bi bi-person-circle text-light h5 mb-0 d-none d-md-block">${sessionScope.username}</i>
+	    <i class="bi bi-person-circle text-light h5 pe-4 mb-0 d-none d-md-block">${user.username}</i>
 	    <i class="bi bi-box-arrow-right text-light ml-3" role="button" onclick="window.location.href='../logout'">登出</i>
 	  </div>
 	</nav>

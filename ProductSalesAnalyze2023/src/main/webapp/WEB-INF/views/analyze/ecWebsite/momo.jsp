@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/views/analyze/header.jsp" %>
+<%@include file="/WEB-INF/views/analyze/ecWebsite/header.jsp" %>
 
 <head>
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import spring.mvc.analyze.model.entity.Product;
 import spring.mvc.analyze.model.entity.SalesData;
 import spring.mvc.analyze.model.entity.User;
 
@@ -23,6 +24,8 @@ public class AnalyzeDaoMySQL implements AnalyzeDao{
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	
+	//-----------------------------------------------------------------------
+	//user
 	@Override
 	public List<User> findAllUsers() {
 		String sql = "select userId, username, password, level from user";
@@ -67,6 +70,8 @@ public class AnalyzeDaoMySQL implements AnalyzeDao{
 		}
 	}
 
+	//------------------------------------------------------------------------
+	//匯入excel
 	@Override
 	public void saveExcelData(List<SalesData> dataList) {
 		String sql = "insert into salesdata(orderNumber, productCodeMomo, productName, productId, productDepartment, productType, warehouse, sales, price, salesDate, salesOrReturn) "
@@ -86,6 +91,38 @@ public class AnalyzeDaoMySQL implements AnalyzeDao{
                     ps.setString(10, salesData.getSalesDate());
                     ps.setString(11, salesData.getSalesOrReturn());
                 });
+	}
+	
+	//---------------------------------------------------------------------------
+	//product
+	@Override
+	public List<Product> findAllProducts() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Product> findAllProducts(Boolean isLaunch) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<Product> findProductById(Integer productId) {
+		// TODO Auto-generated method stub
+		return Optional.empty();
+	}
+
+	@Override
+	public void addProduct(Product product) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Boolean updateProductLaunch(Integer productId, Boolean isLaunch) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import spring.mvc.analyze.model.entity.SalesData;
 import spring.mvc.analyze.model.entity.User;
+import spring.mvc.analyze.model.entity.Product;
 
 public interface AnalyzeDao {
 
@@ -26,5 +27,20 @@ public interface AnalyzeDao {
 	
 	// 將匯入的 excel 寫入 MySQL
 	void saveExcelData(List<SalesData> dataList);
+	
+//	商品-Product
+//	1. 查詢所有商品(多筆)
+	List<Product> findAllProducts();
+	// 根據 isLaunch 狀態取得商品資料
+	List<Product> findAllProducts(Boolean isLaunch);
+	
+//	2. 根據產品ID來查找商品(單筆)
+	Optional<Product> findProductById(Integer productId);
+	
+//	3. 新增商品
+	void addProduct(Product product);
+	
+//	4. 變更商品上架狀態
+	Boolean updateProductLaunch(Integer productId, Boolean isLaunch);
 	
 }

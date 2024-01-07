@@ -10,7 +10,7 @@ create table if not exists user(
 drop table if exists salesdata;
 -- 創建 salesdata 表格
 -- private String orderNumber;
--- private String productCodeMomo;
+-- private String productCodeMO;
 --     private String productName;
 --     private String productId;
 --     private String productDepartment;
@@ -22,7 +22,7 @@ drop table if exists salesdata;
 --     private String salesOrReturn;
 create table if not exists salesdata(
 	orderNumber varchar(100) unique not null,
-    productCodeMomo varchar(50) unique not null primary key,
+    productCodeMO varchar(50) unique not null primary key,
     productName varchar(50) not null,
     productId varchar(50) unique not null,
     productDepartment varchar(50),
@@ -34,6 +34,34 @@ create table if not exists salesdata(
     salesOrReturn varchar(50) not null
 ); 
 
+drop table if exists product;
+-- 創建 product 表格
+-- private String productId;
+-- 	private String productName;
+-- 	private Integer price;
+-- 	private String barcode;
+-- 	private String brand;
+-- 	private String productDepartment;
+-- 	private String productType;
+-- 	private String productCodeMO;
+-- 	private String productCodePC;
+-- 	private String productCodeSP;
+-- 	private Boolean isLaunch;
+create table if not exists product(
+	productId varchar(20) unique not null primary key,
+    productName varchar(50) not null,
+    price int not null,
+    barcode varchar(20),
+    brand varchar(50),
+    productDepartment varchar(50),
+    productType varchar(50),
+    productCodeMO varchar(20),
+    productCodePC varchar(20),
+    productCodeSP varchar(20),
+    isLaunch varchar(20)
+);
+
+-------------------------------------------------------------------------------------
 -- 設立預設值
 insert into user (userId, username, password, level) values
 (101, 'John', 'pass123', 1),

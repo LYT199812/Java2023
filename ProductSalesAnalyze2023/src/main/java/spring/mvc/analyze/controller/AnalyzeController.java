@@ -176,15 +176,15 @@ public class AnalyzeController {
 		return "analyze/main"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
 	}
 	
-	// ecWebsite momo
-	@GetMapping("/ecWebsite/momo")
-	public String ecWebsiteMomo(Model model) {
+	// product addProduct
+	@GetMapping("/product/addProduct")
+	public String addProduct(Model model) {
 		/*
 		// 過濾出只有上架的商品
 		List<Product> products = dao.findAllProducts(true);
 		model.addAttribute("products", products);
 		*/
-		return "analyze/ecWebsite/momo"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
+		return "analyze/product/addProduct"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
 	}
 		
 	// ecWebsite momo2
