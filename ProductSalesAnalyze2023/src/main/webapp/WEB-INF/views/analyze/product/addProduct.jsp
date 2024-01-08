@@ -3,7 +3,13 @@
 <%@include file="/WEB-INF/views/analyze/product/header.jsp" %>
 
 <div class="container mt-4">
-    <h2 class="mb-4">新增商品</h2>
+	<div class="d-flex justify-content-between">
+    <h2 class="mb-4">商品新增</h2>
+    <form id="excelForm" method="post" action="../upload" enctype="multipart/form-data">
+	  <input type="file" class="form-control" id="uploadFile" name="uploadFile" accept=".xlsx" required aria-describedby="inputGroupFileAddon04" aria-label="Upload" hidden="">
+	  <button type="button" class="btn btn-primary" onclick="document.getElementById('uploadFile').click();"><i class="bi bi-plus-circle-dotted"></i> 批次新增商品</button>
+	 </form>
+    </div>
     <form enctype="multipart/form-data">
         <div class="mb-3">
             <label for="productName" class="form-label">商品名稱</label>
@@ -14,11 +20,27 @@
             <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="輸入商品價格">
         </div>
         <div class="mb-3">
+            <label for="productPrice" class="form-label">商品條碼</label>
+            <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="輸入商品條碼">
+        </div>
+        <div class="mb-3">
+            <label for="productPrice" class="form-label">品牌</label>
+            <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="輸入商品品牌">
+        </div>
+        <div class="mb-3">
+            <label for="productPrice" class="form-label">館別</label>
+            <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="輸入商品館別">
+        </div>
+        <div class="mb-3">
+            <label for="productPrice" class="form-label">分類</label>
+            <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="輸入商品分類">
+        </div>
+        <div class="mb-3">
             <label for="productDescription" class="form-label">商品描述</label>
             <textarea class="form-control" id="productDescription" name="productDescription" rows="3" placeholder="輸入商品描述"></textarea>
         </div>
         
-        <label for="productImage" class="form-label">上傳圖片</label>
+        <label for="productImage" class="form-label">商品圖片</label>
         <div class="row mb-3" id="updatebox">
 	        <label for="file" class="col-sm-4">
 	            <div class="panel updatepanel">
