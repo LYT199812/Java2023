@@ -5,9 +5,13 @@
 <div class="container mt-4">
 	<div class="d-flex justify-content-between">
     <h2 class="mb-4">商品新增</h2>
-    <form id="excelForm" method="post" action="../upload" enctype="multipart/form-data">
-	  <input type="file" class="form-control" id="uploadFile" name="uploadFile" accept=".xlsx" required aria-describedby="inputGroupFileAddon04" aria-label="Upload" hidden="">
-	  <button type="button" class="btn btn-primary" onclick="document.getElementById('uploadFile').click();"><i class="bi bi-plus-circle-dotted"></i> 批次新增商品</button>
+    <form id="addProductExcelForm" method="post" action="../addProductUpload" enctype="multipart/form-data">
+	  <input type="file" class="form-control" id="addProductUploadFile" name="addProductUploadFile" accept=".xlsx" required hidden="">
+	  <button type="button" class="btn btn-primary" onclick="document.getElementById('addProductUploadFile').click();">
+	  	<span id="fileNameContainer">
+            <i class="bi bi-plus-circle-dotted"></i> 批次新增商品
+        </span>
+	  </button>
 	 </form>
     </div>
     <form enctype="multipart/form-data">
@@ -21,19 +25,19 @@
         </div>
         <div class="mb-3">
             <label for="productPrice" class="form-label">商品條碼</label>
-            <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="輸入商品條碼">
+            <input type="number" class="form-control" id="productBarcode" name="productBarcode" placeholder="輸入商品條碼">
         </div>
         <div class="mb-3">
             <label for="productPrice" class="form-label">品牌</label>
-            <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="輸入商品品牌">
+            <input type="number" class="form-control" id="productBrand" name="productBrand" placeholder="輸入商品品牌">
         </div>
         <div class="mb-3">
             <label for="productPrice" class="form-label">館別</label>
-            <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="輸入商品館別">
+            <input type="number" class="form-control" id="productDepartment" name="productDepartment" placeholder="輸入商品館別">
         </div>
         <div class="mb-3">
             <label for="productPrice" class="form-label">分類</label>
-            <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="輸入商品分類">
+            <input type="number" class="form-control" id="productType" name="productType" placeholder="輸入商品分類">
         </div>
         <div class="mb-3">
             <label for="productDescription" class="form-label">商品描述</label>
@@ -121,6 +125,30 @@
 	
 <!-- 自定义js -->
 <script>
+	// 批次新增商品
+	document.getElementById('addProductUploadFile').addEventListener('change', function () {
+	    var fileName = this.files[0].name;
+	    var fileNameContainer = document.getElementById('fileNameContainer');
+	    
+	    fileNameContainer.innerHTML = `<span>${fileName}</span><i class="bi bi-x" onclick="resetUpload()"></i>`;
+	    document.getElementById('fileNameContainer').innerText = fileName;
+	});
+	
+	function resetUpload() {
+	    var fileNameContainer = document.getElementById('fileNameContainer');
+	    var addProductUploadFile = document.getElementById('addProductUploadFile');
+	
+	    // Clear the file input
+	    addProductUploadFile.value = '';
+	
+	    // Reset the button content
+	    fileNameContainer.innerHTML = `<i class="bi bi-plus-circle-dotted"></i> 批次新增商品`;
+	    document.getElementById('fileNameContainer').innerText = '批次新增商品';
+	}
+	
+	//-----------------------------------------------------------------------------
+	// 上傳圖片
+
     $(document).ready(function () {
         $(".file-input").on("change", function () {
             addImage(this);
