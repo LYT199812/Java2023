@@ -115,7 +115,8 @@ public class AnalyzeDaoMySQL implements AnalyzeDao{
 
 	@Override
 	public void addProduct(Product product) {
-		// TODO Auto-generated method stub
+		String sql = "insert into product(productId, productName, price, barcode, brand, productDepartment, productType, isLaunch) value(?, ?, ?, ?, ?, ?, ?, ?)";
+		jdbcTemplate.update(sql, product.getProductId(), product.getProductName(), product.getPrice(), product.getBarcode(), product.getBrand(), product.getProductDepartment(), product.getProductType(), product.getIsLaunch());
 		
 	}
 
@@ -123,6 +124,24 @@ public class AnalyzeDaoMySQL implements AnalyzeDao{
 	public Boolean updateProductLaunch(Integer productId, Boolean isLaunch) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void addProductExcelData(List<Product> dataList) {
+		String sql = "insert into product(productId, productName, price, barcode, brand, productDepartment, productType, isLaunch) value(?, ?, ?, ?, ?, ?, ?, ?)";
+		
+		jdbcTemplate.batchUpdate(sql, dataList, dataList.size(),
+             (ps, product) -> {
+                 ps.setString(1, product.getProductId());
+                 ps.setString(2, product.getProductName());
+                 ps.setInt(3, product.getPrice());
+                 ps.setString(4, product.getBarcode());
+                 ps.setString(5, product.getBrand());
+                 ps.setString(6, product.getProductDepartment());
+                 ps.setString(7, product.getProductType());
+                 ps.setBoolean(8, product.getIsLaunch());
+             });
+		
 	}
 	
 }

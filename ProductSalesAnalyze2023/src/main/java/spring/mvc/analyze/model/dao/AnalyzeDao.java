@@ -42,5 +42,8 @@ public interface AnalyzeDao {
 	
 //	4. 變更商品上架狀態
 	Boolean updateProductLaunch(Integer productId, Boolean isLaunch);
+	 
+//  5. 批次新增商品
+	void addProductExcelData(List<Product> dataList);
 	
 }

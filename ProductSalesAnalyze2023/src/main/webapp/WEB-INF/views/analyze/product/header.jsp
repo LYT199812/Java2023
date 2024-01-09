@@ -52,7 +52,7 @@
 	          </a>
 	          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 	            <li><a class="dropdown-item" href="..\product\addProduct.jsp">商品新增</a></li>
-	            <li><a class="dropdown-item" href="#">商品管理</a></li>
+	            <li><a class="dropdown-item" href="..\product\maintainProduct.jsp">商品管理</a></li>
 	          </ul>
         	</li>
         	

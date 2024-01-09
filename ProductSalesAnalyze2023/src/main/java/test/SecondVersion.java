@@ -62,6 +62,50 @@ public class SecondVersion {
 	    }
 		*/
 
+		
+		// 單純讀取資料到eclipse 3.17版本 (為了可以支援commons-io 2.6的版本)
+		/*
+		@PostMapping("/upload")
+	    @ResponseBody
+	    public String handleFileUpload(@RequestParam("uploadFile") MultipartFile uploadFile, Model model) {
+	        if (!uploadFile.isEmpty()) {
+	            try (InputStream inputStream = uploadFile.getInputStream()) {
+	                Workbook workbook = new XSSFWorkbook(inputStream); // 使用XSSFWorkbook處理xlsx格式的Excel
+
+	                Sheet sheet = workbook.getSheetAt(0); // 假設只有一個工作表，根據實際情況調整索引
+
+	                // 遍歷每一行
+	                for (Row row : sheet) {
+	                    // 遍歷每一列
+	                    for (Cell cell : row) {
+	                        // 根據單元格類型進行相應的處理
+	                        switch (cell.getCellType()) {
+	                            case Cell.CELL_TYPE_STRING:
+	                                System.out.print(cell.getStringCellValue() + "\t");
+	                                break;
+	                            case Cell.CELL_TYPE_NUMERIC:
+	                                System.out.print(cell.getNumericCellValue() + "\t");
+	                                break;
+	                            // 其他類型的處理可以根據需要添加
+	                            default:
+	                                System.out.print("Unsupported Cell Type\t");
+	                        }
+	                    }
+	                    System.out.println(); // 換行
+	                }
+
+	                return "File uploaded and processed successfully.";
+	            } catch (IOException ex) {
+	                ex.printStackTrace();
+	                return "Error processing the file.";
+	            }
+	        } else {
+	            return "File is empty.";
+	        }
+	    }
+		*/
+		
+		
 		/*
 		 * 寫入進SQL，不使用LIST而是單筆單筆寫入
 		@PostMapping("/upload")

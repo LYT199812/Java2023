@@ -9,35 +9,41 @@
 	  <input type="file" class="form-control" id="addProductUploadFile" name="addProductUploadFile" accept=".xlsx" required hidden="">
 	  <button type="button" class="btn btn-primary" onclick="document.getElementById('addProductUploadFile').click();">
 	  	<span id="fileNameContainer">
-            <i class="bi bi-plus-circle-dotted"></i> 批次新增商品
+            <i class="bi bi-plus-circle"></i> 批次新增商品
         </span>
 	  </button>
+	  <button class="btn btn-outline-secondary" type="submit" id="uploadButton" style="display: none;">檔案上傳</button>
 	 </form>
     </div>
-    <form enctype="multipart/form-data">
+    
+    <form method="post" action="./addProduct" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="productId" class="form-label">商品ID</label>
+            <input type="text" class="form-control" id="productId" name="productId" placeholder="輸入商品ID">
+        </div>
         <div class="mb-3">
             <label for="productName" class="form-label">商品名稱</label>
             <input type="text" class="form-control" id="productName" name="productName" placeholder="輸入商品名稱">
         </div>
         <div class="mb-3">
-            <label for="productPrice" class="form-label">商品價格</label>
-            <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="輸入商品價格">
+            <label for="price" class="form-label">商品價格</label>
+            <input type="number" class="form-control" id="price" name="price" placeholder="輸入商品價格">
         </div>
         <div class="mb-3">
-            <label for="productPrice" class="form-label">商品條碼</label>
-            <input type="number" class="form-control" id="productBarcode" name="productBarcode" placeholder="輸入商品條碼">
+            <label for="barcode" class="form-label">商品條碼</label>
+            <input type="text" class="form-control" id="barcode" name="barcode" placeholder="輸入商品條碼">
         </div>
         <div class="mb-3">
-            <label for="productPrice" class="form-label">品牌</label>
-            <input type="number" class="form-control" id="productBrand" name="productBrand" placeholder="輸入商品品牌">
+            <label for="brand" class="form-label">品牌</label>
+            <input type="text" class="form-control" id="brand" name="brand" placeholder="輸入商品品牌">
         </div>
         <div class="mb-3">
             <label for="productPrice" class="form-label">館別</label>
-            <input type="number" class="form-control" id="productDepartment" name="productDepartment" placeholder="輸入商品館別">
+            <input type="text" class="form-control" id="productDepartment" name="productDepartment" placeholder="輸入商品館別">
         </div>
         <div class="mb-3">
             <label for="productPrice" class="form-label">分類</label>
-            <input type="number" class="form-control" id="productType" name="productType" placeholder="輸入商品分類">
+            <input type="text" class="form-control" id="productType" name="productType" placeholder="輸入商品分類">
         </div>
         <div class="mb-3">
             <label for="productDescription" class="form-label">商品描述</label>
@@ -51,13 +57,24 @@
 	                <div class="remove-icon bi bi-x-lg"></div>
 	                <input type="file" id="file" class="file-input"  hidden=""/>
 	                <div class="addbox">
-		                <span class="bi bi-plus">
+		                <span class="bi bi-plus-lg">
+	                		上傳圖片
 	                	</span>
                 	</div>
 		            <img class="updateimg img-responsive" style="width: inherit; height: 210px; display: none;">
 	            </div>
 	        </label>
     	</div>
+        
+        <div class="mb-3">
+            <label for="productLaunch" class="form-label">是否立即上架</label>
+            <div required>
+	            <input type="radio" id="isLaunch" name="isLaunch" value="yes" >
+	            <label for="productisLaunch">是</label>
+	            <input type="radio" id="isLaunch" name="isLaunch" value="no">
+	        	<label for="productnoLaunch">否</label>
+        	</div>
+        </div>
         
         <button type="submit" class="btn btn-primary mb-5">新增商品</button>
     </form>
@@ -121,6 +138,10 @@
 	    display: none;
 	}
 	
+	bi-x-circle{
+		color:red !important;
+	}
+	
 </style>
 	
 <!-- 自定义js -->
@@ -129,9 +150,17 @@
 	document.getElementById('addProductUploadFile').addEventListener('change', function () {
 	    var fileName = this.files[0].name;
 	    var fileNameContainer = document.getElementById('fileNameContainer');
+	    var uploadButton = document.getElementById('uploadButton');
 	    
-	    fileNameContainer.innerHTML = `<span>${fileName}</span><i class="bi bi-x" onclick="resetUpload()"></i>`;
+	    //fileNameContainer.innerHTML = `<span>${fileName}</span><i class="bi bi-x" onclick="resetUpload()"></i>`;
 	    document.getElementById('fileNameContainer').innerText = fileName;
+	    fileNameContainer.insertAdjacentHTML('beforeend', '&nbsp;<i class="bi bi-x-circle" onclick="resetUpload()"></i>');
+	
+	    if (fileName !== '') {
+            uploadButton.style.display = 'inline';
+        }
+	    
+	    
 	});
 	
 	function resetUpload() {
@@ -142,8 +171,10 @@
 	    addProductUploadFile.value = '';
 	
 	    // Reset the button content
-	    fileNameContainer.innerHTML = `<i class="bi bi-plus-circle-dotted"></i> 批次新增商品`;
+	    //fileNameContainer.innerHTML = `<i class="bi bi-plus-circle"></i> 批次新增商品`;
 	    document.getElementById('fileNameContainer').innerText = '批次新增商品';
+	    fileNameContainer.insertAdjacentHTML('afterbegin', '<i class="bi bi-plus-circle"></i>&nbsp;');
+	    uploadButton.style.display = 'none';
 	}
 	
 	//-----------------------------------------------------------------------------
