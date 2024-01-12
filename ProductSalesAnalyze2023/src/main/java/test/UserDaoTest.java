@@ -6,6 +6,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.google.gson.Gson;
 
 import spring.mvc.analyze.dao.UserDaoResposity;
+import spring.mvc.analyze.entity.Level;
 import spring.mvc.analyze.entity.User;
 
 public class UserDaoTest {
@@ -16,12 +17,19 @@ public class UserDaoTest {
 		
 		UserDaoResposity userDaoResposity = ctx.getBean("userDaoResposity", UserDaoResposity.class);
 		
-		User user1 = userDaoResposity.findUserById(101).get();
+		User user1 = userDaoResposity.findUserById(106).get();
 		System.out.println(new Gson().toJson(user1));
 
-		User user2 = userDaoResposity.findUserById(102).get();
-		System.out.println(new Gson().toJson(user2));
+//		User user2 = userDaoResposity.findUserByUsername("Sean").get();
+//		System.out.println(new Gson().toJson(user2));
 		
+//		User user99 = new User();
+//		user99.setUsername("antia");
+//		user99.setPassword("123");
+//		user99.setLevel(Level.builder().levelId(3).build());
+//		int rowcount = userDaoResposity.save(user99);
+//		System.out.println(rowcount);
+//		System.out.println(user99.getUserId());
 	}
 
 }

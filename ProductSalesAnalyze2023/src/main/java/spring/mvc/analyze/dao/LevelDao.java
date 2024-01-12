@@ -6,5 +6,5 @@ import spring.mvc.analyze.entity.Level;
 
 public interface LevelDao {
 
-	Optional<Level> findLevelByUserId(Integer uesrId);
+	Optional<Level> findLevelById(Integer levelId);
 }

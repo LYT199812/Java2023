@@ -22,13 +22,13 @@ level: 1(分析人員-匯入檔案查看銷售表), 2(管理人員-管理庫存+
 @AllArgsConstructor
 public class User {
 	
-	private Integer userId;
+	Integer userId;
 	
-	private String username;
+	String username;
 	
-	private String password;
+	String password;
 	
-	private Level level;
+	Level level;
 	
 	List<Service> menu;
 

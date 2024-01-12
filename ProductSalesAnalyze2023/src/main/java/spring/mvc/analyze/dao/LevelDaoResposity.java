@@ -16,10 +16,10 @@ public class LevelDaoResposity implements LevelDao {
 	JdbcTemplate jdbcTemplate;
 	
 	@Override
-	public Optional<Level> findLevelByUserId(Integer userId) {
-		String sql = "select l.levelId, l.levelName from user u, level l where u.levelId = l.levelId and userId = ?";
+	public Optional<Level> findLevelById(Integer levelId) {
+		String sql = "select l.levelId, l.levelName from level l where l.levelId=?";
 		try {
-			Level level = jdbcTemplate.queryForObject(sql,new BeanPropertyRowMapper<>(Level.class), userId);
+			Level level = jdbcTemplate.queryForObject(sql,new BeanPropertyRowMapper<>(Level.class), levelId);
 			return Optional.ofNullable(level);
 		} catch (Exception e) {
 			e.printStackTrace(); // 可以看console的錯誤
