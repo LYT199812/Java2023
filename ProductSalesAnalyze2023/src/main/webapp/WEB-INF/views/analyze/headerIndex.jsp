@@ -58,7 +58,7 @@
         	</li>
         	
 	        <li class="nav-item">
-	          <a class="nav-link text-light" href="#">權限設定</a>
+	          <a class="nav-link text-light" href=".\permissionSettings">權限設定</a>
 	        </li>
 	      </ul>
 	    </div>
