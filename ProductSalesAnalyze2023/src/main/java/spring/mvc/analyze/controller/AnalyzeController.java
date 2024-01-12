@@ -12,17 +12,14 @@ import java.util.Optional;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,10 +32,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import spring.mvc.analyze.model.dao.AnalyzeDao;
-import spring.mvc.analyze.model.entity.SalesData;
-import spring.mvc.analyze.model.entity.User;
-import spring.mvc.analyze.model.entity.Product;
+import spring.mvc.analyze.dao.AnalyzeDao;
+import spring.mvc.analyze.entity.Product;
+import spring.mvc.analyze.entity.SalesData;
+import spring.mvc.analyze.entity.User;
 
 
 @Controller

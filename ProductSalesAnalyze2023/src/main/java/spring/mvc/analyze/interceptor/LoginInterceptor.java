@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import spring.mvc.analyze.model.entity.User;
+import spring.mvc.analyze.entity.User;
 
 public class LoginInterceptor implements HandlerInterceptor{
 

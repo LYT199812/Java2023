@@ -1,4 +1,4 @@
-package spring.mvc.analyze.model.dao;
+package spring.mvc.analyze.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -11,9 +11,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import spring.mvc.analyze.model.entity.Product;
-import spring.mvc.analyze.model.entity.SalesData;
-import spring.mvc.analyze.model.entity.User;
+import spring.mvc.analyze.entity.Product;
+import spring.mvc.analyze.entity.SalesData;
+import spring.mvc.analyze.entity.User;
 
 @Repository
 public class AnalyzeDaoMySQL implements AnalyzeDao{
@@ -35,7 +35,7 @@ public class AnalyzeDaoMySQL implements AnalyzeDao{
 	@Override
 	public void addUser(User user) {
 		String sql = "insert into user(username, password, levelId) value (?, ?, ?)";
-		jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getLevel());
+		jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getLevelId());
 		
 	}
 

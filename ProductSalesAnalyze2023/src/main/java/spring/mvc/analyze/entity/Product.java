@@ -1,4 +1,4 @@
-package spring.mvc.analyze.model.entity;
+package spring.mvc.analyze.entity;
 
 public class Product {
 
