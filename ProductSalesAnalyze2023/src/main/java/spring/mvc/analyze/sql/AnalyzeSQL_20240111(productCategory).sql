@@ -154,6 +154,56 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
+-- Table `analyze`.`level`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `analyze`.`level` ;
+
+CREATE TABLE IF NOT EXISTS `analyze`.`level` (
+  `levelId` INT NOT NULL,
+  `levelName` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`levelId`),
+  UNIQUE INDEX `username` (`levelName` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `analyze`.`service`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `analyze`.`service` ;
+
+CREATE TABLE IF NOT EXISTS `analyze`.`service` (
+  `serviceId` INT NOT NULL,
+  `serviceLocation` varchar(50),
+  `serviceName` VARCHAR(50) NOT NULL,
+  `serviceUrl` VARCHAR(50) ,
+  PRIMARY KEY (`serviceId`),
+  UNIQUE INDEX `serviceName` (`serviceName` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `analyze`.`level_ref_service`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `analyze`.`level_ref_service` ;
+
+CREATE TABLE IF NOT EXISTS `analyze`.`level_ref_service` (
+  `levelId` INT NOT NULL,
+  `serviceId` INT NOT NULL,
+  `serviceLocation` varchar(50),
+  `serviceName` VARCHAR(50) NOT NULL,
+  `serviceUrl` VARCHAR(50) ,
+  PRIMARY KEY (`serviceId`),
+  UNIQUE INDEX `serviceName` (`serviceName` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
 -- Table `analyze`.`stock`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `analyze`.`stock` ;
