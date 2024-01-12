@@ -28,13 +28,13 @@ public class AnalyzeDaoMySQL implements AnalyzeDao{
 	//user
 	@Override
 	public List<User> findAllUsers() {
-		String sql = "select userId, username, password, level from user";
+		String sql = "select userId, username, password, levelId from user";
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class));
 	}
 
 	@Override
 	public void addUser(User user) {
-		String sql = "insert into user(username, password, level) value (?, ?, ?)";
+		String sql = "insert into user(username, password, levelId) value (?, ?, ?)";
 		jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getLevel());
 		
 	}
@@ -48,7 +48,7 @@ public class AnalyzeDaoMySQL implements AnalyzeDao{
 
 	@Override
 	public Optional<User> findUserByUsername(String username) {
-		String sql  = "select userId, username, password, level from User where username = ?";
+		String sql  = "select userId, username, password, levelId from User where username = ?";
 		// 若找不到會發生例外，所以看要不要寫try catch，這裡有寫
 		try {
 			User user =  jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), username);
@@ -61,7 +61,7 @@ public class AnalyzeDaoMySQL implements AnalyzeDao{
 
 	@Override
 	public Optional<User> findUserById(Integer userId) {
-		String sql = "select userId, username, password, level from user where userId = ?";
+		String sql = "select userId, username, password, levelId from user where userId = ?";
 		try {
 			User user = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), userId);
 			return Optional.ofNullable(user);

@@ -76,8 +76,6 @@ DROP TABLE IF EXISTS `analyze`.`levelRefService` ;
 CREATE TABLE IF NOT EXISTS `analyze`.`levelRefService` (
   `levelId` INT NOT NULL,
   `serviceId` INT NOT NULL,
-  `serviceName` VARCHAR(100) NOT NULL,
-  `serviceUrl` VARCHAR(1000) NOT NULL,
   PRIMARY KEY (`serviceId`, `levelId`),
   INDEX `lrs_levelId_idx` (`levelId` ASC) VISIBLE,
   CONSTRAINT `lrs_levelId`
@@ -168,19 +166,16 @@ CREATE TABLE IF NOT EXISTS `analyze`.`salesData` (
   `productId` VARCHAR(50) NOT NULL,
   `ecOrderNumber` VARCHAR(100) NOT NULL,
   `ecProductCode` VARCHAR(50) NOT NULL,
-  `ecProductCategory` VARCHAR(50) NULL DEFAULT NULL,
   `ecProductType` VARCHAR(50) NULL DEFAULT NULL,
-  `ecWarehouse` VARCHAR(50) NOT NULL DEFAULT '轉',
+  `ecProductSubType` VARCHAR(50) NULL DEFAULT NULL,
+  `ecWarehouse` VARCHAR(50) NOT NULL DEFAULT '轉單',
   `ecSalesQty` INT NOT NULL,
   `ecSalesPrice` INT NOT NULL,
   `ecSalesDate` DATETIME NOT NULL,
   `ecSalesStatus` VARCHAR(50) NOT NULL,
   `createTime` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`trxId`),
-  UNIQUE INDEX `orderNumber` (`ecOrderNumber` ASC) VISIBLE,
-  UNIQUE INDEX `productId` (`productId` ASC) VISIBLE,
-  UNIQUE INDEX `ecProductCode` (`ecProductCode` ASC) VISIBLE,
-  UNIQUE INDEX `ecSalesStatus` (`ecSalesStatus` ASC) VISIBLE,
+  UNIQUE INDEX `combinedUniqueIndex` (`ecOrderNumber` ASC, `productId` ASC, `ecProductCode` ASC, `ecSalesStatus` ASC) VISIBLE,
   INDEX `salesdata_ec_id_idx` (`ecId` ASC) VISIBLE,
   CONSTRAINT `sales_productId`
     FOREIGN KEY (`productId`)
