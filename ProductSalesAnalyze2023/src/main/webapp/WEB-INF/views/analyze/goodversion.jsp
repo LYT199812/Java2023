@@ -15,7 +15,7 @@
 
 <body>
 	
-	<div class="d-flex bd-highlight">
+	<div class="d-flex bd-highlight px-5">
 	  <div class="p-2 flex-grow-1 bd-highlight"><h2 class="d-flex">MOMO Sales Analysis</h2></div>
 	  
 	  
