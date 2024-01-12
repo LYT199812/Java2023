@@ -40,3 +40,11 @@ insert into salesdata (ecId, productId, ecOrderNumber, ecProductCode, ecProductT
 values (1, 'A101', 'BD-2023123012345-01', '12345-01', '刀具砧板配件', '鍋鏟', '轉單', 2, 550, 20231201, '銷售'),
 (1, 'B101', 'BD-2023123012345-02', '12345-02', '鍋具', '平底鍋', '寄倉', 1, 1000, 20231202, '銷售');
 
+-- 依照平台，取得商品銷售資訊原始數據(待定)
+select d.trxId,p.productId,p.productName,p.productBrand,pt.name,pst.name,p.productBarcode, s.ecProductQty, s.productQty, d.ecSalesQty,d.ecSalesPrice
+from product p, salesdata d, ecommerce e , stock s, producttype pt, productsubtype pst
+where p.productId = d.productId and d.ecId = e.id
+and s.ecId = e.id and s.productId = p.productId
+and pt.id = p.productTypeId
+and pst.id = productSubTypeId
+and e.name = 'Momo';
