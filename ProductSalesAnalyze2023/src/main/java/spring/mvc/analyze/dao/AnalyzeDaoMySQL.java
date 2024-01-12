@@ -35,7 +35,7 @@ public class AnalyzeDaoMySQL implements AnalyzeDao{
 	@Override
 	public void addUser(User user) {
 		String sql = "insert into user(username, password, levelId) value (?, ?, ?)";
-		jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getLevelId());
+		jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getLevel().getLevelId());
 		
 	}
 

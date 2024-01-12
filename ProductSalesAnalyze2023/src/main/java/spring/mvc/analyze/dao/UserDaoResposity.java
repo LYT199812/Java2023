@@ -23,12 +23,16 @@ public class UserDaoResposity implements UserDao{
 	@Autowired
 	private ServiceDaoResposity serviceDaoResposity;
 	
+	@Autowired
+	private LevelDaoResposity levelDaoResposity;
+	
+	
 	RowMapper<User> rowMapper = (ResultSet rs, int rowNum) -> {
 		User user = new User();
 		user.setUserId(rs.getInt("userId"));
 		user.setUsername(rs.getString("username"));
 		user.setPassword(rs.getString("password"));
-		user.setLevelId(rs.getInt("levelId"));
+		user.setLevel(levelDaoResposity.findLevelByUserId(rs.getInt("userId")).get());
 		List<Service> menu = serviceDaoResposity.findSevicesByUserId(rs.getInt("userId"));
 		user.setMenu(menu);
 		return user;

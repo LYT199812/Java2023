@@ -28,7 +28,7 @@ public class User {
 	
 	private String password;
 	
-	private Integer levelId;
+	private Level level;
 	
 	List<Service> menu;
 
