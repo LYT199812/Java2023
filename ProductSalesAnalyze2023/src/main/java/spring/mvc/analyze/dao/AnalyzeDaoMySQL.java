@@ -1,4 +1,4 @@
-package spring.mvc.analyze.model.dao;
+package spring.mvc.analyze.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -11,9 +11,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import spring.mvc.analyze.model.entity.Product;
-import spring.mvc.analyze.model.entity.SalesData;
-import spring.mvc.analyze.model.entity.User;
+import spring.mvc.analyze.entity.Product;
+import spring.mvc.analyze.entity.SalesData;
+import spring.mvc.analyze.entity.User;
 
 @Repository
 public class AnalyzeDaoMySQL implements AnalyzeDao{
@@ -28,14 +28,14 @@ public class AnalyzeDaoMySQL implements AnalyzeDao{
 	//user
 	@Override
 	public List<User> findAllUsers() {
-		String sql = "select userId, username, password, level from user";
+		String sql = "select userId, username, password, levelId from user";
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class));
 	}
 
 	@Override
 	public void addUser(User user) {
-		String sql = "insert into user(username, password, level) value (?, ?, ?)";
-		jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getLevel());
+		String sql = "insert into user(username, password, levelId) value (?, ?, ?)";
+		jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getLevel().getLevelId());
 		
 	}
 
@@ -48,7 +48,7 @@ public class AnalyzeDaoMySQL implements AnalyzeDao{
 
 	@Override
 	public Optional<User> findUserByUsername(String username) {
-		String sql  = "select userId, username, password, level from User where username = ?";
+		String sql  = "select userId, username, password, levelId from User where username = ?";
 		// 若找不到會發生例外，所以看要不要寫try catch，這裡有寫
 		try {
 			User user =  jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), username);
@@ -61,7 +61,7 @@ public class AnalyzeDaoMySQL implements AnalyzeDao{
 
 	@Override
 	public Optional<User> findUserById(Integer userId) {
-		String sql = "select userId, username, password, level from user where userId = ?";
+		String sql = "select userId, username, password, levelId from user where userId = ?";
 		try {
 			User user = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), userId);
 			return Optional.ofNullable(user);

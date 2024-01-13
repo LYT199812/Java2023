@@ -14,8 +14,9 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
 		http://www.springframework.org/schema/data/jpa https://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 	
-	<!-- 啟用 AspectJ 自動代理 -->
+	<!-- 啟用 AspectJ 自動代理
     <aop:aspectj-autoproxy/>
+     -->
     <!-- 設定 Spring AOP 切面程式自動實現代理，且強制要求 Spring 使用 CGLIB 代理 -->
 	<!--  
 		<aop:aspectj-autoproxy proxy-target-class="true" />  

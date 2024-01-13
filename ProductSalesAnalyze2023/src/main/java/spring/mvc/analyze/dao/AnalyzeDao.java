@@ -1,11 +1,11 @@
-package spring.mvc.analyze.model.dao;
+package spring.mvc.analyze.dao;
 
 import java.util.List;
 import java.util.Optional;
 
-import spring.mvc.analyze.model.entity.SalesData;
-import spring.mvc.analyze.model.entity.User;
-import spring.mvc.analyze.model.entity.Product;
+import spring.mvc.analyze.entity.Product;
+import spring.mvc.analyze.entity.SalesData;
+import spring.mvc.analyze.entity.User;
 
 public interface AnalyzeDao {
 
