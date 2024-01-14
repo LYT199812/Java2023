@@ -131,15 +131,15 @@ DROP TABLE IF EXISTS `analyze`.`product` ;
 CREATE TABLE IF NOT EXISTS `analyze`.`product` (
   `productId` VARCHAR(20) NOT NULL,
   `productName` VARCHAR(50) NOT NULL,
-  `productPrice` INT NOT NULL DEFAULT '0',
+  `productPrice` INT NOT NULL DEFAULT 0,
   `productBarcode` VARCHAR(100) NULL DEFAULT NULL,
   `productBrand` VARCHAR(100) NOT NULL,
   `productTypeId` INT NULL DEFAULT NULL,
   `productSubTypeId` INT NULL DEFAULT NULL,
   `productImg` VARCHAR(1000) NULL,
   `productDesc` VARCHAR(2000) NULL,
-  `isLaunch` INT NOT NULL DEFAULT '0',
-  `productQty` INT NOT NULL DEFAULT '0',
+  `isLaunch` INT NOT NULL DEFAULT 0,
+  -- `productQty` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`productId`),
   UNIQUE INDEX `productId` (`productId` ASC) VISIBLE,
   INDEX `product_productCategory_idx` (`productTypeId` ASC) VISIBLE,
@@ -195,10 +195,11 @@ DROP TABLE IF EXISTS `analyze`.`stock` ;
 
 CREATE TABLE IF NOT EXISTS `analyze`.`stock` (
   `productId` VARCHAR(50) NOT NULL,
-  `ecId` INT NOT NULL,
-  `productQty` INT NOT NULL,
-  `ecProductQty` INT NOT NULL,
-  PRIMARY KEY (`productId`, `ecId`),
+  `ecId` INT NULL,
+  `productQty` INT NOT NULL DEFAULT 0,
+  `ecProductQty` INT NULL,
+  PRIMARY KEY (`productId`),
+  UNIQUE INDEX `unique_ecId` (`ecId`, `productId`), -- 唯一索引
   INDEX `stock_ec_id_idx` (`ecId` ASC) VISIBLE,
   CONSTRAINT `stock_ec_id`
     FOREIGN KEY (`ecId`)

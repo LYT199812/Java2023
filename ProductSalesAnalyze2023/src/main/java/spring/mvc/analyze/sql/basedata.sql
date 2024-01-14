@@ -23,8 +23,8 @@ insert into productType (name) values ('餐廚'), ('傢俱'), ('旅遊');
 insert into productSubType (name) values ('鍋鏟'), ('平底鍋'), ('主廚刀');
 
 -- 7. 設立 product 預設值
-insert into product (productId, productName, productPrice, productBarcode, productBrand, productTypeId, productSubTypeId, productImg, productDesc, isLaunch, productQty) 
-values ('A101', '好用鍋鏟', 550, '12345678', 'AAA', 1, 1, '','', 0, 50), ('B101', '好用平底鍋', 1200, '22345678', 'BBB', 1, 2, '','', 0, 50);
+insert into product (productId, productName, productPrice, productBarcode, productBrand, productTypeId, productSubTypeId, productImg, productDesc, isLaunch) 
+values ('A101', '好用鍋鏟', 550, '12345678', 'AAA', 1, 1, '','', 0), ('B101', '好用平底鍋', 1200, '22345678', 'BBB', 1, 2, '','', 0), ('C101', '好用平底鍋', 1200, '22345689', 'CCC', 1, 2, '','', 0);
 
 -- 8. 設立 ecommerce 預設值
 insert into ecommerce (name, website) 
