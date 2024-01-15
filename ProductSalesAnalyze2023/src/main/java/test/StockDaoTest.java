@@ -22,7 +22,7 @@ import spring.mvc.analyze.entity.ProductType;
 import spring.mvc.analyze.entity.Stock;
 import spring.mvc.analyze.entity.User;
 
-public class ProductDaoTest {
+public class StockDaoTest {
 
 	public static void main(String[] args) {
 		
@@ -32,58 +32,40 @@ public class ProductDaoTest {
 		StockDaoResposity stockDaoResposity = ctx.getBean("stockDaoResposity", StockDaoResposity.class);
 		
 		// 測試查詢功能
-//		List<Product> product1 = productDaoResposity.findAllProducts();
-//		Product product1 = productDaoResposity.findProductById("A101").get();
-//		Product product1 = productDaoResposity.findProductByProductname("好用鍋鏟").get();
-//		System.out.println(new Gson().toJson(product1));
+//		List<Stock> stocks = stockDaoResposity.findStockByProductIdAndEcId("A101", 1);
+//		System.out.println(new Gson().toJson(stocks));
 		
 		// 測試新增功能
-//		Product product = new Product();
-//		product.setProductId("C101");
-//		product.setProductName("好用鍋鏟");
-//		product.setProductPrice(300);
-//		product.setProductBarcode("78945632");
-//		product.setProductBrand("CCC");
-//		product.setProductType(ProductType.builder().id(1).build());
-//		product.setProductSubType(ProductSubType.builder().id(1).build());
-//		product.setIsLaunch(false);
-//		Stock stock = new Stock();
+		Stock stock = new Stock();
 //		stock.setProductId("C101");
 //		stock.setEcId(3);
 //		stock.setProductQty(40);
 //		stock.setEcProductQty(10);
-//		int rowcount1 = productDaoResposity.addProduct(productC);
 //		int rowcount2 = stockDaoResposity.addStock(stock);		
-//		System.out.println(new Gson().toJson(rowcount1 + rowcount2));
 //		System.out.println(new Gson().toJson(rowcount2));
 		
 		// 測試修改功能
-//		product.setProductId("A101");
-//		product.setProductName("好用鍋鏟");
-//		product.setProductPrice(800);
-//		product.setProductBarcode("");
-//		product.setProductBrand("AAA");
-//		product.setProductTypeId(1);
-//		product.setProductSubTypeId(1);
-//		product.setProductImg(null);
-//		product.setProductDesc(null);
-//        product.setIsLaunch(false);
-//        int updateRowCount = productDaoResposity.updateProduct(product);
+//		stock.setProductId("A101");
+//		stock.setEcId(2);
+//		stock.setProductQty(1);
+//		stock.setEcProductQty(0);
+//        int updateRowCount = stockDaoResposity.updateStock(stock);
 //        System.out.println("Update Product Rows: " + updateRowCount);
 		
-
+		
         // 刪除產品
-        String productIdToDelete = "C101";
+        String productIdToDelete = "A101";
+        Integer ecIdToDelete = 2;
 
         // 呼叫刪除方法
-        int rowcount = productDaoResposity.removeProductById(productIdToDelete);
+        int rowcount = stockDaoResposity.removeStockByIdAndEcId(productIdToDelete, ecIdToDelete);
 //      int product = productDaoResposity.removeProductById("A101");
 
         // 檢查受影響的行數，判斷刪除是否成功
         if (rowcount > 0) {
-            System.out.println("Product deleted successfully.");
+            System.out.println("Stock deleted successfully.");
         } else {
-            System.out.println("Product deletion failed. Product with ID " + productIdToDelete + " not found.");
+            System.out.println("Stock deletion failed. Product with ID " + productIdToDelete + ecIdToDelete +" not found.");
         }
         
         

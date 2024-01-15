@@ -17,9 +17,11 @@ public interface ProductDao {
 	
 	int addProduct (Product product);
 	
-	public int updateProduct(String productName, Integer productPrice, String productBarcode, String productBrand,
-            Integer productTypeId, Integer productSubTypeId, String productImg, String productDesc, Boolean isLaunch);
-	
 	void saveProductExcelData(List<Product> productList);
+	
+	public int updateProduct(Product product);
+	
+	public int removeProductById(String productId);
+	
 	
 }

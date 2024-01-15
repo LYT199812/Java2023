@@ -1,8 +1,15 @@
 package spring.mvc.analyze.dao;
 
+import java.lang.reflect.Field;
 import java.sql.ResultSet;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -37,7 +44,7 @@ public class ProductDaoResposity implements ProductDao{
 		product.setProductImg(rs.getString("productImg"));
 		product.setProductDesc(rs.getString("productDesc"));
 		product.setIsLaunch(rs.getBoolean("isLaunch"));
-		product.setInventory(stockDaoResposity.findStockByProductId2(rs.getString("productId")));
+		product.setInventory(stockDaoResposity.findStockByProductId(rs.getString("productId")));
 		//product.setProductQty(rs.getInt("productQty"));
 		//user.setMenu(serviceDaoResposity.findSevicesByUserId(rs.getInt("userId")));
 		return product;
@@ -95,10 +102,30 @@ public class ProductDaoResposity implements ProductDao{
 	}
 
 	@Override
-	public int updateProduct(String productName, Integer productPrice, String productBarcode, String productBrand,
-			Integer productTypeId, Integer productSubTypeId, String productImg, String productDesc, Boolean isLaunch) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateProduct(Product product) {
+		String sql = "UPDATE product " +
+                "SET productName=?, productPrice=?, productBarcode=?, " +
+                "productBrand=?, productTypeId=?, productSubTypeId=?, " +
+                "productImg=?, productDesc=?, isLaunch=? " +
+                "WHERE productId=?";
+
+	   // 使用 update 方法執行更新，並回傳受影響的列數
+	   return jdbcTemplate.update(sql,
+	           product.getProductName(),
+	           product.getProductPrice(),
+	           product.getProductBarcode(),
+	           product.getProductBrand(),
+	           product.getProductTypeId(),
+	           product.getProductSubTypeId(),
+	           product.getProductImg(),
+	           product.getProductDesc(),
+	           product.getIsLaunch(),
+	           product.getProductId());
 	}
 
+	@Override
+	public int removeProductById(String productId) {
+		String sql = "delete from product where productId = ?";
+		return jdbcTemplate.update(sql, productId);
+	}
 }

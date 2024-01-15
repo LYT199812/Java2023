@@ -116,7 +116,7 @@ public class AnalyzeDaoMySQL implements AnalyzeDao{
 	@Override
 	public void addProduct(Product product) {
 		String sql = "insert into product(productId, productName, productPrice, productBarcode, brproductBrandand, productTypeId, productSubTypeId, productImg, productDesc, isLaunch, productQty) value(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		jdbcTemplate.update(sql, product.getProductId(), product.getProductName(), product.getProductPrice(), product.getProductBarcode(), product.getProductBrand(), product.getProductType().getId(), product.getProductSubType().getId(), product.getProductImg(), product.getProductDesc(), product.getIsLaunch(), product.getProductQty());
+		jdbcTemplate.update(sql, product.getProductId(), product.getProductName(), product.getProductPrice(), product.getProductBarcode(), product.getProductBrand(), product.getProductType().getId(), product.getProductSubType().getId(), product.getProductImg(), product.getProductDesc(), product.getIsLaunch());
 		
 	}
 
