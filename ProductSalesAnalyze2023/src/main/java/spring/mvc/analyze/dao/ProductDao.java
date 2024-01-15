@@ -1,0 +1,22 @@
+package spring.mvc.analyze.dao;
+
+import java.util.List;
+import java.util.Optional;
+
+import spring.mvc.analyze.entity.Product;
+import spring.mvc.analyze.entity.Stock;
+import spring.mvc.analyze.entity.User;
+
+public interface ProductDao {
+
+	List<Product> findAllProducts();
+	
+	Optional<Product> findProductById(String productId);
+	
+	Optional<Product> findProductByProductname(String productName);
+	
+	int save(Product product, Integer stock);
+	
+	void saveProductExcelData(List<Product> productList);
+	
+}
