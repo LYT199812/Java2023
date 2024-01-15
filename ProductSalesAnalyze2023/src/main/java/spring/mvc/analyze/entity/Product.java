@@ -36,7 +36,8 @@ public class Product {
 	private String productDesc;
 	private Boolean isLaunch;
 	
-	private Integer productQty;
+	//private Integer productQty;
+	private List<Stock> inventory;
 	
 	private ProductType productType;
 	private ProductSubType productSubType ;

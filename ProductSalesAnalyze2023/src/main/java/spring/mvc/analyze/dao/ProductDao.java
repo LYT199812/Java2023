@@ -15,7 +15,10 @@ public interface ProductDao {
 	
 	Optional<Product> findProductByProductname(String productName);
 	
-	int save(Product product, Integer stock);
+	int addProduct (Product product);
+	
+	public int updateProduct(String productName, Integer productPrice, String productBarcode, String productBrand,
+            Integer productTypeId, Integer productSubTypeId, String productImg, String productDesc, Boolean isLaunch);
 	
 	void saveProductExcelData(List<Product> productList);
 	

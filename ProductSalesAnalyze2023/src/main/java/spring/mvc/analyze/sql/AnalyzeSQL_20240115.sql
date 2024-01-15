@@ -21,21 +21,6 @@ DROP SCHEMA IF EXISTS `analyze` ;
 CREATE SCHEMA IF NOT EXISTS `analyze` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
 USE `analyze` ;
 
--- -----------------------------------------------------
--- Table `analyze`.`ecommerce`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `analyze`.`ecommerce` ;
-
-CREATE TABLE IF NOT EXISTS `analyze`.`ecommerce` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(100) NOT NULL,
-  `website` VARCHAR(1000) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
 
 -- -----------------------------------------------------
 -- Table `analyze`.`level`
@@ -124,6 +109,22 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
+-- Table `analyze`.`ecommerce`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `analyze`.`ecommerce` ;
+
+CREATE TABLE IF NOT EXISTS `analyze`.`ecommerce` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NOT NULL,
+  `website` VARCHAR(1000) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE
+) ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
 -- Table `analyze`.`product`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `analyze`.`product` ;
@@ -139,17 +140,44 @@ CREATE TABLE IF NOT EXISTS `analyze`.`product` (
   `productImg` VARCHAR(1000) NULL,
   `productDesc` VARCHAR(2000) NULL,
   `isLaunch` INT NOT NULL DEFAULT 0,
-  -- `productQty` INT NOT NULL DEFAULT 0,
+  `productQty` INT NOT NULL DEFAULT 0,
+  `ecId` INT NULL DEFAULT NULL,  -- 新增的 ecId 欄位
   PRIMARY KEY (`productId`),
   UNIQUE INDEX `productId` (`productId` ASC) VISIBLE,
   INDEX `product_productCategory_idx` (`productTypeId` ASC) VISIBLE,
   INDEX `product_productType_idx` (`productSubTypeId` ASC) VISIBLE,
+  INDEX `product_ec_id_idx` (`ecId` ASC) VISIBLE,  -- 新增的索引
   CONSTRAINT `product_productCategory`
     FOREIGN KEY (`productTypeId`)
     REFERENCES `analyze`.`productType` (`id`),
   CONSTRAINT `product_productType`
     FOREIGN KEY (`productSubTypeId`)
-    REFERENCES `analyze`.`productSubType` (`id`))
+    REFERENCES `analyze`.`productSubType` (`id`),
+  CONSTRAINT `product_ec_id`  -- 修正的外鍵約束
+    FOREIGN KEY (`ecId`)
+    REFERENCES `analyze`.`ecommerce` (`id`)
+) ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `analyze`.`productRefEcommerce`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `analyze`.`productRefEcommerce` ;
+
+CREATE TABLE IF NOT EXISTS `analyze`.`productRefEcommerce` (
+  `productId` VARCHAR(20) NOT NULL,
+  `ecId` INT NOT NULL,
+  PRIMARY KEY (`productId`, `ecId`),
+  INDEX `product_ecommerce_productId_idx` (`productId` ASC) VISIBLE,
+  INDEX `product_ecommerce_ecId_idx` (`ecId` ASC) VISIBLE,
+  CONSTRAINT `product_ecommerce_productId`
+    FOREIGN KEY (`productId`)
+    REFERENCES `analyze`.`product` (`productId`),
+  CONSTRAINT `product_ecommerce_ecId`
+    FOREIGN KEY (`ecId`)
+    REFERENCES `analyze`.`ecommerce` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -182,8 +210,8 @@ CREATE TABLE IF NOT EXISTS `analyze`.`salesData` (
     REFERENCES `analyze`.`product` (`productId`),
   CONSTRAINT `salesdata_ec_id`
     FOREIGN KEY (`ecId`)
-    REFERENCES `analyze`.`ecommerce` (`id`))
-ENGINE = InnoDB
+    REFERENCES `analyze`.`ecommerce` (`id`)
+) ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -195,19 +223,16 @@ DROP TABLE IF EXISTS `analyze`.`stock` ;
 
 CREATE TABLE IF NOT EXISTS `analyze`.`stock` (
   `productId` VARCHAR(50) NOT NULL,
-  `ecId` INT NOT NULL,
-  `productQty` INT NOT NULL DEFAULT 0,
+  `ecId` INT NOT NULL,  -- 新增的 ecId 欄位
   `ecProductQty` INT NULL,
-  PRIMARY KEY (`productId`, `ecId`),
-  INDEX `stock_ec_id_idx` (`ecId` ASC) VISIBLE,
-  INDEX `product_inventory_ecId_idx` (`ecId` ASC) VISIBLE,
+  PRIMARY KEY (`productId`, `ecId`), -- 修改為複合主鍵
   CONSTRAINT `stock_ec_id`
     FOREIGN KEY (`ecId`)
     REFERENCES `analyze`.`ecommerce` (`id`),
   CONSTRAINT `stock_product_id`
     FOREIGN KEY (`productId`)
-    REFERENCES `analyze`.`product` (`productId`))
-ENGINE = InnoDB
+    REFERENCES `analyze`.`product` (`productId`)
+) ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 

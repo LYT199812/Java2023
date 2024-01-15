@@ -23,8 +23,8 @@ insert into productType (name) values ('餐廚'), ('傢俱'), ('旅遊');
 insert into productSubType (name) values ('鍋鏟'), ('平底鍋'), ('主廚刀');
 
 -- 7. 設立 product 預設值
-insert into product (productId, productName, productPrice, productBarcode, productBrand, productTypeId, productSubTypeId, productImg, productDesc, isLaunch) 
-values ('A101', '好用鍋鏟', 550, '12345678', 'AAA', 1, 1, '','', 0), ('B101', '好用平底鍋', 1200, '22345678', 'BBB', 1, 2, '','', 0), ('C101', '好用平底鍋', 1200, '22345689', 'CCC', 1, 2, '','', 0);
+insert into product (productId, productName, productPrice, productBarcode, productBrand, productTypeId, productSubTypeId, productImg, productDesc, isLaunch, productQty) 
+values ('A101', '好用鍋鏟', 550, '12345678', 'AAA', 1, 1, '','', 0, 50), ('B101', '好用平底鍋', 1200, '22345678', 'BBB', 1, 2, '','', 0, 100), ('C101', '好用平底鍋', 1200, '22345689', 'CCC', 1, 2, '','', 0, 80);
 
 -- 8. 設立 ecommerce 預設值
 insert into ecommerce (name, website) 
@@ -33,18 +33,25 @@ values ('Momo', 'https://www.momoshop.com.tw/main/Main.jsp'),
 ('蝦皮', 'https://shopee.tw/');
 
 -- 9. 設立 stcok 預設值
-insert into stock (productId, ecId, productQty, ecProductQty) values ('A101', 1, 50, 10), ('B101', 1, 50, 8), ('A101', 2, 50, 18);
+insert into stock (productId, ecId, ecProductQty) values ('A101', 1, 10), ('B101', 1, 8);
+insert into stock (productId, ecId, ecProductQty) values ('A101', 2, 30);
 
 -- 10.設立 salesdata 預設值
 insert into salesdata (ecId, productId, ecOrderNumber, ecProductCode, ecProductType, ecProductSubType, ecWarehouse, ecSalesQty, ecSalesPrice, ecSalesDate, ecSalesStatus) 
 values (1, 'A101', 'BD-2023123012345-01', '12345-01', '刀具砧板配件', '鍋鏟', '轉單', 2, 550, 20231201, '銷售'),
 (1, 'B101', 'BD-2023123012345-02', '12345-02', '鍋具', '平底鍋', '寄倉', 1, 1000, 20231202, '銷售');
 
+-- 11.設立 productRefEcommerce 預設值
+INSERT INTO `analyze`.`productRefEcommerce` (`productId`, `ecId`)
+VALUES 
+('A101', 1), -- Momo
+('A101', 2); -- PChome
+
 -- 依照平台，取得商品銷售資訊原始數據(待定)
-select d.trxId,p.productId,p.productName,p.productBrand,pt.name,pst.name,p.productBarcode, s.ecProductQty, s.productQty, d.ecSalesQty,d.ecSalesPrice
-from product p, salesdata d, ecommerce e , stock s, producttype pt, productsubtype pst
-where p.productId = d.productId and d.ecId = e.id
-and s.ecId = e.id and s.productId = p.productId
-and pt.id = p.productTypeId
-and pst.id = productSubTypeId
-and e.name = 'Momo';
+-- select d.trxId,p.productId,p.productName,p.productBrand,pt.name,pst.name,p.productBarcode, s.ecProductQty, s.productQty, d.ecSalesQty,d.ecSalesPrice
+-- from product p, salesdata d, ecommerce e , stock s, producttype pt, productsubtype pst
+-- where p.productId = d.productId and d.ecId = e.id
+-- and s.ecId = e.id and s.productId = p.productId
+-- and pt.id = p.productTypeId
+-- and pst.id = productSubTypeId
+-- and e.name = 'Momo'; 

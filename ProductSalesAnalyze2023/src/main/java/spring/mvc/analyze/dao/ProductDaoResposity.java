@@ -21,6 +21,9 @@ public class ProductDaoResposity implements ProductDao{
 	private JdbcTemplate jdbcTemplate;
 	
 	@Autowired
+	private StockDaoResposity stockDaoResposity;
+	
+	@Autowired
 	private ProductTypeDaoResposity productTypeDaoResposity;
 	
 	RowMapper<Product> rowMapper = (ResultSet rs, int rowNum) -> {
@@ -34,30 +37,26 @@ public class ProductDaoResposity implements ProductDao{
 		product.setProductImg(rs.getString("productImg"));
 		product.setProductDesc(rs.getString("productDesc"));
 		product.setIsLaunch(rs.getBoolean("isLaunch"));
-		product.setProductQty(rs.getInt("productQty"));
-		//product.setProductQty(stockDaoResposity.findStockByProductId(rs.getString("productId")).orElse(null));
+		product.setInventory(stockDaoResposity.findStockByProductId2(rs.getString("productId")));
+		//product.setProductQty(rs.getInt("productQty"));
 		//user.setMenu(serviceDaoResposity.findSevicesByUserId(rs.getInt("userId")));
 		return product;
 	};
 	
 	@Override
 	public List<Product> findAllProducts() {
-//		String sql = "select productId, productName, productPrice, productBarcode, productBrand, productTypeId, productSubTypeId, productImg, productDesc, isLaunch from product";
-		String sql = "SELECT p.productId, p.productName, p.productPrice, p.productBarcode, p.productBrand, "
-				+ "p.productTypeId, p.productSubTypeId, p.productImg, p.productDesc, p.isLaunch, s.productQty "
-				+ "FROM product p "
-				+ "LEFT JOIN stock s ON p.productId = s.productId;";
+		String sql = "select productId, productName, productPrice, productBarcode, productBrand, productTypeId, productSubTypeId, productImg, productDesc, isLaunch from product";
+//		String sql = "SELECT p.productId, p.productName, p.productPrice, p.productBarcode, p.productBrand, "
+//				+ "p.productTypeId, p.productSubTypeId, p.productImg, p.productDesc, p.isLaunch, s.productQty "
+//				+ "FROM product p "
+//				+ "LEFT JOIN stock s ON p.productId = s.productId;";
 		//return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Product.class));
 		return jdbcTemplate.query(sql, rowMapper);
 	}
 
 	@Override
 	public Optional<Product> findProductById(String productId) {
-		String sql = "SELECT p.productId, p.productName, p.productPrice, p.productBarcode, p.productBrand, "
-				+ "p.productTypeId, p.productSubTypeId, p.productImg, p.productDesc, p.isLaunch, s.productQty "
-				+ "FROM product p "
-				+ "LEFT JOIN stock s ON p.productId = s.productId "
-				+ "where P.productId=?;";
+		String sql = "select productId, productName, productPrice, productBarcode, productBrand, productTypeId, productSubTypeId, productImg, productDesc, isLaunch from product where productId = ?";
 		try {
 			Product product = jdbcTemplate.queryForObject(sql,rowMapper, productId);
 			return Optional.ofNullable(product);
@@ -69,11 +68,7 @@ public class ProductDaoResposity implements ProductDao{
 
 	@Override
 	public Optional<Product> findProductByProductname(String productName) {
-		String sql = "SELECT p.productId, p.productName, p.productPrice, p.productBarcode, p.productBrand, "
-				+ "p.productTypeId, p.productSubTypeId, p.productImg, p.productDesc, p.isLaunch, s.productQty "
-				+ "FROM product p "
-				+ "LEFT JOIN stock s ON p.productId = s.productId "
-				+ "where P.productName=?;";
+		String sql = "select productId, productName, productPrice, productBarcode, productBrand, productTypeId, productSubTypeId, productImg, productDesc, isLaunch from product where productName = ?";
 		try {
 			Product product = jdbcTemplate.queryForObject(sql,rowMapper, productName);
 			return Optional.ofNullable(product);
@@ -84,21 +79,26 @@ public class ProductDaoResposity implements ProductDao{
 	}
 
 	@Override
-	public int save(Product product, Integer productQty) {
+	public int addProduct (Product product) {
 		String sql = "insert into product(productId, productName, productPrice, productBarcode, productBrand, productTypeId, productSubTypeId, productImg, productDesc, isLaunch) value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		int rowcount1 =  jdbcTemplate.update(sql, 
+		int rowcount =  jdbcTemplate.update(sql, 
 				product.getProductId(), product.getProductName(), product.getProductPrice(), product.getProductBarcode(), product.getProductBrand(), 
 				product.getProductType().getId(), product.getProductSubType().getId(), product.getProductImg(), product.getProductDesc(), product.getIsLaunch());
 	
-		String stockSql = "INSERT INTO stock(productId, productQty) VALUES (?, ?)";
-		int rowcount2 = jdbcTemplate.update(stockSql, product.getProductId(), productQty);
-		return rowcount1 + rowcount2;
+		return rowcount ;
 	}
 
 	@Override
 	public void saveProductExcelData(List<Product> productList) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public int updateProduct(String productName, Integer productPrice, String productBarcode, String productBrand,
+			Integer productTypeId, Integer productSubTypeId, String productImg, String productDesc, Boolean isLaunch) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
