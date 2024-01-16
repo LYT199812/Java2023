@@ -13,7 +13,7 @@ public interface StockDao {
 	
 	public List<Stock> findStockByProductId(String productId);
 	
-	public List<Stock> findStockByProductIdAndEcId(String productId, Integer ecId);
+	public Optional<Stock> findStockByProductIdAndEcId(String productId, Integer ecId);
 	
 	int addStock (Stock stock);
 	

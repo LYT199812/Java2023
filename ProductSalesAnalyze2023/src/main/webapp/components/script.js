@@ -1,27 +1,24 @@
-// 假設你有一個名為salesData的陣列，內含銷售資料物件
-const salesData = [
-    { number: 1, productId: 'A101', productName: '好用鍋鏟', brand: 'AAA', productDepartment: '餐廚', productType: '鍋鏟', 
-    productEAN: '12345678' , ecQuantity: 20 , quantity: 50 , sales: 3 , salesFigures: 5000, date: '2023-12-03', yoy: 50 },
-
-    { number: 2, productId: 'B101', productName: '好用桿麵棍', brand: 'BBB', productDepartment: '烘焙', productType: '桿麵棍', 
-    productEAN: '12348765' , ecQuantity: 20 , quantity: 50 , sales: 3 , salesFigures: 5000, date: '2023-08-13', yoy: 50 },
-
-    { number: 3, productId: 'B201', productName: '好用擠花袋', brand: 'BBB', productDepartment: '烘焙', productType: '擠花袋', 
-    productEAN: '87654321' , ecQuantity: 20 , quantity: 50 , sales: 3 , salesFigures: 5000, date: '2023-05-10', yoy: 50 },
-    
-    // 其他資料...
-    // 其他資料...
-    // 其他資料...
-    // 其他資料...
-];
-
 // 初始化表格
 function initTable(data) {
     const tableBody = document.getElementById('salesTable').getElementsByTagName('tbody')[0];
     tableBody.innerHTML = ''; // 清空表格
 
+	// 相同型號 合併 銷售數量 + 銷售額
+	let productIds = [...new Set(data.map(s => s.productId))];
+	let analyzeSalesDatas = [];
+	for (let productId of productIds) {
+	    let salesList = data.filter(s => s.productId === productId);
+	    let qty = salesList.reduce((sum, s) => sum + s.sales, 0);
+	    let price = salesList.reduce((sum, s) => sum + s.salesFigures, 0);
+	    let salesData = { ...salesList[0] }; 
+	    salesData.sales = qty;
+	    salesData.salesFigures = price;
+	    analyzeSalesDatas.push(salesData);
+	}
+    //console.log(analyzeSalesDatas);
+
     // 將資料插入表格
-    data.forEach(item => {
+    analyzeSalesDatas.forEach(item => {
         const row = tableBody.insertRow();
         row.insertCell(0).textContent = item.number;
         row.insertCell(1).textContent = item.productId;
@@ -38,6 +35,13 @@ function initTable(data) {
         row.insertCell(12).textContent = item.yoy;
         // 插入其他欄位...
     });
+    
+    // 處理總計
+    let quantitys = 0;
+    data.forEach(item => {
+		quantitys += item.quantity;
+	});
+	document.getElementById('totalQty').innerText = quantitys;
 }
 
 // 根據篩選條件更新表格

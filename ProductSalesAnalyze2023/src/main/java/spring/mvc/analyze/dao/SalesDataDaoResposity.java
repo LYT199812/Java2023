@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import spring.mvc.analyze.entity.Product;
 import spring.mvc.analyze.entity.ProductType;
@@ -13,6 +14,7 @@ import spring.mvc.analyze.entity.SalesData;
 import spring.mvc.analyze.entity.Stock;
 import spring.mvc.analyze.entity.User;
 
+@Repository
 public class SalesDataDaoResposity implements SalesDataDao{
 
 	@Autowired
@@ -34,6 +36,12 @@ public class SalesDataDaoResposity implements SalesDataDao{
 			e.printStackTrace(); // 可以看console的錯誤
 			return Optional.empty();
 		}
+	}
+
+	@Override
+	public List<SalesData> findAllSalesDataByEcId(Integer ecId) {
+		String sql = "SELECT trxId, ecId, productId, ecOrderNumber, ecProductCode, ecProductType, ecProductSubType, ecWarehouse, ecSalesQty, ecSalesPrice, ecSalesDate, ecSalesStatus, createTime FROM salesData where ecId = ?";
+		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(SalesData.class),ecId);
 	}
 
 }

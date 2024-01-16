@@ -34,7 +34,7 @@
 	            平台
 	          </a>
 	          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-	            <li><a class="dropdown-item" href=".\momo2.jsp">MOMO</a></li>
+	            <li><a class="dropdown-item" href="${ pageContext.request.contextPath }/mvc/eccommerce/1">MOMO</a></li>
 	            <li><a class="dropdown-item" href="#">PChome</a></li>
 	            <li><a class="dropdown-item" href="#">蝦皮</a></li>
 	            <li><hr class="dropdown-divider"></li>

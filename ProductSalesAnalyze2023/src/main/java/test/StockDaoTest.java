@@ -32,8 +32,8 @@ public class StockDaoTest {
 		StockDaoResposity stockDaoResposity = ctx.getBean("stockDaoResposity", StockDaoResposity.class);
 		
 		// 測試查詢功能
-//		List<Stock> stocks = stockDaoResposity.findStockByProductIdAndEcId("A101", 1);
-//		System.out.println(new Gson().toJson(stocks));
+		Optional<Stock> stocks = stockDaoResposity.findStockByProductIdAndEcId("A101", 1);
+		System.out.println(new Gson().toJson(stocks));
 		
 		// 測試新增功能
 		Stock stock = new Stock();
@@ -54,19 +54,19 @@ public class StockDaoTest {
 		
 		
         // 刪除產品
-        String productIdToDelete = "A101";
-        Integer ecIdToDelete = 2;
-
-        // 呼叫刪除方法
-        int rowcount = stockDaoResposity.removeStockByIdAndEcId(productIdToDelete, ecIdToDelete);
-//      int product = productDaoResposity.removeProductById("A101");
-
-        // 檢查受影響的行數，判斷刪除是否成功
-        if (rowcount > 0) {
-            System.out.println("Stock deleted successfully.");
-        } else {
-            System.out.println("Stock deletion failed. Product with ID " + productIdToDelete + ecIdToDelete +" not found.");
-        }
+//        String productIdToDelete = "A101";
+//        Integer ecIdToDelete = 2;
+//
+//        // 呼叫刪除方法
+//        int rowcount = stockDaoResposity.removeStockByIdAndEcId(productIdToDelete, ecIdToDelete);
+////      int product = productDaoResposity.removeProductById("A101");
+//
+//        // 檢查受影響的行數，判斷刪除是否成功
+//        if (rowcount > 0) {
+//            System.out.println("Stock deleted successfully.");
+//        } else {
+//            System.out.println("Stock deletion failed. Product with ID " + productIdToDelete + ecIdToDelete +" not found.");
+//        }
         
         
        

@@ -38,8 +38,11 @@ public class ProductDaoResposity implements ProductDao{
 		product.setProductId(rs.getString("productId"));
 		product.setProductName(rs.getString("productName"));
 		product.setProductPrice(rs.getInt("productPrice"));
+		product.setProductBrand(rs.getString("productBrand"));
 		product.setProductBarcode(rs.getString("productBarcode"));
+		product.setProductTypeId(rs.getInt("productTypeId"));
 		product.setProductType(productTypeDaoResposity.findProductTypeById(rs.getInt("productTypeId")).get());
+		product.setProductSubTypeId(rs.getInt("productSubTypeId"));
 		product.setProductSubType(productTypeDaoResposity.findProductSubTypeById(rs.getInt("productSubTypeId")).get());
 		product.setProductImg(rs.getString("productImg"));
 		product.setProductDesc(rs.getString("productDesc"));

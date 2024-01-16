@@ -12,4 +12,6 @@ public interface SalesDataDao {
 	
 	Optional<SalesData> findSalesDataByProductId(String productId);
 	
+	List<SalesData> findAllSalesDataByEcId(Integer ecId);
+	
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import spring.mvc.analyze.entity.Level;
 import spring.mvc.analyze.entity.Product;
+import spring.mvc.analyze.entity.SalesData;
 import spring.mvc.analyze.entity.Stock;
 
 @Repository
@@ -37,9 +38,15 @@ public class StockDaoResposity implements StockDao{
 	}
 	
 	@Override
-	public List<Stock> findStockByProductIdAndEcId(String productId, Integer ecId) {
+	public Optional<Stock> findStockByProductIdAndEcId(String productId, Integer ecId) {
 		String sql = "SELECT productId, ecId, productQty, ecProductQty FROM stock where productId=? and ecId=?";
-		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Stock.class), productId, ecId);
+		try {
+			Stock stock = jdbcTemplate.queryForObject(sql,new BeanPropertyRowMapper<>(Stock.class), productId, ecId);
+			return Optional.ofNullable(stock);
+		} catch (Exception e) {
+			e.printStackTrace(); // 可以看console的錯誤
+			return Optional.empty();
+		}
 	}
 	
 	@Override
