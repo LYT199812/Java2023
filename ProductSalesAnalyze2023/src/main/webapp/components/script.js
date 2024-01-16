@@ -38,7 +38,7 @@ function initTable(data) {
     
     // 處理總計
     let quantitys = 0;
-    data.forEach(item => {
+    analyzeSalesDatas.forEach(item => {
 		quantitys += item.quantity;
 	});
 	document.getElementById('totalQty').innerText = quantitys;

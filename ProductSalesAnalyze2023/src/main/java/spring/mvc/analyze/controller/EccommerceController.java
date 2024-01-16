@@ -1,18 +1,10 @@
 package spring.mvc.analyze.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
-import javax.enterprise.inject.New;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.weaving.DefaultContextLoadTimeWeaver;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,14 +32,8 @@ public class EccommerceController {
 	SalesDataDao salesDataDao;
 	
 	@Autowired
-	ProductTypeDao productTypeDao;
-	
-	@Autowired
 	ProductDao productDao;
-	
-	@Autowired
-	StockDao stockDao;
-	
+
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
 	/**
@@ -67,7 +53,20 @@ public class EccommerceController {
 				.date("2023-12-03")
 				.yoy(50)
 				.build()
-		);
+		    );
+		    
+	//		List<SalesData> analyzeSalesDatas = new ArrayList<SalesData>();         // 處理後的數據 (邏輯：相同型號 合併 銷售數量 + 銷售額)	
+			// 相同型號 合併 銷售數量 + 銷售額
+	//		List<String> productIds = salesDatas.stream().map(SalesData::getProductId).distinct().collect(Collectors.toList());
+	//		for(String productId: productIds) {
+	//			List<SalesData> salesList = salesDatas.stream().filter(s->s.getProductId().equals(productId)).collect(Collectors.toList());
+	//			int qty = salesList.stream().mapToInt(s-> s.getEcSalesQty()).sum();
+	//			int price =  salesList.stream().mapToInt(s-> s.getEcSalesPrice()).sum();
+	//			SalesData salesData = salesList.get(0);
+	//			salesData.setEcSalesQty(qty);
+	//			salesData.setEcSalesPrice(price);
+	//			analyzeSalesDatas.add(salesData);
+	//		}
 	 * @param ecId
 	 * @param model
 	 * @return
@@ -75,21 +74,9 @@ public class EccommerceController {
 	@GetMapping("/{ecId}")
 	public String eccommerce(@PathVariable("ecId") Integer ecId,Model model) {
 		
-		List<SalesData> salesDatas = salesDataDao.findAllSalesDataByEcId(ecId); // 從DB來的原始數據
-		List<SalesData> analyzeSalesDatas = new ArrayList<SalesData>();         // 處理後的數據 (邏輯：相同型號 合併 銷售數量 + 銷售額)
-		
-		// 相同型號 合併 銷售數量 + 銷售額
-//		List<String> productIds = salesDatas.stream().map(SalesData::getProductId).distinct().collect(Collectors.toList());
-//		for(String productId: productIds) {
-//			List<SalesData> salesList = salesDatas.stream().filter(s->s.getProductId().equals(productId)).collect(Collectors.toList());
-//			int qty = salesList.stream().mapToInt(s-> s.getEcSalesQty()).sum();
-//			int price =  salesList.stream().mapToInt(s-> s.getEcSalesPrice()).sum();
-//			SalesData salesData = salesList.get(0);
-//			salesData.setEcSalesQty(qty);
-//			salesData.setEcSalesPrice(price);
-//			analyzeSalesDatas.add(salesData);
-//		}
-		
+		// 從DB來的原始數據
+		List<SalesData> salesDatas = salesDataDao.findAllSalesDataByEcId(ecId);
+
 		// 從分析過後的 analyze sales data， 轉成 sales data dto
 		List<SalesDataDto> salesDataDtos = new ArrayList<SalesDataDto>();
 		for (int i=0;i<salesDatas.size();i++) {
