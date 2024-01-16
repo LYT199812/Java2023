@@ -2,8 +2,15 @@ package test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -16,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import spring.mvc.analyze.entity.Product;
 import spring.mvc.analyze.entity.SalesData;
 
 public class SecondVersion {
@@ -181,6 +189,76 @@ public class SecondVersion {
 	    }
 		*/
 		
+		
+		// 使用動態生成sql語法，目的是為了自由選擇要修改的 product 屬性
+		/*
+		@Override
+		public int updateProduct(Product product) {
+		    Map<String, Object> updateMap = new HashMap<>();
+		    updateMap.put("productName", product.getProductName());
+		    updateMap.put("productPrice", product.getProductPrice());
+		    updateMap.put("productBrand", product.getProductBrand());
+
+		    // 可以為 null 的屬性
+		    Arrays.asList("productBarcode", "productTypeId", "productSubTypeId", "productImg", "productDesc")
+		            .forEach(field -> {
+		                Object value = getProductFieldValue(product, field);
+		                if (value != null) {
+		                    updateMap.put(field, value);
+		                }
+		            });
+
+		    updateMap.put("isLaunch", product.getIsLaunch());
+
+		    String sql = buildUpdateSql("product", updateMap.keySet(), "productId");
+
+		    // 將 Map 的值轉為 Object[] 以便傳遞給 update 方法
+		    Object[] params = updateMap.values().toArray();
+		    // 在 Object[] 末尾添加 productId 的值
+		    Object[] fullParams = Arrays.copyOf(params, params.length + 1);
+		    fullParams[params.length] = product.getProductId();
+		    System.out.println(sql);
+		    return jdbcTemplate.update(sql, fullParams);
+		}
+
+		private Object getProductFieldValue(Product product, String fieldName) {
+		    try {
+		        Field field = Product.class.getDeclaredField(fieldName);
+		        field.setAccessible(true);
+		        return field.get(product);
+		    } catch (NoSuchFieldException | IllegalAccessException e) {
+		        e.printStackTrace();
+		        return null;
+		    }
+		}
+
+		private String buildDynamicUpdateSql(String tableName, Set<String> fields, String idField, Product product) {
+		    List<String> filteredFields = fields.stream()
+		            .filter(field -> !Objects.isNull(getProductFieldValue(product, field)))
+		            .collect(Collectors.toList());
+
+		    String setClause = filteredFields.stream()
+		            .map(field -> field + " = ?")
+		            .collect(Collectors.joining(", "));
+
+		    // 將 Map 的值轉為 Object[] 以便傳遞給 update 方法
+		    Object[] params = filteredFields.stream()
+		            .map(field -> getProductFieldValue(product, field))
+		            .toArray();
+
+		    // 在 Object[] 末尾添加 productId 的值
+		    Object[] fullParams = Arrays.copyOf(params, params.length + 1);
+		    fullParams[params.length] = product.getProductId();
+
+		    return String.format("UPDATE %s SET %s WHERE %s = ?", tableName, setClause, idField);
+		}
+
+
+		private String buildUpdateSql(String tableName, Set<String> fields, String idField) {
+		    String setClause = fields.stream().map(field -> field + " = ?").collect(Collectors.joining(", "));
+		    return String.format("UPDATE %s SET %s WHERE %s = ?", tableName, setClause, idField);
+		}
+		*/
 		
 	}
 

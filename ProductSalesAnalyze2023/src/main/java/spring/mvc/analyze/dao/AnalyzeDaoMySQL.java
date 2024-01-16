@@ -77,19 +77,23 @@ public class AnalyzeDaoMySQL implements AnalyzeDao{
 		String sql = "insert into salesdata(orderNumber, productCodeMomo, productName, productId, productDepartment, productType, warehouse, sales, price, salesDate, salesOrReturn) "
 				   + "value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
+		
+		
 		jdbcTemplate.batchUpdate(sql, dataList, dataList.size(),
                 (ps, salesData) -> {
-                    ps.setString(1, salesData.getOrderNumber());
-                    ps.setString(2, salesData.getProductCodeMomo());
-                    ps.setString(3, salesData.getProductName());
-                    ps.setString(4, salesData.getProductId());
-                    ps.setString(5, salesData.getProductDepartment());
-                    ps.setString(6, salesData.getProductType());
-                    ps.setString(7, salesData.getWarehouse());
-                    ps.setInt(8, salesData.getSales());
-                    ps.setInt(9, salesData.getPrice());
-                    ps.setString(10, salesData.getSalesDate());
-                    ps.setString(11, salesData.getSalesOrReturn());
+                	java.util.Date utilDate = salesData.getEcSalesDate();
+            		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+                    ps.setString(1, salesData.getEcOrderNumber());
+                    ps.setString(2, salesData.getEcProductCode());
+                    ps.setString(3, salesData.getProduct().getProductName());
+                    ps.setString(4, salesData.getProduct().getProductId());
+                    ps.setString(5, salesData.getEcProductType());
+                    ps.setString(6, salesData.getEcProductSubType());
+                    ps.setString(7, salesData.getEcWarehouse());
+                    ps.setInt(8, salesData.getEcSalesQty());
+                    ps.setInt(9, salesData.getEcSalesPrice());
+                    ps.setDate(10, sqlDate);
+                    ps.setString(11, salesData.getEcSalesStatus());
                 });
 	}
 	
@@ -115,8 +119,8 @@ public class AnalyzeDaoMySQL implements AnalyzeDao{
 
 	@Override
 	public void addProduct(Product product) {
-		String sql = "insert into product(productId, productName, price, barcode, brand, productDepartment, productType, isLaunch) value(?, ?, ?, ?, ?, ?, ?, ?)";
-		jdbcTemplate.update(sql, product.getProductId(), product.getProductName(), product.getPrice(), product.getBarcode(), product.getBrand(), product.getProductDepartment(), product.getProductType(), product.getIsLaunch());
+		String sql = "insert into product(productId, productName, productPrice, productBarcode, brproductBrandand, productTypeId, productSubTypeId, productImg, productDesc, isLaunch, productQty) value(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		jdbcTemplate.update(sql, product.getProductId(), product.getProductName(), product.getProductPrice(), product.getProductBarcode(), product.getProductBrand(), product.getProductType().getId(), product.getProductSubType().getId(), product.getProductImg(), product.getProductDesc(), product.getIsLaunch());
 		
 	}
 
@@ -134,11 +138,11 @@ public class AnalyzeDaoMySQL implements AnalyzeDao{
              (ps, product) -> {
                  ps.setString(1, product.getProductId());
                  ps.setString(2, product.getProductName());
-                 ps.setInt(3, product.getPrice());
-                 ps.setString(4, product.getBarcode());
-                 ps.setString(5, product.getBrand());
-                 ps.setString(6, product.getProductDepartment());
-                 ps.setString(7, product.getProductType());
+                 ps.setInt(3, product.getProductPrice());
+                 ps.setString(4, product.getProductBarcode());
+                 ps.setString(5, product.getProductBrand());
+                 ps.setInt(6, product.getProductType().getId());
+                 ps.setInt(7, product.getProductSubType().getId());
                  ps.setBoolean(8, product.getIsLaunch());
              });
 		

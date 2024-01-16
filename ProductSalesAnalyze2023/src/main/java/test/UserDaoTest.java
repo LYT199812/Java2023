@@ -17,19 +17,19 @@ public class UserDaoTest {
 		
 		UserDaoResposity userDaoResposity = ctx.getBean("userDaoResposity", UserDaoResposity.class);
 		
-		User user1 = userDaoResposity.findUserById(106).get();
-		System.out.println(new Gson().toJson(user1));
+//		User user1 = userDaoResposity.findUserById(103).get();
+//		System.out.println(new Gson().toJson(user1));
 
 //		User user2 = userDaoResposity.findUserByUsername("Sean").get();
 //		System.out.println(new Gson().toJson(user2));
 		
-//		User user99 = new User();
-//		user99.setUsername("antia");
-//		user99.setPassword("123");
-//		user99.setLevel(Level.builder().levelId(3).build());
-//		int rowcount = userDaoResposity.save(user99);
-//		System.out.println(rowcount);
-//		System.out.println(user99.getUserId());
+		User user99 = new User();
+		user99.setUsername("Antia");
+		user99.setPassword("123");
+		user99.setLevel(Level.builder().levelId(1).build());
+		int rowcount = userDaoResposity.save(user99);
+		System.out.println(rowcount);
+		System.out.println(user99.getUserId());
 	}
 
 }

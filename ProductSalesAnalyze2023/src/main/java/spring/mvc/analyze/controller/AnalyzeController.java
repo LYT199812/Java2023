@@ -33,7 +33,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import spring.mvc.analyze.dao.AnalyzeDao;
+import spring.mvc.analyze.entity.Level;
 import spring.mvc.analyze.entity.Product;
+import spring.mvc.analyze.entity.ProductType;
 import spring.mvc.analyze.entity.SalesData;
 import spring.mvc.analyze.entity.User;
 
@@ -234,33 +236,51 @@ public class AnalyzeController {
                                 break;
                             case 2:
                             	if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-                            		product.setPrice((int) cell.getNumericCellValue());
+                            		product.setProductPrice((int) cell.getNumericCellValue());
                                 } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
                                     String salesStringValue = cell.getStringCellValue().trim();;
                                     try {
-                                    	product.setPrice(Integer.parseInt(salesStringValue));
+                                    	product.setProductPrice(Integer.parseInt(salesStringValue));
                                     } catch (NumberFormatException e) {
                                         // 處理轉換失敗的情況，例如文字不是合法的整數格式
-                                    	product.setPrice(0); // 或者設定為預設值
+                                    	product.setProductPrice(0); // 或者設定為預設值
                                     }
                                 }
                                 break;   
                             case 3:
                             	cell.setCellType(CellType.STRING);
-                            	product.setBarcode(cell.getStringCellValue());
+                            	product.setProductBarcode(cell.getStringCellValue());
                                 break;
                             case 4:
                             	cell.setCellType(CellType.STRING);
-                            	product.setBrand(cell.getStringCellValue());
+                            	product.setProductBrand(cell.getStringCellValue());
                                 break;
-                            case 5:
-                            	cell.setCellType(CellType.STRING);
-                            	product.setProductDepartment(cell.getStringCellValue());
-                                break;
+                            case 5:            
+                            	if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                            		product.setProductType(ProductType.builder().id((int) cell.getNumericCellValue()).build());
+                                } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                                    String salesStringValue = cell.getStringCellValue().trim();;
+                                    try {
+                                    	product.setProductTypeId(Integer.parseInt(salesStringValue));
+                                    } catch (NumberFormatException e) {
+                                        // 處理轉換失敗的情況，例如文字不是合法的整數格式
+                                    	product.setProductTypeId(0); // 或者設定為預設值
+                                    }
+                                }
+                                break;   
                             case 6:
-                            	cell.setCellType(CellType.STRING);
-                            	product.setProductType(cell.getStringCellValue());
-                                break;
+                            	if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                            		product.setProductSubTypeId((int) cell.getNumericCellValue());
+                                } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                                    String salesStringValue = cell.getStringCellValue().trim();;
+                                    try {
+                                    	product.setProductSubTypeId(Integer.parseInt(salesStringValue));
+                                    } catch (NumberFormatException e) {
+                                        // 處理轉換失敗的情況，例如文字不是合法的整數格式
+                                    	product.setProductSubTypeId(0); // 或者設定為預設值
+                                    }
+                                }
+                                break;   
                             case 7:
                             	cell.setCellType(CellType.BOOLEAN);
                             	product.setIsLaunch(cell.getBooleanCellValue());
@@ -289,6 +309,7 @@ public class AnalyzeController {
 	
 	//---------------------------------------------------------------------------------------------------
 	// POI EXCEL 檔案匯入
+	/*
 	@PostMapping("/upload")
     @ResponseBody
     public String handleFileUpload(@RequestParam("uploadFile") MultipartFile uploadFile, Model model) {
@@ -403,5 +424,5 @@ public class AnalyzeController {
             return "File is empty.";
         }
     }
-	
+	*/
 }
