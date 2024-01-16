@@ -24,7 +24,9 @@ insert into productSubType (name) values ('鍋鏟'), ('平底鍋'), ('主廚刀'
 
 -- 7. 設立 product 預設值
 insert into product (productId, productName, productPrice, productBarcode, productBrand, productTypeId, productSubTypeId, productImg, productDesc, isLaunch) 
-values ('A101', '好用鍋鏟', 550, '12345678', 'AAA', 1, 1, '','', 0), ('B101', '好用平底鍋', 1200, '22345678', 'BBB', 1, 2, '','', 0), ('C101', '好用平底鍋', 1200, '22345689', 'CCC', 1, 2, '','', 0);
+values
+('A101', '好用鍋鏟', 550, '12345678', 'AAA', 1, 1, '','', 0), ('B101', '好用平底鍋', 1200, '22345678', 'BBB', 1, 2, '','', 0), 
+('C101', '好用平底鍋', 1200, '22345689', 'CCC', 1, 2, '','', 0);
 
 -- 8. 設立 ecommerce 預設值
 insert into ecommerce (name, website) 
@@ -37,8 +39,10 @@ insert into stock (productId, ecId, productQty, ecProductQty) values ('A101', 1,
 
 -- 10.設立 salesdata 預設值
 insert into salesdata (ecId, productId, ecOrderNumber, ecProductCode, ecProductType, ecProductSubType, ecWarehouse, ecSalesQty, ecSalesPrice, ecSalesDate, ecSalesStatus) 
-values (1, 'A101', 'BD-2023123012345-01', '12345-01', '刀具砧板配件', '鍋鏟', '轉單', 2, 550, 20231201, '銷售'),
-(1, 'B101', 'BD-2023123012345-02', '12345-02', '鍋具', '平底鍋', '寄倉', 1, 1000, 20231202, '銷售');
+values 
+(1, 'A101', 'BD-2023123012345-01', '12345-01', '刀具砧板配件', '鍋鏟', '轉單', 2, 550, 20231201, '銷售'),
+(1, 'B101', 'BD-2023123012345-02', '12345-02', '鍋具', '平底鍋', '寄倉', 1, 1000, 20231202, '銷售'),
+(1, 'A101', 'BD-2023123012345-03', '12345-01', '刀具砧板配件', '鍋鏟', '轉單', 2, 550, 20230909, '銷售');
 
 -- 依照平台，取得商品銷售資訊原始數據(待定)
 select d.trxId,p.productId,p.productName,p.productBrand,pt.name,pst.name,p.productBarcode, s.ecProductQty, s.productQty, d.ecSalesQty,d.ecSalesPrice
