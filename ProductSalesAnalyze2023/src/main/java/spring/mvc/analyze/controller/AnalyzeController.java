@@ -309,6 +309,7 @@ public class AnalyzeController {
 	
 	//---------------------------------------------------------------------------------------------------
 	// POI EXCEL 檔案匯入
+	/*
 	@PostMapping("/upload")
     @ResponseBody
     public String handleFileUpload(@RequestParam("uploadFile") MultipartFile uploadFile, Model model) {
@@ -423,5 +424,5 @@ public class AnalyzeController {
             return "File is empty.";
         }
     }
-	
+	*/
 }
