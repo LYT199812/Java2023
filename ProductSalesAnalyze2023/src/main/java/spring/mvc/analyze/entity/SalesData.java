@@ -13,7 +13,7 @@ public class SalesData {
 
 	private Integer trxId;
 	private String ecOrderNumber;
-//	private String productId;
+	private String productId;
 	private String ecProductCode;
 	private String ecProductType;
     private String ecProductSubType;
