@@ -14,4 +14,6 @@ public interface SalesDataDao {
 	
 	List<SalesData> findAllSalesDataByEcId(Integer ecId);
 	
+	void addSalesDataByExcel(List<SalesData> salesDataList);
+	
 }

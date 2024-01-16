@@ -14,10 +14,11 @@
 		<div class="p-2 flex-grow-1 bd-highlight">
 			<h2 class="d-flex">MOMO Sales Analysis</h2>
 		</div>
-		<form id="excelForm" method="post" action="../upload"
+		<form id="excelForm" method="post" action="./upload"
 			enctype="multipart/form-data">
 			<div class="p-2 bd-highlight">
 				<div class="input-group d-flex">
+				 <input type="hidden" name="originalUri" value="${request.getRequestURI()}" />
 					<input type="file" class="form-control" id="uploadFile"
 						name="uploadFile" accept=".xlsx" required
 						aria-describedby="inputGroupFileAddon04" aria-label="Upload">

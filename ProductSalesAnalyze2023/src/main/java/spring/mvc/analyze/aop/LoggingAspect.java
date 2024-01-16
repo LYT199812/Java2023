@@ -32,4 +32,5 @@ public class LoggingAspect {
 		Object[] args = joinPoint.getArgs();
 		System.out.printf("調用方法: %s 參數: %s%n", methodName, Arrays.toString(args));
 	}
+	
 }

@@ -35,8 +35,8 @@
 	          </a>
 	          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 	            <li><a class="dropdown-item" href="${ pageContext.request.contextPath }/mvc/eccommerce/1">MOMO</a></li>
-	            <li><a class="dropdown-item" href="#">PChome</a></li>
-	            <li><a class="dropdown-item" href="#">蝦皮</a></li>
+	            <li><a class="dropdown-item" href="${ pageContext.request.contextPath }/mvc/eccommerce/2"">PChome</a></li>
+	            <li><a class="dropdown-item" href="${ pageContext.request.contextPath }/mvc/eccommerce/3">蝦皮</a></li>
 	            <li><hr class="dropdown-divider"></li>
 	            <li><a class="dropdown-item" href="#">ALL</a></li>
 	          </ul>

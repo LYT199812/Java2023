@@ -1,16 +1,36 @@
 package spring.mvc.analyze.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.deser.impl.ExternalTypeHandler.Builder;
 import com.google.gson.Gson;
 
 import spring.mvc.analyze.dao.ProductDao;
@@ -18,6 +38,7 @@ import spring.mvc.analyze.dao.ProductTypeDao;
 import spring.mvc.analyze.dao.SalesDataDao;
 import spring.mvc.analyze.dao.StockDao;
 import spring.mvc.analyze.dto.SalesDataDto;
+import spring.mvc.analyze.entity.Ecommerce;
 import spring.mvc.analyze.entity.Product;
 import spring.mvc.analyze.entity.ProductSubType;
 import spring.mvc.analyze.entity.ProductType;
@@ -112,4 +133,308 @@ public class EccommerceController {
 		
 		return "/analyze/ecWebsite/eccommerce";
 	}
+	
+	@PostMapping("/upload")
+    @ResponseBody
+    public String handleFileUpload(@RequestParam("originalUri") String originalUri,@RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request, Model model) {
+		
+		System.out.println("Original URI: " + originalUri);
+		// 獲取 URI
+	    String uri = request.getRequestURI();
+
+	    // 將 URI 拆分成路徑片段
+	    String[] pathSegments = uri.split("/");
+	    
+	 // 在控制台輸出 URI 解析結果
+	    System.out.println("URI: " + uri);
+	    System.out.println("Path Segments: " + Arrays.toString(pathSegments));
+
+	    // 確認 pathSegments 不為空並獲取最後一個值
+	    String lastSegment = pathSegments.length > 0 ? pathSegments[pathSegments.length - 1] : null;
+
+	    // 如果有最後一個值，進行相應的操作
+	    if (lastSegment != null) {
+	        // 這裡的 lastSegment 就是最後一個值，可以轉換為整數，如果需要
+	        try {
+	            int ecId = Integer.parseInt(lastSegment);
+	            SalesData salesData = new SalesData();
+	            salesData.setEcommerce(Ecommerce.builder().id(ecId).build());
+	            // 將 ecId 用於相應的邏輯
+	            // ...
+	        } catch (NumberFormatException e) {
+	        	e.printStackTrace();
+	            return "Invalid ecId format.";
+	        }
+	    } else {
+	        return "Unable to extract ecId from the URI.";
+	    }
+		
+		
+		
+//		// 獲取當前網址的 ecId 參數
+//	    String ecIdString = request.getParameter("uploadFile");
+//		System.out.println(params);
+	    // 確保 ecId 不為空
+//	    if (ecIdString == null || ecIdString.isEmpty()) {
+//	        return "Invalid ecId parameter.";
+//	    }
+	    
+		// 將 ecId 轉換為整數
+//	    int ecId;
+//	    try {
+//	        ecId = Integer.parseInt(ecIdString);
+//	    } catch (NumberFormatException e) {
+//	        return "Invalid ecId format.";
+//	    }
+	    
+		if (!uploadFile.isEmpty()) {
+            try (InputStream inputStream = uploadFile.getInputStream()) {
+                Workbook workbook = new XSSFWorkbook(inputStream); // 使用XSSFWorkbook處理xlsx格式的Excel
+
+                Sheet sheet = workbook.getSheetAt(0); // 假設只有一個工作表，根據實際情況調整索引
+
+                List<SalesData> dataList = new ArrayList<>();
+                
+                // 遍歷每一行
+                int rowIndex = 0;  // 用於追蹤行索引
+                for (Row row : sheet) {
+                	// 跳過第一行（表頭）
+                    if (rowIndex == 0) {
+                        rowIndex++;
+                        continue;}
+                	
+                	SalesData salesData = new SalesData();
+                	
+                    
+                	// 遍歷每一列
+                    for (Cell cell : row) {
+                    	int columnIndex = cell.getColumnIndex();
+                        // 根據單元格的索引將資料映射到對應的屬性
+                        switch (columnIndex) {
+                            case 0:
+                            	//強制設定單元格cell類型
+                            	cell.setCellType(CellType.STRING);
+                            	salesData.setEcOrderNumber(cell.getStringCellValue());
+                                break;
+                            case 1:
+                            	cell.setCellType(CellType.STRING);
+                            	salesData.setEcProductCode(cell.getStringCellValue());
+                                break;
+                            case 2:
+                            	cell.setCellType(CellType.STRING);
+                            	salesData.setProductId(cell.getStringCellValue());
+                                break;
+                            case 3:
+                            	cell.setCellType(CellType.STRING);
+                            	salesData.setEcProductType(cell.getStringCellValue());
+                                break;
+                            case 4:
+                            	cell.setCellType(CellType.STRING);
+                            	salesData.setEcProductSubType(cell.getStringCellValue());
+                                break;
+                            case 5:
+                            	cell.setCellType(CellType.STRING);
+                            	salesData.setEcWarehouse(cell.getStringCellValue());
+                                break;
+                            case 6:
+                            	if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                                    salesData.setEcSalesQty((int) cell.getNumericCellValue());
+                                } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                                    String salesStringValue = cell.getStringCellValue().trim();;
+                                    try {
+                                        salesData.setEcSalesQty(Integer.parseInt(salesStringValue));
+                                    } catch (NumberFormatException e) {
+                                        // 處理轉換失敗的情況，例如文字不是合法的整數格式
+                                        salesData.setEcSalesQty(0); // 或者設定為預設值
+                                    }
+                                }
+                                break;
+                            	
+                            	//salesData.setSales((int)(cell.getNumericCellValue()));
+                                //break;
+                            case 7:
+                                if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                                    salesData.setEcSalesPrice((int) cell.getNumericCellValue());
+                                } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                                    String priceStringValue = cell.getStringCellValue().trim();
+                                    try {
+                                        salesData.setEcSalesPrice(Integer.parseInt(priceStringValue));
+                                    } catch (NumberFormatException e) {
+                                        // 處理轉換失敗的情況，例如文字不是合法的整數格式
+                                        salesData.setEcSalesPrice(0); // 或者設定為預設值
+                                    }
+                                }
+                                break;
+                            	
+                            	//salesData.setPrice((int)(cell.getNumericCellValue()));
+                                //break;
+                            case 8:
+                                if (DateUtil.isCellDateFormatted(cell)) {
+                                    salesData.setEcSalesDate(cell.getDateCellValue());
+                                } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                                    String salesDateStringValue = cell.getStringCellValue().trim();
+                                    // 根據實際情況進行日期解析，這裡僅提供示例
+                                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                    try {
+                                        Date salesDate = dateFormat.parse(salesDateStringValue);
+                                        salesData.setEcSalesDate(salesDate);
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                        // 處理日期解析失敗的情況
+                                    }
+                                }
+                                break;
+
+                            case 9:
+                            	cell.setCellType(CellType.STRING);
+                            	salesData.setEcSalesStatus(cell.getStringCellValue());
+                                break;                               
+                            // 忽略不需要的列
+                            default:
+                            	break;
+                        }
+                    }
+                    dataList.add(salesData);
+                }
+                // 將 SalesData 物件保存到資料庫
+                salesDataDao.addSalesDataByExcel(dataList);
+
+                return "File uploaded and processed successfully.";
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                return "Error processing the file.";
+            }
+        } else {
+            return "File is empty.";
+        }
+    }
+	
+	
+	
+	/*
+	@PostMapping("/upload")
+    @ResponseBody
+    public String handleFileUpload(@RequestParam("uploadFile") MultipartFile uploadFile, Model model) {
+        if (!uploadFile.isEmpty()) {
+            try (InputStream inputStream = uploadFile.getInputStream()) {
+                Workbook workbook = new XSSFWorkbook(inputStream); // 使用XSSFWorkbook處理xlsx格式的Excel
+
+                Sheet sheet = workbook.getSheetAt(0); // 假設只有一個工作表，根據實際情況調整索引
+
+                List<SalesData> dataList = new ArrayList<>();
+                
+                // 遍歷每一行
+                int rowIndex = 0;  // 用於追蹤行索引
+                for (Row row : sheet) {
+                	// 跳過第一行（表頭）
+                    if (rowIndex == 0) {
+                        rowIndex++;
+                        continue;}
+                	
+                	SalesData salesData = new SalesData();
+                    
+                	// 遍歷每一列
+                    for (Cell cell : row) {
+                    	int columnIndex = cell.getColumnIndex();
+                        // 根據單元格的索引將資料映射到對應的屬性
+                        switch (columnIndex) {
+                            case 0:
+                            	//強制設定單元格cell類型
+                            	cell.setCellType(CellType.STRING);
+                            	salesData.setEcOrderNumber(cell.getStringCellValue());
+                                break;
+                            case 1:
+                            	cell.setCellType(CellType.STRING);
+                            	salesData.setEcProductCode(cell.getStringCellValue());
+                                break;
+                            case 2:
+                            	cell.setCellType(CellType.STRING);
+                            	salesData.setProductId(cell.getStringCellValue());
+                                break;
+                            case 3:
+                            	cell.setCellType(CellType.STRING);
+                            	salesData.setEcProductType(cell.getStringCellValue());
+                                break;
+                            case 4:
+                            	cell.setCellType(CellType.STRING);
+                            	salesData.setEcProductSubType(cell.getStringCellValue());
+                                break;
+                            case 5:
+                            	cell.setCellType(CellType.STRING);
+                            	salesData.setEcWarehouse(cell.getStringCellValue());
+                                break;
+                            case 6:
+                            	if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                                    salesData.setEcSalesQty((int) cell.getNumericCellValue());
+                                } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                                    String salesStringValue = cell.getStringCellValue().trim();;
+                                    try {
+                                        salesData.setEcSalesQty(Integer.parseInt(salesStringValue));
+                                    } catch (NumberFormatException e) {
+                                        // 處理轉換失敗的情況，例如文字不是合法的整數格式
+                                        salesData.setEcSalesQty(0); // 或者設定為預設值
+                                    }
+                                }
+                                break;
+                            	
+                            	//salesData.setSales((int)(cell.getNumericCellValue()));
+                                //break;
+                            case 7:
+                                if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                                    salesData.setEcSalesPrice((int) cell.getNumericCellValue());
+                                } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                                    String priceStringValue = cell.getStringCellValue().trim();
+                                    try {
+                                        salesData.setEcSalesPrice(Integer.parseInt(priceStringValue));
+                                    } catch (NumberFormatException e) {
+                                        // 處理轉換失敗的情況，例如文字不是合法的整數格式
+                                        salesData.setEcSalesPrice(0); // 或者設定為預設值
+                                    }
+                                }
+                                break;
+                            	
+                            	//salesData.setPrice((int)(cell.getNumericCellValue()));
+                                //break;
+                            case 8:
+                                if (DateUtil.isCellDateFormatted(cell)) {
+                                    salesData.setEcSalesDate(cell.getDateCellValue());
+                                } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                                    String salesDateStringValue = cell.getStringCellValue().trim();
+                                    // 根據實際情況進行日期解析，這裡僅提供示例
+                                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                    try {
+                                        Date salesDate = dateFormat.parse(salesDateStringValue);
+                                        salesData.setEcSalesDate(salesDate);
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                        // 處理日期解析失敗的情況
+                                    }
+                                }
+                                break;
+
+                            case 9:
+                            	cell.setCellType(CellType.STRING);
+                            	salesData.setEcSalesStatus(cell.getStringCellValue());
+                                break;                               
+                            // 忽略不需要的列
+                            default:
+                            	break;
+                        }
+                    }
+                    dataList.add(salesData);
+                }
+                // 將 SalesData 物件保存到資料庫
+                salesDataDao.addSalesDataByExcel(dataList);
+
+                return "File uploaded and processed successfully.";
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                return "Error processing the file.";
+            }
+        } else {
+            return "File is empty.";
+        }
+    }
+	*/
+	
 }
