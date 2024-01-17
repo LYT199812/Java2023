@@ -20,7 +20,9 @@ insert into user (username, password, levelId) values ('John', 'pass123', 1),('S
 insert into productType (name) values ('餐廚'), ('烘焙'), ('傢俱'), ('旅遊');
 
 -- 6. 設立 productSubType 預設值
-insert into productSubType (name) values ('鍋鏟'), ('餅乾模'), ('平底鍋'), ('主廚刀');
+insert into productSubType (name) values ('鍋鏟'), ('餅乾模'), ('平底鍋'), ('主廚刀'),
+('醬料刷'),	('量杯'), ('電子秤'), ('量匙'), ('隔熱手套'), 
+('派烤盤'), ('蛋糕烤盤'), ('可麗露模'), ('烘焙紙'), ('計時器');
 
 -- 7. 設立 product 預設值
 insert into product (productId, productName, productPrice, productBarcode, productBrand, productTypeId, productSubTypeId, productImg, productDesc, isLaunch) 

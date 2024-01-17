@@ -16,7 +16,7 @@
 	 </form>
     </div>
     
-    <form method="post" action="./addProduct" enctype="multipart/form-data">
+    <form method="post" id="addProduct" action="./addProduct" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="productId" class="form-label">商品ID</label>
             <input type="text" class="form-control" id="productId" name="productId" placeholder="輸入商品ID">
@@ -27,27 +27,27 @@
         </div>
         <div class="mb-3">
             <label for="price" class="form-label">商品價格</label>
-            <input type="number" class="form-control" id="price" name="price" placeholder="輸入商品價格">
+            <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="輸入商品價格">
         </div>
         <div class="mb-3">
             <label for="barcode" class="form-label">商品條碼</label>
-            <input type="text" class="form-control" id="barcode" name="barcode" placeholder="輸入商品條碼">
+            <input type="text" class="form-control" id="productBarcode" name="productBarcode" placeholder="輸入商品條碼">
         </div>
         <div class="mb-3">
             <label for="brand" class="form-label">品牌</label>
-            <input type="text" class="form-control" id="brand" name="brand" placeholder="輸入商品品牌">
+            <input type="text" class="form-control" id="productBrand" name="productBrand" placeholder="輸入商品品牌">
         </div>
         <div class="mb-3">
             <label for="productPrice" class="form-label">館別</label>
-            <input type="text" class="form-control" id="productDepartment" name="productDepartment" placeholder="輸入商品館別">
+            <input type="text" class="form-control" id="productTypeId" name="productTypeId" placeholder="輸入商品館別">
         </div>
         <div class="mb-3">
             <label for="productPrice" class="form-label">分類</label>
-            <input type="text" class="form-control" id="productType" name="productType" placeholder="輸入商品分類">
+            <input type="text" class="form-control" id="productSubTypeId" name="productSubTypeId" placeholder="輸入商品分類">
         </div>
         <div class="mb-3">
             <label for="productDescription" class="form-label">商品描述</label>
-            <textarea class="form-control" id="productDescription" name="productDescription" rows="3" placeholder="輸入商品描述"></textarea>
+            <textarea class="form-control" id="productDesc" name="productDesc" rows="3" placeholder="輸入商品描述"></textarea>
         </div>
         
         <label for="productImage" class="form-label">商品圖片</label>
@@ -68,15 +68,27 @@
         
         <div class="mb-3">
             <label for="productLaunch" class="form-label">是否立即上架</label>
-            <div required>
-	            <input type="radio" id="isLaunch" name="isLaunch" value="yes" >
+            <div>
+	            <input type="radio" id="isLaunch" name="isLaunch" value="true" >
 	            <label for="productisLaunch">是</label>
-	            <input type="radio" id="isLaunch" name="isLaunch" value="no">
+	            <input type="radio" id="isLaunch" name="isLaunch" value="false">
 	        	<label for="productnoLaunch">否</label>
         	</div>
         </div>
         
-        <button type="submit" class="btn btn-primary mb-5">新增商品</button>
+        <div class="mb-3">
+          <label for="productLaunch" class="form-label">有上架的電商平台</label>
+          <div>
+			  <input class="form-check-input" type="checkbox" id="ecId" value="1">
+			  <label class="form-check-label" for="inlineCheckbox1">Momo</label>
+			  <input class="form-check-input" type="checkbox" id="ecId" value="2">
+			  <label class="form-check-label" for="inlineCheckbox2">PChome</label>
+			  <input class="form-check-input" type="checkbox" id="ecId" value="3">
+			  <label class="form-check-label" for="inlineCheckbox3">蝦皮</label>
+		  </div>
+		</div>
+        
+        <button type="submit" class="btn btn-primary mb-5" onclick="validateForm()">新增商品</button>
     </form>
 </div>
 
@@ -144,7 +156,7 @@
 	
 </style>
 	
-<!-- 自定义js -->
+<!-- 自定義js -->
 <script>
 	// 批次新增商品
 	document.getElementById('addProductUploadFile').addEventListener('change', function () {
@@ -212,6 +224,25 @@
         // Optionally, you can clear the file input
         $panel.find('.file-input').val('');
     }
+    
+ 	//  表單驗證
+	function validateForm() {
+	  var checkboxes = document.getElementsByClassName('form-check-input');
+	  var isChecked = false;
+	
+	  for (var i = 0; i < checkboxes.length; i++) {
+	    if (checkboxes[i].checked) {
+	      isChecked = true;
+	      break;
+	    }
+	  }
+	
+	  if (!isChecked) {
+	    alert('請至少選擇一個選項');
+	    event.preventDefault(); // 防止表單提交
+	  }
+	}
+    
 </script>
 
 
