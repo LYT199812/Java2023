@@ -136,41 +136,61 @@ public class EccommerceController {
 	
 	@PostMapping("/upload")
     @ResponseBody
-    public String handleFileUpload(@RequestParam("originalUri") String originalUri,@RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request, Model model) {
+    public String handleFileUpload(@RequestParam("source") String source, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request, Model model) {
 		
-		System.out.println("Original URI: " + originalUri);
-		// 獲取 URI
-	    String uri = request.getRequestURI();
-
-	    // 將 URI 拆分成路徑片段
-	    String[] pathSegments = uri.split("/");
-	    
-	 // 在控制台輸出 URI 解析結果
-	    System.out.println("URI: " + uri);
-	    System.out.println("Path Segments: " + Arrays.toString(pathSegments));
-
-	    // 確認 pathSegments 不為空並獲取最後一個值
-	    String lastSegment = pathSegments.length > 0 ? pathSegments[pathSegments.length - 1] : null;
-
-	    // 如果有最後一個值，進行相應的操作
-	    if (lastSegment != null) {
-	        // 這裡的 lastSegment 就是最後一個值，可以轉換為整數，如果需要
-	        try {
-	            int ecId = Integer.parseInt(lastSegment);
-	            SalesData salesData = new SalesData();
-	            salesData.setEcommerce(Ecommerce.builder().id(ecId).build());
-	            // 將 ecId 用於相應的邏輯
-	            // ...
-	        } catch (NumberFormatException e) {
-	        	e.printStackTrace();
-	            return "Invalid ecId format.";
-	        }
-	    } else {
-	        return "Unable to extract ecId from the URI.";
+		//------設定source----------------------------------------------
+		// 根據 source 確定對應的 ecId
+	    int ecId;
+	    switch (source) {
+	        case "momo":
+	            ecId = 1;
+	            break;
+	        case "pchome":
+	            ecId = 2;
+	            break;
+	        case "shopee":
+	            ecId = 3;
+	            break;
+	        default:
+	            // 預設為 0 或其他處理方式
+	            ecId = 0;
+	            break;
 	    }
 		
+	    //-------抓網址最後一個資料-------------------------------------------------------
+//		System.out.println("Original URI: " + originalUri);
+//		// 獲取 URI
+//	    String uri = request.getRequestURI();
+//
+//	    // 將 URI 拆分成路徑片段
+//	    String[] pathSegments = uri.split("/");
+//	    
+//	 // 在控制台輸出 URI 解析結果
+//	    System.out.println("URI: " + uri);
+//	    System.out.println("Path Segments: " + Arrays.toString(pathSegments));
+//
+//	    // 確認 pathSegments 不為空並獲取最後一個值
+//	    String lastSegment = pathSegments.length > 0 ? pathSegments[pathSegments.length - 1] : null;
+//
+//	    // 如果有最後一個值，進行相應的操作
+//	    if (lastSegment != null) {
+//	        // 這裡的 lastSegment 就是最後一個值，可以轉換為整數，如果需要
+//	        try {
+//	            int ecId = Integer.parseInt(lastSegment);
+//	            SalesData salesData = new SalesData();
+//	            salesData.setEcommerce(Ecommerce.builder().id(ecId).build());
+//	            // 將 ecId 用於相應的邏輯
+//	            // ...
+//	        } catch (NumberFormatException e) {
+//	        	e.printStackTrace();
+//	            return "Invalid ecId format.";
+//	        }
+//	    } else {
+//	        return "Unable to extract ecId from the URI.";
+//	    }
+//		
 		
-		
+		//-----獲取參數版本用httpservlet---------------------------------------------------------
 //		// 獲取當前網址的 ecId 參數
 //	    String ecIdString = request.getParameter("uploadFile");
 //		System.out.println(params);
@@ -195,6 +215,7 @@ public class EccommerceController {
 
                 List<SalesData> dataList = new ArrayList<>();
                 
+                
                 // 遍歷每一行
                 int rowIndex = 0;  // 用於追蹤行索引
                 for (Row row : sheet) {
@@ -204,7 +225,8 @@ public class EccommerceController {
                         continue;}
                 	
                 	SalesData salesData = new SalesData();
-                	
+                	Product product = new Product();
+                	salesData.setEcommerce(Ecommerce.builder().id(ecId).build());
                     
                 	// 遍歷每一列
                     for (Cell cell : row) {
@@ -222,21 +244,25 @@ public class EccommerceController {
                                 break;
                             case 2:
                             	cell.setCellType(CellType.STRING);
-                            	salesData.setProductId(cell.getStringCellValue());
+                            	product.setProductName(cell.getStringCellValue());
                                 break;
                             case 3:
                             	cell.setCellType(CellType.STRING);
-                            	salesData.setEcProductType(cell.getStringCellValue());
+                            	salesData.setProductId(cell.getStringCellValue());
                                 break;
                             case 4:
                             	cell.setCellType(CellType.STRING);
-                            	salesData.setEcProductSubType(cell.getStringCellValue());
+                            	salesData.setEcProductType(cell.getStringCellValue());
                                 break;
                             case 5:
                             	cell.setCellType(CellType.STRING);
-                            	salesData.setEcWarehouse(cell.getStringCellValue());
+                            	salesData.setEcProductSubType(cell.getStringCellValue());
                                 break;
                             case 6:
+                            	cell.setCellType(CellType.STRING);
+                            	salesData.setEcWarehouse(cell.getStringCellValue());
+                                break;
+                            case 7:
                             	if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
                                     salesData.setEcSalesQty((int) cell.getNumericCellValue());
                                 } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
@@ -252,7 +278,7 @@ public class EccommerceController {
                             	
                             	//salesData.setSales((int)(cell.getNumericCellValue()));
                                 //break;
-                            case 7:
+                            case 8:
                                 if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
                                     salesData.setEcSalesPrice((int) cell.getNumericCellValue());
                                 } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
@@ -268,11 +294,12 @@ public class EccommerceController {
                             	
                             	//salesData.setPrice((int)(cell.getNumericCellValue()));
                                 //break;
-                            case 8:
-                                if (DateUtil.isCellDateFormatted(cell)) {
+                            case 9:
+                            	if (DateUtil.isCellDateFormatted(cell)) {
                                     salesData.setEcSalesDate(cell.getDateCellValue());
                                 } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
                                     String salesDateStringValue = cell.getStringCellValue().trim();
+                                    System.out.println("Trying to parse date: " + salesDateStringValue);
                                     // 根據實際情況進行日期解析，這裡僅提供示例
                                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                                     try {
@@ -284,8 +311,8 @@ public class EccommerceController {
                                     }
                                 }
                                 break;
-
-                            case 9:
+								
+                            case 10:
                             	cell.setCellType(CellType.STRING);
                             	salesData.setEcSalesStatus(cell.getStringCellValue());
                                 break;                               

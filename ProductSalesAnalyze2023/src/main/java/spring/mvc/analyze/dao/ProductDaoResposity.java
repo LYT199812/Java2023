@@ -93,14 +93,29 @@ public class ProductDaoResposity implements ProductDao{
 		String sql = "insert into product(productId, productName, productPrice, productBarcode, productBrand, productTypeId, productSubTypeId, productImg, productDesc, isLaunch) value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		int rowcount =  jdbcTemplate.update(sql, 
 				product.getProductId(), product.getProductName(), product.getProductPrice(), product.getProductBarcode(), product.getProductBrand(), 
-				product.getProductType().getId(), product.getProductSubType().getId(), product.getProductImg(), product.getProductDesc(), product.getIsLaunch());
+				product.getProductTypeId(), product.getProductSubTypeId(), product.getProductImg(), product.getProductDesc(), product.getIsLaunch());
 	
 		return rowcount ;
 	}
 
 	@Override
-	public void saveProductExcelData(List<Product> productList) {
-		// TODO Auto-generated method stub
+	public void addProductByExcel(List<Product> productList) {
+		String sql = "insert into product(productId, productName, productPrice, productBarcode, productBrand, productTypeId, productSubTypeId, productImg, productDesc, isLaunch) "
+				+ "value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	
+		jdbcTemplate.batchUpdate(sql, productList, productList.size(),
+          (ps, product) -> {
+      		  ps.setString(1, product.getProductId());
+              ps.setString(2, product.getProductName());
+              ps.setInt(3, product.getProductPrice());
+              ps.setString(4, product.getProductBarcode());
+              ps.setString(5, product.getProductBrand());
+              ps.setInt(6, product.getProductTypeId());
+              ps.setInt(7, product.getProductSubTypeId());
+              ps.setString(8, product.getProductImg());
+              ps.setString(9, product.getProductDesc());
+              ps.setBoolean(10, product.getIsLaunch());
+          });
 		
 	}
 
@@ -131,4 +146,6 @@ public class ProductDaoResposity implements ProductDao{
 		String sql = "delete from product where productId = ?";
 		return jdbcTemplate.update(sql, productId);
 	}
+
+	
 }

@@ -6,20 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-/**
- * productId, 
- * productName, 
- * productPrice, 
- * productBarcode, 
- * productBrand, 
- * productTypeId, 
- * productSubTypeId, 
- * productImg, 
- * productDesc, 
- * isLaunch, 
- * productQty
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -22,7 +22,7 @@
 	
 		<nav class="navbar navbar-expand-lg navbar-light px-5">
 	  <div class="container-fluid px-5">
-	    <a class="navbar-brand text-light" href="..\main.jsp">MyAnalyze</a>
+	    <a class="navbar-brand text-light" href="${ pageContext.request.contextPath }/mvc/analyze/main.jsp">MyAnalyze</a>
 	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	      <span class="navbar-toggler-icon"></span>
 	    </button>
@@ -43,7 +43,7 @@
         	</li>
 	      
 	        <li class="nav-item">
-	          <a class="nav-link active text-light" aria-current="page" href="./">庫存</a>
+	          <a class="nav-link active text-light" aria-current="page" href="${ pageContext.request.contextPath }/mvc/analyze/maintainStock">庫存</a>
 	        </li>
 	        
 	        <li class="nav-item dropdown">
@@ -51,18 +51,18 @@
 	            商品
 	          </a>
 	          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-	            <li><a class="dropdown-item" href="..\product\addProduct.jsp">商品新增</a></li>
-	            <li><a class="dropdown-item" href="..\product\maintainProduct.jsp">商品管理</a></li>
+	            <li><a class="dropdown-item" href="${ pageContext.request.contextPath }/mvc/product/addProduct">商品新增</a></li>
+	            <li><a class="dropdown-item" href="${ pageContext.request.contextPath }/mvc/analyze/maintainProduct">商品管理</a></li>
 	          </ul>
         	</li>
         	
 	        <li class="nav-item">
-	          <a class="nav-link text-light" href="..\permissionSettings">權限設定</a>
+	          <a class="nav-link text-light" href="${ pageContext.request.contextPath }/mvc/analyze/permissionSettings">權限設定</a>
 	        </li>
 	      </ul>
 	    </div>
 	    <i class="bi bi-person-circle text-light h5 pe-4 mb-0 d-none d-md-block">${user.username}</i>
-	    <i class="bi bi-box-arrow-right text-light ml-3" role="button" onclick="window.location.href='../logout'">登出</i>
+	    <i class="bi bi-box-arrow-right text-light ml-3" role="button" onclick="window.location.href='${ pageContext.request.contextPath }/mvc/analyze/logout'">登出</i>
 	  </div>
 	</nav>
 	

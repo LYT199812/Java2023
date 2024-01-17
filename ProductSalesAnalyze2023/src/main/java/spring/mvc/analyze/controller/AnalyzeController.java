@@ -160,32 +160,35 @@ public class AnalyzeController {
 		
 	// 首頁
 	@GetMapping("/main")
-	public String main(Model model) {
-		return "analyze/main"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
+	public String main(Model model, HttpSession session) {
+		if (session.getAttribute("user") != null) {
+			return "analyze/main"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
+		}
+		return "redirect:/mvc/analyze/login";
 	}
 	
-	// product addProduct
-	@GetMapping("/product/addProduct")
-	public String addProduct(Model model) {
-		return "analyze/product/addProduct"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
-	}
+//	// product addProduct
+//	@GetMapping("/addProduct")
+//	public String addProduct(Model model) {
+//		return "analyze/product/addProduct"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
+//	}
 	
 	// product maintainProduct
-	@GetMapping("/product/maintainProduct")
+	@GetMapping("/maintainProduct")
 	public String maintainProduct(Model model) {
 		return "analyze/product/maintainProduct"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
 	}
 		
-	// ecWebsite momo2
-	@GetMapping("/ecWebsite/momo2")
-	public String ecWebsiteMomo2(Model model) {
-		return "analyze/ecWebsite/momo2"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
-	}
-	
 	// 權限設定
 	@GetMapping("/permissionSettings")
 	public String permissionSettings(Model model) {
 		return "analyze/permissionSettings"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
+	}
+	
+	// 權限設定
+	@GetMapping("/maintainStock")
+	public String maintainStock(Model model) {
+		return "analyze/maintainStock"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
 	}
 	
 	//---------------------------------------------------------------------------------------------------

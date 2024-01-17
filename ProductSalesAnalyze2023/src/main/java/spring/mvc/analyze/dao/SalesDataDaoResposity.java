@@ -20,6 +20,9 @@ public class SalesDataDaoResposity implements SalesDataDao{
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
+	@Autowired
+	private ProductDaoResposity productDaoResposity;
+	
 	@Override
 	public List<SalesData> findAllSalesDatas() {
 		String sql = "SELECT trxId, ecId, productId, ecOrderNumber, ecProductCode, ecProductType, ecProductSubType, ecWarehouse, ecSalesQty, ecSalesPrice, ecSalesDate, ecSalesStatus, createTime FROM salesData";
@@ -44,6 +47,8 @@ public class SalesDataDaoResposity implements SalesDataDao{
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(SalesData.class),ecId);
 	}
 
+	
+	
 	@Override
 	public void addSalesDataByExcel(List<SalesData> salesDataList) {
 		String sql = "insert into salesdata(ecId, productId, ecOrderNumber, ecProductCode, ecProductType, ecProductSubType, ecWarehouse, ecSalesQty, ecSalesPrice, ecSalesDate, ecSalesStatus) "
@@ -54,7 +59,7 @@ public class SalesDataDaoResposity implements SalesDataDao{
              	java.util.Date utilDate = salesData.getEcSalesDate();
          		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
          		 ps.setInt(1, salesData.getEcommerce().getId());
-         		 ps.setString(2, salesData.getProduct().getProductId());
+         		 ps.setString(2, salesData.getProductId());
                  ps.setString(3, salesData.getEcOrderNumber());
                  ps.setString(4, salesData.getEcProductCode());
                  ps.setString(5, salesData.getEcProductType());

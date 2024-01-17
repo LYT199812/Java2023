@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/views/analyze/product/header.jsp" %>
+<%@include file="/WEB-INF/views/analyze/ecWebsite/header.jsp" %>
 
 <div class="container mt-4">
 	<div class="d-flex justify-content-between">
     <h2 class="mb-4">商品新增</h2>
-    <form id="addProductExcelForm" method="post" action="../addProductUpload" enctype="multipart/form-data">
+    <form id="addProductExcelForm" method="post" action="./addProductUpload" enctype="multipart/form-data">
 	  <input type="file" class="form-control" id="addProductUploadFile" name="addProductUploadFile" accept=".xlsx" required hidden="">
 	  <button type="button" class="btn btn-primary" onclick="document.getElementById('addProductUploadFile').click();">
 	  	<span id="fileNameContainer">

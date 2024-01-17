@@ -57,6 +57,21 @@ public class StockDaoResposity implements StockDao{
 	}
 
 	@Override
+	public void addStockByExcel(List<Stock> stockList) {
+		String sql = "insert into stock(productId, ecId, productQty, ecProductQty) VALUES (?, ?, ?, ?)";
+	
+		jdbcTemplate.batchUpdate(sql, stockList, stockList.size(),
+          (ps, stock) -> {
+      		  ps.setString(1, stock.getProductId());
+              ps.setInt(2, stock.getEcId());
+              ps.setInt(3, stock.getProductQty());
+              ps.setInt(4, stock.getEcProductQty());
+          });
+		
+	}
+	
+	
+	@Override
 	public int updateStock(Stock stock) {
 		String sql = "UPDATE stock " +
                 "SET productQty=?, ecProductQty=? " +
@@ -75,7 +90,5 @@ public class StockDaoResposity implements StockDao{
 		String sql = "delete from stock where productId = ? and ecId=? ";
 		return jdbcTemplate.update(sql, productId, ecId);
 	}
-
-	
-	
+		
 }
