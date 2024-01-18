@@ -16,18 +16,34 @@
 	 </form>
     </div>
     
-    <form method="post" id="addProduct" action="./addProduct" enctype="multipart/form-data">
+    <form class="needs-validation" method="post" id="addProduct" action="./addProduct" enctype="multipart/form-data">
+        
         <div class="mb-3">
             <label for="productId" class="form-label">商品ID</label>
-            <input type="text" class="form-control" id="productId" name="productId" placeholder="輸入商品ID">
-        </div>
+            <div class="input-group has-validation">
+		        <input type="text" class="form-control" id="productId" name="productId" placeholder="輸入商品ID" required>
+		        <div class="invalid-feedback">
+				     請輸入商品ID!
+		        </div>
+	        </div>
+       	</div>
         <div class="mb-3">
-            <label for="productName" class="form-label">商品名稱</label>
-            <input type="text" class="form-control" id="productName" name="productName" placeholder="輸入商品名稱">
+	        <label for="productName" class="form-label">商品名稱</label>
+	        <div class="input-group has-validation">
+	            <input type="text" class="form-control" id="productName" name="productName" placeholder="輸入商品名稱" required>
+	        	<div class="invalid-feedback">
+					 請輸入商品名稱!
+			    </div>
+	        </div>
         </div>
         <div class="mb-3">
             <label for="price" class="form-label">商品價格</label>
-            <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="輸入商品價格">
+            <div class="input-group has-validation">
+	            <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="輸入商品價格" required>
+	        	<div class="invalid-feedback">
+					 請輸入商品價格!
+				</div>
+	        </div>
         </div>
         <div class="mb-3">
             <label for="barcode" class="form-label">商品條碼</label>
@@ -35,21 +51,37 @@
         </div>
         <div class="mb-3">
             <label for="brand" class="form-label">品牌</label>
-            <input type="text" class="form-control" id="productBrand" name="productBrand" placeholder="輸入商品品牌">
+	        <div class="input-group has-validation">
+	            <input type="text" class="form-control" id="productBrand" name="productBrand" placeholder="輸入商品品牌" required>
+		        <div class="invalid-feedback">
+					 請輸入商品品牌!
+				</div>
+		   	</div>
         </div>
         <div class="mb-3">
-            <label for="productPrice" class="form-label">館別</label>
-            <input type="text" class="form-control" id="productTypeId" name="productTypeId" placeholder="輸入商品館別">
+            <label for="productPrice" class="form-label">大分類</label>
+            <div class="input-group has-validation">
+	            <input type="text" class="form-control" id="productTypeId" name="productTypeId" placeholder="輸入商品館別" required>
+	        	<div class="invalid-feedback">
+					請輸入商品大分類!
+				</div>
+		   	</div>
         </div>
         <div class="mb-3">
-            <label for="productPrice" class="form-label">分類</label>
-            <input type="text" class="form-control" id="productSubTypeId" name="productSubTypeId" placeholder="輸入商品分類">
+            <label for="productPrice" class="form-label">中分類</label>
+            <div class="input-group has-validation">
+	            <input type="text" class="form-control" id="productSubTypeId" name="productSubTypeId" placeholder="輸入商品分類" required>
+	        	<div class="invalid-feedback">
+						請輸入商品中分類!
+				</div>
+		   	</div>
         </div>
         <div class="mb-3">
             <label for="productDescription" class="form-label">商品描述</label>
             <textarea class="form-control" id="productDesc" name="productDesc" rows="3" placeholder="輸入商品描述"></textarea>
         </div>
         
+        <!-- 
         <label for="productImage" class="form-label">商品圖片</label>
         <div class="row mb-3" id="updatebox">
 	        <label for="file" class="col-sm-4">
@@ -65,30 +97,38 @@
 	            </div>
 	        </label>
     	</div>
-        
+    	 -->
+    	
         <div class="mb-3">
             <label for="productLaunch" class="form-label">是否立即上架</label>
+            <div id="radio-error-message" class="error-message" style="display: none; color: red;">
+		      請至少選擇一個選項
+		    </div>
             <div>
-	            <input type="radio" id="isLaunch" name="isLaunch" value="true" >
-	            <label for="productisLaunch">是</label>
-	            <input type="radio" id="isLaunch" name="isLaunch" value="false">
-	        	<label for="productnoLaunch">否</label>
+	            <input class="radio-button-input" type="radio" id="isLaunch" name="isLaunch" value="true" required>
+	            <label class="radio-button-label" for="productisLaunch">是</label>
+	            <input class="radio-button-input" type="radio" id="isLaunch" name="isLaunch" value="false" required>
+	        	<label class="radio-button-label" for="productnoLaunch">否</label>
         	</div>
         </div>
         
         <div class="mb-3">
           <label for="productLaunch" class="form-label">有上架的電商平台</label>
+          <div id="error-message" class="error-message" style="display: none; color: red;">
+	      請至少選擇一個選項
+	      </div>
           <div>
-			  <input class="form-check-input" type="checkbox" id="ecId" value="1">
+			  <input class="check-box-input" type="checkbox" id="ecId" value="1">
 			  <label class="form-check-label" for="inlineCheckbox1">Momo</label>
-			  <input class="form-check-input" type="checkbox" id="ecId" value="2">
+			  <input class="check-box-input" type="checkbox" id="ecId" value="2">
 			  <label class="form-check-label" for="inlineCheckbox2">PChome</label>
-			  <input class="form-check-input" type="checkbox" id="ecId" value="3">
+			  <input class="check-box-input" type="checkbox" id="ecId" value="3">
 			  <label class="form-check-label" for="inlineCheckbox3">蝦皮</label>
 		  </div>
 		</div>
+		
         
-        <button type="submit" class="btn btn-primary mb-5" onclick="validateForm()">新增商品</button>
+        <button type="submit" class="btn btn-primary mb-5" onclick="validateForm();validateRadio();">新增商品</button>
     </form>
 </div>
 
@@ -120,6 +160,19 @@
 		line-height: 250px;
 	}
 	*/
+	
+	.error-radio {
+	  box-shadow: 0 0 5px red; /* 使用紅色的陰影 */
+	  border: 2px solid red;  /* 使用紅色的邊框，調整邊框寬度 */
+	  border-radius: 4px; /* 可以添加圓角效果，視需求而定 */
+	  transition: box-shadow 0.3s ease, border 0.3s ease; /* 陰影和邊框變化的過渡效果 */
+	}
+	
+	.error-checkbox {
+	  box-shadow: 0 0 5px red; /* 使用紅色的陰影 */
+	  border: 2px solid red;  /* 使用紅色的邊框 */
+	  transition: box-shadow 0.3s ease; /* 陰影變化的過渡效果 */
+	}
 	
 	.panel {
     height: 250px;
@@ -157,7 +210,7 @@
 </style>
 	
 <!-- 自定義js -->
-<script>
+<script type="text/javascript">
 	// 批次新增商品
 	document.getElementById('addProductUploadFile').addEventListener('change', function () {
 	    var fileName = this.files[0].name;
@@ -226,8 +279,42 @@
     }
     
  	//  表單驗證
+ 	
+ 	// radio-button 驗證
+	function validateRadio() {
+	  var radioButtons = document.getElementsByName('isLaunch');
+	  var isChecked = false;
+	
+	  for (var i = 0; i < radioButtons.length; i++) {
+	    if (radioButtons[i].checked) {
+	      isChecked = true;
+	      break;
+	    }
+	  }
+	
+	  var errorMessage = document.getElementById('radio-error-message');
+	  if (!isChecked) {
+	    errorMessage.style.display = 'block'; // 顯示錯誤消息
+	
+	    // 遍歷所有 radio 按鈕，添加紅色光暈樣式
+	    for (var i = 0; i < radioButtons.length; i++) {
+	      radioButtons[i].classList.add('error-radio');
+	    }
+	  } else {
+	    errorMessage.style.display = 'none'; // 隱藏錯誤消息
+	
+	    // 移除所有 radio 按鈕的紅色光暈樣式
+	    for (var i = 0; i < radioButtons.length; i++) {
+	      radioButtons[i].classList.remove('error-radio');
+	    }
+	  }
+
+	  return isChecked;
+	}
+ 	
+	// check-box 驗證
 	function validateForm() {
-	  var checkboxes = document.getElementsByClassName('form-check-input');
+	  var checkboxes = document.getElementsByClassName('check-box-input');
 	  var isChecked = false;
 	
 	  for (var i = 0; i < checkboxes.length; i++) {
@@ -236,12 +323,64 @@
 	      break;
 	    }
 	  }
-	
-	  if (!isChecked) {
-	    alert('請至少選擇一個選項');
-	    event.preventDefault(); // 防止表單提交
+      
+      var errorMessage = document.getElementById('error-message');
+      if (!isChecked) {
+        errorMessage.style.display = 'block'; // 顯示錯誤消息
+        // 遍歷所有checkbox，添加紅色光暈樣式
+        for (var i = 0; i < checkboxes.length; i++) {
+          checkboxes[i].classList.add('error-checkbox');
+        }
+        
+        event.preventDefault(); // 防止表單提交
+        
+      } else {
+        errorMessage.style.display = 'none'; // 隱藏錯誤消息
+        // 移除所有checkbox的紅色光暈樣式
+        for (var i = 0; i < checkboxes.length; i++) {
+          checkboxes[i].classList.remove('error-checkbox');
+        }
+      }
+      
+   	// 使用 Bootstrap 的驗證
+      var form = document.querySelector('.needs-validation');
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+      form.classList.add('was-validated');
+      
+      
+    }
+ 	
+	// 添加事件監聽器，當 radio-button 被選擇時，隱藏錯誤消息
+	document.addEventListener('change', function(event) {
+	  var target = event.target;
+	  if (target.type === 'radio' && target.classList.contains('radio-button-input')) {
+	    var errorMessage = document.getElementById('radio-error-message');
+	    errorMessage.style.display = 'none';
+	    
+	    var radioButtons = document.getElementsByClassName('radio-button-input');
+	    for (var i = 0; i < radioButtons.length; i++) {
+	    	radioButtons[i].classList.remove('error-radio');
+	    }
 	  }
-	}
+	});
+	// 添加事件監聽器，當 checkbox 被選擇時，隱藏錯誤消息
+	document.addEventListener('change', function(event) {
+	  var target = event.target;
+	  if (target.type === 'checkbox' && target.classList.contains('check-box-input')) {
+	    var errorMessage = document.getElementById('error-message');
+	    errorMessage.style.display = 'none';
+	    
+	    var checkboxes = document.getElementsByClassName('check-box-input');
+	    for (var i = 0; i < checkboxes.length; i++) {
+	      checkboxes[i].classList.remove('error-checkbox');
+	    }
+	  }
+	});
+	
     
 </script>
 

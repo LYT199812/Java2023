@@ -22,4 +22,5 @@ public class Stock {
 	private Integer productQty; 
 	private Integer ecProductQty;
 	
+	private Ecommerce ecommerce;
 }

@@ -32,7 +32,8 @@ public class StockDaoTest {
 		StockDaoResposity stockDaoResposity = ctx.getBean("stockDaoResposity", StockDaoResposity.class);
 		
 		// 測試查詢功能
-		Optional<Stock> stocks = stockDaoResposity.findStockByProductIdAndEcId("A101", 1);
+//		Optional<Stock> stocks = stockDaoResposity.findStockByProductIdAndEcId("A101", 1);
+		List<Stock> stocks = stockDaoResposity.findAllStocks();
 		System.out.println(new Gson().toJson(stocks));
 		
 		// 測試新增功能

@@ -1,11 +1,13 @@
 package spring.mvc.analyze.dao;
 
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import spring.mvc.analyze.entity.Level;
@@ -19,6 +21,18 @@ public class StockDaoResposity implements StockDao{
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
+	@Autowired
+	private EcommerceDaoResposity ecommerceDaoResposity;
+	
+	RowMapper<Stock> rowMapper = (ResultSet rs, int rowNum) -> {
+		Stock stock = new Stock();
+		stock.setEcId(rs.getInt("ecId"));
+		stock.setProductQty(rs.getInt("productQty"));
+		stock.setEcProductQty(rs.getInt("ecProductQty"));
+		stock.setEcommerce(ecommerceDaoResposity.findEcById(rs.getInt("ecId")).get());
+		return stock;
+		};
+	
 	@Override
 	public List<Stock> findAllStocks() {
 		String sql = "SELECT productId, ecId, productQty, ecProductQty FROM stock";
@@ -26,15 +40,15 @@ public class StockDaoResposity implements StockDao{
 //				+ "p.productTypeId, p.productSubTypeId, p.productImg, p.productDesc, p.isLaunch, s.productQty "
 //				+ "FROM product p "
 //				+ "LEFT JOIN stock s ON p.productId = s.productId;";
-		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Stock.class));
-//		return jdbcTemplate.query(sql, rowMapper);
+//		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Stock.class));
+		return jdbcTemplate.query(sql, rowMapper);
 	}
 	
 	@Override
 	public List<Stock> findStockByProductId(String productId) {
 		String sql = "SELECT productId, ecId, productQty, ecProductQty FROM stock where productId=?";
-		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Stock.class), productId);
-//		return jdbcTemplate.query(sql, rowMapper);
+//		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Stock.class), productId);
+		return jdbcTemplate.query(sql, rowMapper,productId);
 	}
 	
 	@Override

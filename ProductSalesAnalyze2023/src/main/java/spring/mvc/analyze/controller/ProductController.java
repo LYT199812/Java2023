@@ -47,6 +47,20 @@ public class ProductController {
 	public String addProduct(Model model) {
 		return "analyze/product/addProduct";
 	}
+	// product maintainProduct
+	@GetMapping("/maintainProduct")
+	public String maintainProduct(Model model) {
+		List<Product> productList = productDao.findAllProducts();
+        model.addAttribute("products", productList);
+		return "analyze/product/maintainProduct"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
+	}
+	// product maintainProduct
+	@GetMapping("/editProduct/{}")
+	public String maintainProduct(Model model) {
+		List<Product> productList = productDao.findProductById();
+        model.addAttribute("products", productList);
+		return "analyze/product/editProduct"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
+	}
 	
 	
 	// 新增商品
@@ -56,6 +70,21 @@ public class ProductController {
 		productDao.addProduct(product);
 		return "analyze/product/addProduct";
 	}
+	
+	// 修改商品
+	@PostMapping("/updateProduct")
+    public String updateProduct(@ModelAttribute Product product, Model model) {
+        int rowCount = productDao.updateProduct(product);
+
+        if (rowCount > 0) {
+            // 產品更新成功
+            return "redirect:/product/maintainProduct";
+        } else {
+            // 處理更新失敗的情況
+            model.addAttribute("error", "無法更新產品。");
+            return "analyze/product/maintainProduct";
+        }
+    }
 	
 	
 	// POI 批次新增商品 EXCEL 檔案匯入
@@ -175,4 +204,6 @@ public class ProductController {
         return false; // 或者設定為預設值
     }
   
+    
+    
 }

@@ -12,3 +12,6 @@
 <footer class="position-fixed bottom-0 w-100 text-light text-center">
 	<p class="mb-0">&copy; 2023 MyAnalyze. All rights reserved.</p>
 </footer>
+
+</body>
+</html>
