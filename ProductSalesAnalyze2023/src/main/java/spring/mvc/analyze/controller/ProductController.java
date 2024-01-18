@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -18,14 +22,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import spring.mvc.analyze.dao.EcommerceDao;
 import spring.mvc.analyze.dao.ProductDao;
 import spring.mvc.analyze.dao.StockDao;
+import spring.mvc.analyze.entity.Ecommerce;
 import spring.mvc.analyze.entity.Product;
 import spring.mvc.analyze.entity.ProductType;
 import spring.mvc.analyze.entity.Stock;
@@ -42,6 +49,8 @@ public class ProductController {
 	@Autowired
 	private StockDao stockDao;
 	
+	@Autowired EcommerceDao ecommerceDao;
+	
 	// product addProduct
 	@GetMapping("/addProduct")
 	public String addProduct(Model model) {
@@ -52,14 +61,42 @@ public class ProductController {
 	public String maintainProduct(Model model) {
 		List<Product> productList = productDao.findAllProducts();
         model.addAttribute("products", productList);
-		return "analyze/product/maintainProduct"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
+		return "analyze/product/maintainProduct";
 	}
-	// product maintainProduct
-	@GetMapping("/editProduct/{}")
-	public String maintainProduct(Model model) {
-		List<Product> productList = productDao.findProductById();
-        model.addAttribute("products", productList);
-		return "analyze/product/editProduct"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
+	// product editProduct
+	@GetMapping("/editProduct/{productId}")
+	public String editProduct(@PathVariable("productId") String productId,Model model) {
+		Optional<Product> productOpt = productDao.findProductById(productId);
+		Product product = productOpt.get();
+//		// 處理平台上架的標記
+//        for (Stock stock : product.getInventory()) {
+//            model.addAttribute("platform_" + stock.getEcId() + "_isOnSale", true);
+//        }
+
+		// 取得所有可能的平台，這裡假設你有一個方法可以取得所有平台的列表
+		List<Ecommerce> ecommerces = product.getInventory().stream()
+			    .map(Stock::getEcommerce)
+			    .distinct()
+			    .collect(Collectors.toList()); 
+
+	    // 將所有平台設置到model中
+	    model.addAttribute("ecommerce", ecommerces);
+		
+	    //創建一個 Map 以保存庫存，以 ecId 為 key
+	    Map<Integer, Stock> stockMap = product.getInventory()
+	            .stream()
+	            .filter(stock -> stockDao.findStockByProductIdAndEcId(productId, stock.getEcId()).isPresent())
+	            .collect(Collectors.toMap(Stock::getEcId, Function.identity()));
+        
+        
+//        List<Stock> stockOpt = product.getInventory()
+//        	    .stream()
+//        	    .filter(stock -> stockDao.findStockByProductIdAndEcId(productId, stock.getEcId()).isPresent())
+//        	    .collect(Collectors.toList());
+
+        model.addAttribute("product", product);
+        model.addAttribute("stockMap", stockMap);
+		return "analyze/product/editProduct";
 	}
 	
 	
@@ -130,7 +167,8 @@ public class ProductController {
         product.setProductSubTypeId(getCellValueAsInt(row.getCell(6)));
         product.setProductImg(getCellValueAsString(row.getCell(7)));
         product.setProductDesc(getCellValueAsString(row.getCell(8)));
-        product.setIsLaunch(getCellValueAsBoolean(row.getCell(9)));
+        product.setProductQty(getCellValueAsInt(row.getCell(9)));
+        product.setIsLaunch(getCellValueAsBoolean(row.getCell(10)));
 
         return product;
     }
@@ -143,9 +181,8 @@ public class ProductController {
         for (int i = 1; i <= 3; i++) {
             Stock stock = new Stock();
             stock.setProductId(productId);
-            stock.setEcId(getCellValueAsInt(row.getCell(9 + i)));
-            stock.setEcProductQty(getCellValueAsInt(row.getCell(12 + i)));
-            stock.setProductQty(getCellValueAsInt(row.getCell(16)));
+            stock.setEcId(getCellValueAsInt(row.getCell(10 + i)));
+            stock.setEcProductQty(getCellValueAsInt(row.getCell(13 + i)));
 
             stocks.add(stock);
         }

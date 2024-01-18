@@ -46,6 +46,7 @@ public class ProductDaoResposity implements ProductDao{
 		product.setProductSubType(productTypeDaoResposity.findProductSubTypeById(rs.getInt("productSubTypeId")).get());
 		product.setProductImg(rs.getString("productImg"));
 		product.setProductDesc(rs.getString("productDesc"));
+		product.setProductQty(rs.getInt("productQty"));
 		product.setIsLaunch(rs.getBoolean("isLaunch"));
 		product.setInventory(stockDaoResposity.findStockByProductId(rs.getString("productId")));
 		//product.setProductQty(rs.getInt("productQty"));
@@ -55,7 +56,7 @@ public class ProductDaoResposity implements ProductDao{
 	
 	@Override
 	public List<Product> findAllProducts() {
-		String sql = "select productId, productName, productPrice, productBarcode, productBrand, productTypeId, productSubTypeId, productImg, productDesc, isLaunch from product";
+		String sql = "select productId, productName, productPrice, productBarcode, productBrand, productTypeId, productSubTypeId, productImg, productDesc, productQty, isLaunch from product";
 //		String sql = "SELECT p.productId, p.productName, p.productPrice, p.productBarcode, p.productBrand, "
 //				+ "p.productTypeId, p.productSubTypeId, p.productImg, p.productDesc, p.isLaunch, s.productQty "
 //				+ "FROM product p "
@@ -66,7 +67,7 @@ public class ProductDaoResposity implements ProductDao{
 
 	@Override
 	public Optional<Product> findProductById(String productId) {
-		String sql = "select productId, productName, productPrice, productBarcode, productBrand, productTypeId, productSubTypeId, productImg, productDesc, isLaunch from product where productId = ?";
+		String sql = "select productId, productName, productPrice, productBarcode, productBrand, productTypeId, productSubTypeId, productImg, productDesc, productQty, isLaunch from product where productId = ?";
 		try {
 			Product product = jdbcTemplate.queryForObject(sql,rowMapper, productId);
 			return Optional.ofNullable(product);
@@ -78,7 +79,7 @@ public class ProductDaoResposity implements ProductDao{
 
 	@Override
 	public Optional<Product> findProductByProductname(String productName) {
-		String sql = "select productId, productName, productPrice, productBarcode, productBrand, productTypeId, productSubTypeId, productImg, productDesc, isLaunch from product where productName = ?";
+		String sql = "select productId, productName, productPrice, productBarcode, productBrand, productTypeId, productSubTypeId, productImg, productDesc, productQty, isLaunch from product where productName = ?";
 		try {
 			Product product = jdbcTemplate.queryForObject(sql,rowMapper, productName);
 			return Optional.ofNullable(product);
@@ -90,18 +91,18 @@ public class ProductDaoResposity implements ProductDao{
 
 	@Override
 	public int addProduct (Product product) {
-		String sql = "insert into product(productId, productName, productPrice, productBarcode, productBrand, productTypeId, productSubTypeId, productImg, productDesc, isLaunch) value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "insert into product(productId, productName, productPrice, productBarcode, productBrand, productTypeId, productSubTypeId, productImg, productDesc, productQty, isLaunch) value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		int rowcount =  jdbcTemplate.update(sql, 
 				product.getProductId(), product.getProductName(), product.getProductPrice(), product.getProductBarcode(), product.getProductBrand(), 
-				product.getProductTypeId(), product.getProductSubTypeId(), product.getProductImg(), product.getProductDesc(), product.getIsLaunch());
+				product.getProductTypeId(), product.getProductSubTypeId(), product.getProductImg(), product.getProductDesc(), product.getProductQty(), product.getIsLaunch());
 	
 		return rowcount ;
 	}
 
 	@Override
 	public void addProductByExcel(List<Product> productList) {
-		String sql = "insert into product(productId, productName, productPrice, productBarcode, productBrand, productTypeId, productSubTypeId, productImg, productDesc, isLaunch) "
-				+ "value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "insert into product(productId, productName, productPrice, productBarcode, productBrand, productTypeId, productSubTypeId, productImg, productDesc, productQty, isLaunch) "
+				+ "value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
 		jdbcTemplate.batchUpdate(sql, productList, productList.size(),
           (ps, product) -> {
@@ -114,7 +115,8 @@ public class ProductDaoResposity implements ProductDao{
               ps.setInt(7, product.getProductSubTypeId());
               ps.setString(8, product.getProductImg());
               ps.setString(9, product.getProductDesc());
-              ps.setBoolean(10, product.getIsLaunch());
+              ps.setInt(10, product.getProductQty());
+              ps.setBoolean(11, product.getIsLaunch());
           });
 		
 	}
@@ -124,7 +126,7 @@ public class ProductDaoResposity implements ProductDao{
 		String sql = "UPDATE product " +
                 "SET productName=?, productPrice=?, productBarcode=?, " +
                 "productBrand=?, productTypeId=?, productSubTypeId=?, " +
-                "productImg=?, productDesc=?, isLaunch=? " +
+                "productImg=?, productDesc=?, productQty=?, isLaunch=? " +
                 "WHERE productId=?";
 
 	   // 使用 update 方法執行更新，並回傳受影響的列數
@@ -137,6 +139,7 @@ public class ProductDaoResposity implements ProductDao{
 	           product.getProductSubTypeId(),
 	           product.getProductImg(),
 	           product.getProductDesc(),
+	           product.getProductQty(),
 	           product.getIsLaunch(),
 	           product.getProductId());
 	}

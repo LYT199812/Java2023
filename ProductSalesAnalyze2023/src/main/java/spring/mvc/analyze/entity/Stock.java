@@ -18,8 +18,7 @@ import lombok.NoArgsConstructor;
 public class Stock {
 
 	private String productId; 
-	private Integer ecId; 
-	private Integer productQty; 
+	private Integer ecId;  
 	private Integer ecProductQty;
 	
 	private Ecommerce ecommerce;

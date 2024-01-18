@@ -1,3 +1,17 @@
+// 編輯產品，動態渲染前端，帶入有上架的平台預設值打勾，迴圈範例(是錯的只能跑最後一個)
+<div class="form-check">
+	<c:forEach items="${product.inventory}" var="stock" varStatus="loop">
+	<c:if test="${stock.ecId == 3}">
+	<input class="form-check-input" type="checkbox" value="3" id="defaultCheck3_${loop3.index}" checked> 
+	</c:if>
+	<c:if test="${stock.ecId != 3}">
+	<input class="form-check-input" type="checkbox" value="3" id="defaultCheck3_${loop3.index}"> 
+	</c:if>
+	</c:forEach>
+	<label class="form-check-label"	for="defaultCheck3"> 蝦皮 </label> 
+	<input type="number" class="form-control inventory-field" id="defaultCheck3-inventory" placeholder="庫存" value="${ product.inventory[2].ecProductQty }">
+</div>
+
 
 // 新增產品的checkbox & radiobutton 合併js驗證
 <!DOCTYPE html>

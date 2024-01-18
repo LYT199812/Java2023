@@ -20,6 +20,7 @@ public class Product {
 	private Integer productSubTypeId ;
 	private String productImg;
 	private String productDesc;
+	private Integer productQty;
 	private Boolean isLaunch;
 	
 	//private Integer productQty;
