@@ -43,7 +43,7 @@ values ('Momo', 'https://www.momoshop.com.tw/main/Main.jsp'),
 -- 9. 設立 stcok 預設值
 insert into stock (productId, ecId, ecProductQty) values ('A101', 1, 10), ('B101', 1, 8), ('A101', 2, 18), 
 ('A102', 1, 10), ('A103', 1, 10), ('A104', 1, 10), ('A105', 1, 10), ('A106', 1, 10), ('A107', 1, 10), ('A108', 1, 10),
-('B102', 1, 10), ('B103', 1, 10), ('C101', 1, 10);
+('B102', 1, 10), ('B103', 1, 10), ('C101', 1, 10), ('A103', 2, 10), ('A103', 3, 10), ('A102', 3, 10), ('A101', 3, 10);
 
 -- 10.設立 salesdata 預設值
 insert into salesdata (ecId, productId, ecOrderNumber, ecProductCode, ecProductType, ecProductSubType, ecWarehouse, ecSalesQty, ecSalesPrice, ecSalesDate, ecSalesStatus) 

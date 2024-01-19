@@ -122,7 +122,7 @@ public class ProductDaoResposity implements ProductDao{
 	}
 
 	@Override
-	public int updateProduct(Product product) {
+	public int updateProductById(Product product) {
 		String sql = "UPDATE product " +
                 "SET productName=?, productPrice=?, productBarcode=?, " +
                 "productBrand=?, productTypeId=?, productSubTypeId=?, " +

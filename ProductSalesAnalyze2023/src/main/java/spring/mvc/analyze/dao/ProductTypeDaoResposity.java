@@ -2,6 +2,7 @@ package spring.mvc.analyze.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,19 @@ public class ProductTypeDaoResposity implements ProductTypeDao{
 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
+	
+	@Override
+	public List<ProductType> findAllProductTypes() {
+		String sql = "select id, name from productType";
+		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(ProductType.class));
+	}
+
+	@Override
+	public List<ProductSubType> findAllProductSubTypes() {
+		String sql = "select id, name from productSubType";
+		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(ProductSubType.class));
+//		return jdbcTemplate.query(sql, rowMapper);
+	}
 	
 	@Override
 	public Optional<ProductType> findProductTypeById(Integer productTypeId) {

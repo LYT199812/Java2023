@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!--  產品表格 -->
-<div class="container mt-5">
+<div class="container mt-3 mb-5">
   <h2>產品表格</h2>
   <table class="table">
     <thead>
@@ -52,7 +52,7 @@
         <!-- 
           <a href="${pageContext.request.contextPath}/mvc/product/editProduct/${product.productId}" class="btn btn-primary" onclick="edit('${product.productId}')" role="button" data-bs-toggle="button">編輯</a>
            -->
-          <a href="${ pageContext.request.contextPath }/mvc/product/editProduct/${product.productId}">
+          <a href="${ pageContext.request.contextPath }/mvc/product/editProduct2/${product.productId}">
           <button class="btn btn-primary" id="editButton" >編輯</button>
           </a>
           

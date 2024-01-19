@@ -63,6 +63,7 @@
 					<option value="" selected>館別</option>
 					<option value="餐廚">餐廚</option>
 					<option value="烘焙">烘焙</option>
+					<option value="傢俱">傢俱</option>
 					<option value="旅遊">旅遊</option>
 				</select>
 			</div>
@@ -70,8 +71,19 @@
 				<select class="form-select" name='name' id="typeSelect">
 					<option value="" selected>分類</option>
 					<option value="鍋鏟">鍋鏟</option>
-					<option value="桿麵棍">桿麵棍</option>
-					<option value="頸枕">頸枕</option>
+					<option value="平底鍋">平底鍋</option>
+					<option value="主廚刀">主廚刀</option>
+					<option value="餅乾模">餅乾模</option>
+					<option value="醬料刷">醬料刷</option>
+					<option value="量杯">量杯</option>
+					<option value="量匙">量匙</option>
+					<option value="電子秤">電子秤</option>
+					<option value="隔熱手套">隔熱手套</option>
+					<option value="派烤盤">派烤盤</option>
+					<option value="蛋糕烤盤">蛋糕烤盤</option>
+					<option value="可麗露模">可麗露模</option>
+					<option value="烘焙紙">烘焙紙</option>
+					<option value="計時器">計時器</option>
 				</select>
 			</div>
 			<div class="col-md-1">

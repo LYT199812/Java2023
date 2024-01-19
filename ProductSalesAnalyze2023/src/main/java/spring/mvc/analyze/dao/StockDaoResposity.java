@@ -26,6 +26,7 @@ public class StockDaoResposity implements StockDao{
 	
 	RowMapper<Stock> rowMapper = (ResultSet rs, int rowNum) -> {
 		Stock stock = new Stock();
+		stock.setProductId(rs.getString("productId"));
 		stock.setEcId(rs.getInt("ecId"));
 		stock.setEcProductQty(rs.getInt("ecProductQty"));
 		stock.setEcommerce(ecommerceDaoResposity.findEcById(rs.getInt("ecId")).get());
