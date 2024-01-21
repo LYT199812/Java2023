@@ -33,6 +33,7 @@ public class SalesDataDaoResposity implements SalesDataDao{
 		salesData.setTrxId(rs.getInt("trxId"));
 		salesData.setEcOrderNumber(rs.getString("ecOrderNumber"));
 		salesData.setProductId(rs.getString("productId"));
+		salesData.setEcId(rs.getInt("ecId"));
 		salesData.setEcProductCode(rs.getString("ecProductCode"));
 		salesData.setEcProductType(rs.getString("ecProductType"));
 		salesData.setEcProductSubType(rs.getString("ecProductSubType"));

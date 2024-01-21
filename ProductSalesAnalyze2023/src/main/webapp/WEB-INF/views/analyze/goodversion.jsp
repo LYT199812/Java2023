@@ -7,7 +7,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>銷售分析</title>
+<style type="text/css">
+
+	.canvas {
+	    max-width: 100%;
+	    height: auto;
+    }
+    
+    body {
+		background-color: #F0F0F0
+	}
+
+</style>
+
 </head>
+<!-- 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ -->
+<script src="https://cdn.staticfile.org/Chart.js/3.9.1/chart.js"></script>
 
 <body>
 	<div class="d-flex bd-highlight px-5">
@@ -42,13 +59,13 @@
 	</div>
 
 
-	<div class="container mt-3">
+	<div class="container mt-3 px-0">
 		<!-- 篩選條件 -->
 		<div class="row mb-3 d-flex align-items-start">
 			<div class="col-md-1">
 				<select class="form-select" name='name' id="modelSelect"
 					aria-label="Floating label select example">
-					<option value="" selected>模式</option>
+					<option value="商品" selected>模式</option>
 					<option value="商品">商品</option>
 					<option value="品牌">品牌</option>
 					<option value="分類">分類</option>
@@ -108,7 +125,8 @@
 			</div>
 		</div>
 
-		<!-- 銷售資料表格 -->
+
+		<!-- 產品銷售資料表格 -->
 		<table class="table" id="salesTable">
 			<!-- 表格標頭 -->
 			<thead>
@@ -124,7 +142,6 @@
 					<th>總庫存</th>
 					<th>銷售量</th>
 					<th>銷售額</th>
-					<th>銷售日期</th>
 					<th>YOY</th>
 					<!-- 其他欄位... -->
 				</tr>
@@ -133,17 +150,61 @@
 			<tbody>
 				<!-- 資料將在篩選時插入這裡 -->
 			</tbody>
+			<!-- 表格總計 -->
+		    <tfoot>
+		        <tr>
+		            <td colspan="8">總計：</td>
+		            <td id="totalQty" class="text-danger">></td>
+		            <td id="totalSalesQty" class="text-danger">></td>
+		            <td id="totalSalesFigures" class="text-danger">></td>
+		            <td colspan="3"></td> <!-- 如果有其他欄位，調整 colspan 的值 -->
+		        </tr>
+		    </tfoot>
 		</table>
+		
+		<!-- 品牌銷售資料表格 -->
+		<table class="table" id="brandSalesTable">
+			<!-- 表格標頭 -->
+			<thead>
+				<tr>
+					<th></th>
+					<th>品牌</th>
+					<th>產品館別</th>
+					<th>產品分類</th>
+					<th>銷售量</th>
+					<th>銷售額</th>
+					<th>YOY</th>
+					<!-- 其他欄位... -->
+				</tr>
+			</thead>
+			<!-- 表格內容 -->
+			<tbody>
+				<!-- 資料將在篩選時插入這裡 -->
+			</tbody>
+			<!-- 表格總計 -->
+		    <tfoot>
+		        <tr>
+		            <td colspan="4">總計：</td>
+		            <td id="brandTotalSalesQty" class="text-danger">></td>
+		            <td id="brandTotalSalesFigures" class="text-danger">></td>
+		            <td colspan="2"></td> <!-- 如果有其他欄位，調整 colspan 的值 -->
+		        </tr>
+		    </tfoot>
+		</table>
+		
 	</div>
-
-
-    <h5 id="totalQty" class="text-center text-danger"></h5>
-
+	
 	<script>
 		const salesData = ${salesData};
 	</script>
 
+<div class="mb-5">
+    <canvas id="salesBarChart" width="400" height="200"></canvas>
+</div>
+
 	<script type="text/javascript" src="<%=request.getContextPath()%>/components/script.js"></script>	
 </body>
+
+
 
 </html>

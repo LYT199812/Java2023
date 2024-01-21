@@ -3,6 +3,12 @@
 <%@include file="/WEB-INF/views/analyze/ecWebsite/header.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<style>
+	body {
+		background-color: #F0F0F0
+	}
+</style>
+
 <!--  產品表格 -->
 <div class="container mt-3 mb-5">
   <h2>產品表格</h2>

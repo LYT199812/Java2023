@@ -14,6 +14,7 @@ public class SalesData {
 	private Integer trxId;
 	private String ecOrderNumber;
 	private String productId;
+	private Integer ecId;
 	private String ecProductCode;
 	private String ecProductType;
     private String ecProductSubType;
@@ -26,5 +27,6 @@ public class SalesData {
     
     private Ecommerce ecommerce;
     private Product product;
+    private String month;
     
 }

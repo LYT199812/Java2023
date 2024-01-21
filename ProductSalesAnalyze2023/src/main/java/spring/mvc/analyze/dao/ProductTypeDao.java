@@ -16,8 +16,8 @@ public interface ProductTypeDao {
 	Optional<ProductType> findProductTypeById(Integer productTypeId);
 	Optional<ProductSubType> findProductSubTypeById(Integer productSubTypeId);
 	
-	int addProductType (ProductType productType);
-	int addProductSubType (ProductSubType productSubType);
+	public int addProductType (ProductType productType);
+	public int addProductSubType (ProductSubType productSubType);
 	
 	public int updateProductType(ProductType productType);
 	public int updateProductSubType(ProductSubType productSubType);

@@ -40,6 +40,7 @@ import spring.mvc.analyze.dao.StockDao;
 import spring.mvc.analyze.dto.SalesDataDto;
 import spring.mvc.analyze.entity.Ecommerce;
 import spring.mvc.analyze.entity.Product;
+import spring.mvc.analyze.entity.ProductBrand;
 import spring.mvc.analyze.entity.ProductSubType;
 import spring.mvc.analyze.entity.ProductType;
 import spring.mvc.analyze.entity.SalesData;
@@ -106,9 +107,9 @@ public class EccommerceController {
 			Product product = productDao.findProductById(salesData.getProductId()).get();
 			ProductType productType = product.getProductType();
 			ProductSubType productSubType = product.getProductSubType();
+			ProductBrand productBrand = product.getProductBrand();
 			Stock stock = product.getInventory()
 					             .stream()
-					             .filter(s-> s.getEcId().equals(ecId))
 					             .findFirst()
 					             .get();
 			
@@ -116,7 +117,7 @@ public class EccommerceController {
 			salesDataDto.setNumber((i+1));
 			salesDataDto.setProductId(salesData.getProductId());
 			salesDataDto.setProductName(product.getProductName());
-			salesDataDto.setBrand(product.getProductBrand());
+			salesDataDto.setBrand(productBrand.getName());
 			salesDataDto.setProductDepartment(productType.getName());
 			salesDataDto.setProductType(productSubType.getName());
 			salesDataDto.setProductEAN(product.getProductBarcode());
@@ -134,6 +135,7 @@ public class EccommerceController {
 		return "/analyze/ecWebsite/eccommerce";
 	}
 	
+	// 大量匯入銷售原始資料
 	@PostMapping("/upload")
     @ResponseBody
     public String handleFileUpload(@RequestParam("source") String source, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request, Model model) {

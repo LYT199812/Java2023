@@ -4,6 +4,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="sp" uri="http://www.springframework.org/tags/form" %>
 
+<style>
+	body {
+		background-color: #F0F0F0
+	}
+</style>
+
 ${ product }
 <div class="container mt-4">
   <h2 class="mb-4">編輯 ${product.productId} 資訊</h2>

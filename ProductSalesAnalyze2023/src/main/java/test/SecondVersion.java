@@ -314,6 +314,26 @@ public class SecondVersion {
 		}
 		*/
 		
+		//------------------------------------------------------------
+		// main controller 
+		
+		// 合併相同 ecId 的資料
+//	    List<SalesData> analyzeSalesDatas = salesDatas.stream()
+//	            .collect(Collectors.groupingBy(SalesData::getEcId))
+//	            .values()
+//	            .stream()
+//	            .map(salesList -> {
+//	                int qty = salesList.stream().mapToInt(SalesData::getEcSalesQty).sum();
+//	                int price = salesList.stream().mapToInt(SalesData::getEcSalesPrice).sum();
+//	                SalesData salesData = salesList.get(0);
+//	                salesData.setEcSalesQty(qty);
+//	                salesData.setEcSalesPrice(price);
+//	                return salesData;
+//	            })
+//	            .collect(Collectors.toList());
+		
+		
+		
 	}
 
 }

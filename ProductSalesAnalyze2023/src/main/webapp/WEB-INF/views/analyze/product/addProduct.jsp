@@ -161,6 +161,10 @@
 	}
 	*/
 	
+	body {
+		background-color: #F0F0F0
+	}
+	
 	.error-radio {
 	  box-shadow: 0 0 5px red; /* 使用紅色的陰影 */
 	  border: 2px solid red;  /* 使用紅色的邊框，調整邊框寬度 */

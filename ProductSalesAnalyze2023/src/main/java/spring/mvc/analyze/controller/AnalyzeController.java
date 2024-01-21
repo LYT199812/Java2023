@@ -35,6 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
 import spring.mvc.analyze.dao.AnalyzeDao;
 import spring.mvc.analyze.entity.Level;
 import spring.mvc.analyze.entity.Product;
+import spring.mvc.analyze.entity.ProductBrand;
 import spring.mvc.analyze.entity.ProductType;
 import spring.mvc.analyze.entity.SalesData;
 import spring.mvc.analyze.entity.User;
@@ -136,7 +137,7 @@ public class AnalyzeController {
 				session.setAttribute("user", user); // 將 user 物件放入到 session 變數中
 				// 這邊重導的路徑是看下面@RequestMapping("/frontend/main")設定，因為是client發起(外部路徑)，會重新再經過controller，再重新發起session；
 				// 資訊安全的一部分，讓client不知道我們實際內部的檔案路徑
-				return "redirect:/mvc/analyze/main"; //login ok，導前台首頁
+				return "redirect:/mvc/chart/main"; //login ok，導前台首頁
 			}else {
 				session.invalidate(); // session 過期失效
 				model.addAttribute("loginMessage", "密碼錯誤");
@@ -255,9 +256,18 @@ public class AnalyzeController {
                             	product.setProductBarcode(cell.getStringCellValue());
                                 break;
                             case 4:
-                            	cell.setCellType(CellType.STRING);
-                            	product.setProductBrand(cell.getStringCellValue());
-                                break;
+                            	if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                            		product.setProductBrand(ProductBrand.builder().id((int) cell.getNumericCellValue()).build());
+                                } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                                    String salesStringValue = cell.getStringCellValue().trim();;
+                                    try {
+                                    	product.setProductBrandId(Integer.parseInt(salesStringValue));
+                                    } catch (NumberFormatException e) {
+                                        // 處理轉換失敗的情況，例如文字不是合法的整數格式
+                                    	product.setProductBrandId(0); // 或者設定為預設值
+                                    }
+                                }
+                                break;  
                             case 5:            
                             	if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
                             		product.setProductType(ProductType.builder().id((int) cell.getNumericCellValue()).build());

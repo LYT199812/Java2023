@@ -15,7 +15,7 @@ public class Product {
 	private String productName;
 	private Integer productPrice;
 	private String productBarcode;
-	private String productBrand;
+	private Integer productBrandId;
 	private Integer productTypeId;
 	private Integer productSubTypeId ;
 	private String productImg;
@@ -26,6 +26,7 @@ public class Product {
 	//private Integer productQty;
 	private List<Stock> inventory;
 	
+	private ProductBrand productBrand;
 	private ProductType productType;
 	private ProductSubType productSubType ;
 	

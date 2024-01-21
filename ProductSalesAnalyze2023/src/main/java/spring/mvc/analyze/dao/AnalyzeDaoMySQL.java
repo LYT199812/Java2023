@@ -140,7 +140,7 @@ public class AnalyzeDaoMySQL implements AnalyzeDao{
                  ps.setString(2, product.getProductName());
                  ps.setInt(3, product.getProductPrice());
                  ps.setString(4, product.getProductBarcode());
-                 ps.setString(5, product.getProductBrand());
+                 ps.setInt(5, product.getProductBrandId());
                  ps.setInt(6, product.getProductType().getId());
                  ps.setInt(7, product.getProductSubType().getId());
                  ps.setBoolean(8, product.getIsLaunch());

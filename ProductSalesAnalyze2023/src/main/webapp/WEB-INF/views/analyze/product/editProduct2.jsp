@@ -10,6 +10,12 @@
 	Product product = (Product)request.getAttribute("product");
 
 %>
+<style>
+	body {
+		background-color: #F0F0F0
+	}
+</style>
+
 
 ${product}
 <div class="container mt-4">
@@ -29,7 +35,7 @@ ${product}
 		</div>
 		<div class="mb-3">
 			<label for="productBrand" class="form-label">產品品牌</label> 
-			<input type="text" class="form-control" id="productBrand" value="${product.productBrand}">
+			<input type="text" class="form-control" id="productBrand" value="${product.productBrand.name}">
 		</div>
 		<div class="mb-3">
 			<label for="productTypeId" class="form-label">產品大分類</label> 

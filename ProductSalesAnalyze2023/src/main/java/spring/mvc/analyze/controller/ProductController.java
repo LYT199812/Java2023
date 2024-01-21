@@ -33,11 +33,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import spring.mvc.analyze.dao.EcommerceDao;
+import spring.mvc.analyze.dao.ProductBrandDao;
 import spring.mvc.analyze.dao.ProductDao;
-import spring.mvc.analyze.dao.ProductTypeDaoResposity;
+import spring.mvc.analyze.dao.ProductTypeDao;
 import spring.mvc.analyze.dao.StockDao;
 import spring.mvc.analyze.entity.Ecommerce;
 import spring.mvc.analyze.entity.Product;
+import spring.mvc.analyze.entity.ProductBrand;
 import spring.mvc.analyze.entity.ProductSubType;
 import spring.mvc.analyze.entity.ProductType;
 import spring.mvc.analyze.entity.Stock;
@@ -58,7 +60,10 @@ public class ProductController {
 	EcommerceDao ecommerceDao;
 	
 	@Autowired
-	ProductTypeDaoResposity productTypeDaoResposity;
+	ProductTypeDao productTypeDao;
+	
+	@Autowired
+	ProductBrandDao productBrandDao;
 	
 	// product addProduct
 	@GetMapping("/addProduct")
@@ -200,14 +205,16 @@ public class ProductController {
 	// 首頁基礎資料
 	private void addBasicModel(Model model) {
 		List<Product> products = productDao.findAllProducts();
-		List<ProductType> productTypes =productTypeDaoResposity.findAllProductTypes();
-		List<ProductSubType> productSubTypes =productTypeDaoResposity.findAllProductSubTypes();
+		List<ProductType> productTypes =productTypeDao.findAllProductTypes();
+		List<ProductSubType> productSubTypes =productTypeDao.findAllProductSubTypes();
+		List<ProductBrand> productBrands = productBrandDao.findAllProductBrands();
 		List<Stock> stocks = stockDao.findAllStocks();
 		List<Ecommerce> ecommerces = ecommerceDao.findAllEcommerces();
 		
 		model.addAttribute("products", products); // 將產品資料傳給 jsp
 		model.addAttribute("productTypes", productTypes); // 將大分類資料傳給 jsp
 		model.addAttribute("productSubTypes", productSubTypes); // 將中分類資料傳給 jsp
+		model.addAttribute("productBrands", productBrands); // 將品牌資料傳給 jsp
 		model.addAttribute("stocks", stocks); // 取得目前最新 stocks 資料
 		model.addAttribute("ecommerces", ecommerces); // 取得目前最新 ecommerces 資料
 	}
@@ -252,7 +259,7 @@ public class ProductController {
         product.setProductName(getCellValueAsString(row.getCell(1)));
         product.setProductPrice(getCellValueAsInt(row.getCell(2)));
         product.setProductBarcode(getCellValueAsString(row.getCell(3)));
-        product.setProductBrand(getCellValueAsString(row.getCell(4)));
+        product.setProductBrandId(getCellValueAsInt(row.getCell(4)));
         product.setProductTypeId(getCellValueAsInt(row.getCell(5)));
         product.setProductSubTypeId(getCellValueAsInt(row.getCell(6)));
         product.setProductImg(getCellValueAsString(row.getCell(7)));

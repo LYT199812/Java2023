@@ -24,4 +24,7 @@ public class SalesDataDto {
 	Integer salesFigures;
 	String date;
 	Integer yoy;
+	String month;
+	
+	String ecommerce;
 }
