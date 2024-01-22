@@ -18,19 +18,19 @@ public class LoginInterceptor implements HandlerInterceptor{
 		// 檢查 session 中是否有 user 的物件資料(意味著用戶已經登入)
 		if (session.getAttribute("user") != null) {
 			User user = (User)session.getAttribute("user");
-			/*
+			
 			// 路徑的權限檢查
 			// "/group_buy/backend"，user level = 2 才可以進入
 			System.out.println("RequestURI = " + request.getRequestURI());
-			if(request.getRequestURI().contains("/group_buy/backend")) { // 後台
-				if(user.getLevel() == 2) {
+			if(request.getRequestURI().contains("/eccommerce")) { // 電商
+				if(user.getLevelId() == 1) {
 					return true; // 放行
-				} else {
+				}  else {
 					response.sendRedirect(request.getServletContext().getContextPath() + "/mvc/group_buy/login");
 					return false; // 不放行
 				}
 			} 
-			*/
+			
 			return true; // 放行
 		}
 		// 未登入，導入到登入頁面

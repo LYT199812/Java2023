@@ -4,13 +4,14 @@ insert into level (levelName) values ('分析人員'),('管理人員'),('主管'
 -- 2. 設立 service 預設值
 insert into service (serviceName, serviceUrl) 
 values ('首頁', '/mvc/analyze/main'),
-('Momo', '/mvc/analyze/ecWebsite/momo2'),
-('商品', '/mvc/analyze/product/addProduct'),
-('庫存', '/mvc/analyze/productQty'),
-('權限管理', '/mvc/analyze/product/permissionSettings');
+('電商', '/mvc/analyze/ecWebsite/eccommerce'),
+('新增商品', '/mvc/analyze/product/addProduct'),
+('管理商品', '/mvc/analyze/product/maintainProduct'),
+('編輯商品', '/mvc/analyze/product/editProduct2'),
+('權限管理', '/mvc/analyze/permissionSettings');
 
 -- 3. 設立 levelRefService 預設值
-insert into levelRefService (levelId, serviceId) values (1, 1),(1, 2),(2, 1),(2, 3),(2, 4),(3, 1),(3, 2),(3, 3),(3, 4),(3, 5);
+insert into levelRefService (levelId, serviceId) values (1, 1),(1, 2),(2, 1),(2, 3),(2, 4),(2, 5),(3, 1),(3, 2),(3, 3),(3, 4),(3, 5),(3, 6);
 
 -- 4. 設立 User 預設值
 insert into user (username, password, levelId) values ('John', 'pass123', 1),('Sean', 'pass456', 2),('Amy', 'pass789', 3);

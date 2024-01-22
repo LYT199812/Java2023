@@ -5,24 +5,27 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <style>
-	body {
-		background-color: #F0F0F0
-	}
+        body {
+            background-color: #F0F0F0
+        }
+        
+        .centered-div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 15px;
+    }
+    .chartBox {
+            
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            
+    	}
+    
 </style>
-
-<style>
-        body {
-            background-color: #F0F0F0
-        }
-    </style>
     
-    <style>
-        body {
-            background-color: #F0F0F0
-        }
-    </style>
-    
-    <div class="w-75 bg-white mt-3" style="margin: 0 auto; border: 1px; padding: 15px;">
+    <div class="w-50 bg-white mt-3 centered-div chartBox " style="margin: 0 auto; border: 1px; padding: 15px;">
         <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">新增員工</button>
@@ -47,13 +50,13 @@
                     <div class="mb-3">
                         <label for="levelId" class="form-label">職務權限：</label>
                         <select class="form-select" id="levelId" name="levelId">
-                        <c:forEach var="user" items="${ userList }">
-                            <option value="${user.levelId }">${user.level.levelName } </option>
+                        	<c:forEach var="level" items="${ levels }">
+                            <option value="${level.levelId }">${level.levelName } </option>
                             <!-- 
                             <option value="1">分析人員</option>
                             <option value="2">商品管理人員</option>
                              -->
-                        </c:forEach>
+                             </c:forEach>
                         </select>
                     </div>
                     <button type="button" class="btn btn-primary" onclick="addEmployee()">新增員工</button>
@@ -62,30 +65,33 @@
     
             <!-- 員工設定 -->
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                <h2 class="mt-4">員工權限列表</h2>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">員工ID</th>
-                            <th scope="col">員工姓名</th>
-                            <th scope="col">職務權限</th>
-                            <th scope="col">操作</th>
-                        </tr>
-                    </thead>
-                    <tbody id="userListTable">
-                    
-                        <tr>
-				            <td>101</td>
-				            <td>John</td>
-				            <td>主管</td>
-				            <td>
-				                <button class="btn btn-warning btn-sm" onclick="editEmployee(${user.userId})">編輯</button>
-				                <button class="btn btn-danger btn-sm" onclick="deleteEmployee(${user.userId})">刪除</button>
-				            </td>
-				        </tr>
-                    
-                    </tbody>
-                </table>
+                
+                <div class="ms-5 me-3">
+	                <table class="table">
+	                    <thead>
+	                        <tr>
+	                            <th scope="col">員工ID</th>
+	                            <th scope="col">員工姓名</th>
+	                            <th scope="col">職務權限</th>
+	                            <th scope="col">操作</th>
+	                        </tr>
+	                    </thead>
+	                    <tbody id="userListTable">
+	                    
+	                        <tr>
+					            <td>101</td>
+					            <td>John</td>
+					            <td>主管</td>
+					            <td>
+					            	<div class="d-flex">
+						                <button class="btn btn-warning btn-sm  me-2" onclick="editEmployee(${user.userId})">編輯</button>
+						                <button class="btn btn-danger btn-sm ms-2" onclick="deleteEmployee(${user.userId})">刪除</button>
+					            	</div>
+					            </td>
+					        </tr>
+	                    </tbody>
+	                </table>
+               	</div>
             </div>
     
             <!-- 身分設定 -->
@@ -191,11 +197,11 @@
                 type: "DELETE",
                 url: "/ProductSalesAnalyze2023/mvc/user/mantain/" + userId, 
                 success: function (response) {
-                    console.log(response);
                     // 刪除成功後的處理，例如刷新列表等
                     loadEmployeeList();
                 },
                 error: function (error) {
+                    console.log(response);
                     console.error("刪除員工失敗", error);
                     // 處理刪除失敗的情況
                 }
@@ -261,8 +267,10 @@
                     // 遍历响应中的员工数据，并添加到列表中
                     for (var i = 0; i < response.length; i++) {
                         var user = response[i];
-                        $("#userListTable").append(`<tr><td>${user.userId}</td><td>${user.username}</td><td>${user.level.levelName}</td><td><button class="btn btn-warning btn-sm" onclick="editEmployee(${user.userId})">編輯</button><button class="btn btn-danger btn-sm" onclick="deleteEmployee(${user.userId})">刪除</button></td></tr>`);
+                        //$("#userListTable").append(`<tr><td>${user.userId}</td><td>${user.username}</td><td>${user.level.levelName}</td><td><button class="btn btn-warning btn-sm" onclick="editEmployee(${user.userId})">編輯</button><button class="btn btn-danger btn-sm" onclick="deleteEmployee(${user.userId})">刪除</button></td></tr>`);
+                        $("#userListTable").append('<tr><td>' + user.userId + '</td><td>' + user.username + '</td><td>' + user.level.levelName + '</td><td><button class="btn btn-warning btn-sm" onclick="editEmployee(' + user.userId + ')">編輯</button><button class="btn btn-danger btn-sm" onclick="deleteEmployee(' + user.userId + ')">刪除</button></td></tr>');
                     }
+                        console.log(userListTable)
                 },
                 error: function (error) {
                     console.error("加载员工列表失败", error);

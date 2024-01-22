@@ -40,7 +40,10 @@ public class UserSettingsController {
 	@GetMapping("/mantain")
 	public String permissionSettings(Model model) {
 		List<User> userList = userDao.findAllUsers();
+		List<Level> levels = levelDao.findAllLevels();
+		//Level level = new Level();
 		model.addAttribute("userList", userList);
+		model.addAttribute("levels", levels);
 		return "analyze/permissionSettings";
 	}
 	
@@ -96,11 +99,12 @@ public class UserSettingsController {
 
 	// 刪除員工
 	@DeleteMapping("/mantain/{userId}")
+	@ResponseBody
 	public String deleteUser(@PathVariable("userId") Integer userId) {
 		int rowcount = userDao.removeProductById(userId);
 		//System.out.println("delete User rowcount =" + rowcount);
 		 
-		return "redirect:/mvc/user/mantain/"; 
+		return "userId"; 
 	}
 	
 	

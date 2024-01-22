@@ -1,5 +1,6 @@
 package spring.mvc.analyze.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,12 @@ public class LevelDaoResposity implements LevelDao {
 			e.printStackTrace(); // 可以看console的錯誤
 			return Optional.empty();
 		}
+	}
+
+	@Override
+	public List<Level> findAllLevels() {
+		String sql = "select levelId, levelName from level;";
+		return jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Level.class));
 	}
 
 }
