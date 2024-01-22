@@ -3,6 +3,7 @@ package spring.mvc.analyze.dao;
 import java.util.List;
 import java.util.Optional;
 
+import spring.mvc.analyze.entity.Product;
 import spring.mvc.analyze.entity.User;
 
 public interface UserDao {
@@ -13,5 +14,9 @@ public interface UserDao {
 	
 	Optional<User> findUserByUsername(String username);
 	
-	int save(User user);
+	int addUser(User user);
+	
+	int updateUserLevelIdAndName(Integer userId, Integer levelId, String name);
+	
+	int removeProductById(Integer userId);
 }

@@ -181,10 +181,10 @@ public class AnalyzeController {
 	}
 		
 	// 權限設定
-	@GetMapping("/permissionSettings")
-	public String permissionSettings(Model model) {
-		return "analyze/permissionSettings"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
-	}
+//	@GetMapping("/permissionSettings")
+//	public String permissionSettings(Model model) {
+//		return "analyze/permissionSettings"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
+//	}
 	
 	// 權限設定
 	@GetMapping("/maintainStock")

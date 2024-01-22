@@ -57,7 +57,7 @@
         	</li>
         	
 	        <li class="nav-item">
-	          <a class="nav-link text-light" href="${ pageContext.request.contextPath }/mvc/analyze/permissionSettings">權限設定</a>
+	          <a class="nav-link text-light" href="${ pageContext.request.contextPath }/mvc/user/mantain">權限設定</a>
 	        </li>
 	      </ul>
 	    </div>
