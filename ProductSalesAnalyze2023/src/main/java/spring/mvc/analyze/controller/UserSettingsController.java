@@ -28,7 +28,7 @@ import spring.mvc.analyze.dao.LevelDao;
 
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/analyze/user")
 public class UserSettingsController {
 
 	@Autowired

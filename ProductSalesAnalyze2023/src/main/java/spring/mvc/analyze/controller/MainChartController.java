@@ -35,7 +35,7 @@ import spring.mvc.analyze.entity.SalesData;
 import spring.mvc.analyze.entity.Stock;
 
 @Controller
-@RequestMapping("/chart")
+@RequestMapping("/analyze/chart")
 public class MainChartController {
 
 	@Autowired

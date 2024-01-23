@@ -25,6 +25,9 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
  -->
 <script src="https://cdn.staticfile.org/Chart.js/3.9.1/chart.js"></script>
+<!-- SheetJS library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+
 
 <body>
 	<div class="d-flex bd-highlight px-5">
@@ -50,8 +53,8 @@
 			</div>
 		</form>
 		<div class="p-2 bd-highlight">
-			<button class="btn btn-outline-secondary  d-flex" type="submit"
-				onclick="window.location.href='./download?filename=456.docx'">
+			<button class="btn btn-outline-secondary  d-flex" type="button"
+				onclick="exportFilteredDataToExcel()">
 				匯出<i class="bi bi-download"></i>
 			</button>
 		</div>
@@ -191,6 +194,27 @@
 		        </tr>
 		    </tfoot>
 		</table>
+		
+		<div id="pagination" class="mt-3">
+		    <nav aria-label="Page navigation example">
+			  <ul class="pagination justify-content-end">
+			    <li class="page-item">
+			      <a class="page-link" href="#" aria-label="Previous">
+			        <span aria-hidden="true">&laquo;</span>
+			      </a>
+			    </li>
+			    <li class="page-item"><a class="page-link" href="#">1</a></li>
+			    <li class="page-item"><a class="page-link" href="#">2</a></li>
+			    <li class="page-item"><a class="page-link" href="#">3</a></li>
+			    <li class="page-item">
+			      <a class="page-link" href="#" aria-label="Next">
+			        <span aria-hidden="true">&raquo;</span>
+			      </a>
+		      	</li>
+			  </ul>
+			</nav>
+		</div>
+		
 		
 	</div>
 	

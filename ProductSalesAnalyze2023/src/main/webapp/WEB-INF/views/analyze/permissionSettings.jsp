@@ -147,7 +147,7 @@
             $.ajax({
                 type: "POST", // 使用POST方法表示新增
                 contentType: "application/json",
-                url: "/ProductSalesAnalyze2023/mvc/user/mantain", // 修改為你的後端控制器的URL
+                url: "/ProductSalesAnalyze2023/mvc/analyze/user/mantain", // 修改為你的後端控制器的URL
                 data: JSON.stringify(userData),
                 success: function (response) {
                 	
@@ -169,7 +169,7 @@
             // 使用Ajax發送請求到後端獲取員工資訊
             $.ajax({
                 type: "GET",
-                url: "/ProductSalesAnalyze2023/mvc/user/mantain/" + userId, // 根据你的后端路由来修改URL
+                url: "/ProductSalesAnalyze2023/mvc/analyze/user/mantain/" + userId, // 根据你的后端路由来修改URL
                 success: function (user) {
                 	console.log(user);
                     // 將員工資訊填入編輯表單
@@ -195,7 +195,7 @@
         	// 使用Ajax發送DELETE請求到後端刪除員工
             $.ajax({
                 type: "DELETE",
-                url: "/ProductSalesAnalyze2023/mvc/user/mantain/" + userId, 
+                url: "/ProductSalesAnalyze2023/mvc/analyze/user/mantain/" + userId, 
                 success: function (response) {
                     // 刪除成功後的處理，例如刷新列表等
                     loadEmployeeList();
@@ -224,7 +224,7 @@
                 $.ajax({
                     type: "PUT", // 使用PUT方法表示更新
                     contentType: "application/json",
-                    url: "/ProductSalesAnalyze2023/mvc/user/mantain/" + userId, // 修改為你的後端控制器的URL
+                    url: "/ProductSalesAnalyze2023/mvc/analyze/user/mantain/" + userId, // 修改為你的後端控制器的URL
                     data: JSON.stringify(userData),
                     success: function (users) {
                     	console.log(users);
@@ -253,7 +253,7 @@
             // 使用Ajax發送請求到後端重新載入員工列表
             $.ajax({
                 type: "GET",
-                url: "/ProductSalesAnalyze2023/mvc/user/getAllUsers",  // 根据你的后端路由来修改URL
+                url: "/ProductSalesAnalyze2023/mvc/analyze/user/getAllUsers",  // 根据你的后端路由来修改URL
                 //headers: {
                 //    'Accept': 'application/json' // 期望的回應內容是 JSON
                 //},

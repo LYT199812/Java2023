@@ -47,7 +47,7 @@ import spring.mvc.analyze.entity.SalesData;
 import spring.mvc.analyze.entity.Stock;
 
 @Controller
-@RequestMapping("/eccommerce")
+@RequestMapping("/analyze/eccommerce")
 public class EccommerceController {
 
 	@Autowired

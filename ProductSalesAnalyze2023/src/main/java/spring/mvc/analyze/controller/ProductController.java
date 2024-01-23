@@ -47,7 +47,7 @@ import spring.mvc.analyze.entity.Stock;
 
 
 @Controller
-@RequestMapping("/product")
+@RequestMapping("/analyze/product")
 public class ProductController {
 
 	@Autowired

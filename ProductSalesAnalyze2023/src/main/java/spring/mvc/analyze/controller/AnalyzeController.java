@@ -135,9 +135,11 @@ public class AnalyzeController {
 			// 比對 password
 			if (user.getPassword().equals(password)) {
 				session.setAttribute("user", user); // 將 user 物件放入到 session 變數中
+	            session.setAttribute("userLevelId", user.getLevelId()); // 將 user 的 levelId 放入 session 變數中
+	            
 				// 這邊重導的路徑是看下面@RequestMapping("/frontend/main")設定，因為是client發起(外部路徑)，會重新再經過controller，再重新發起session；
 				// 資訊安全的一部分，讓client不知道我們實際內部的檔案路徑
-				return "redirect:/mvc/chart/main"; //login ok，導前台首頁
+				return "redirect:/mvc/analyze/chart/main"; //login ok，導前台首頁
 			}else {
 				session.invalidate(); // session 過期失效
 				model.addAttribute("loginMessage", "密碼錯誤");
@@ -148,6 +150,11 @@ public class AnalyzeController {
 			model.addAttribute("loginMessage", "無此使用者");
 			return "analyze/login"; // 自己渲染給jsp，再呈現給前端
 		}
+		
+		
+		
+		
+		
 	}
 	
 	//登出
@@ -160,13 +167,13 @@ public class AnalyzeController {
 	//---------------------------------------------------------------------------------------------
 		
 	// 首頁
-	@GetMapping("/main")
-	public String main(Model model, HttpSession session) {
-		if (session.getAttribute("user") != null) {
-			return "analyze/main"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
-		}
-		return "redirect:/mvc/analyze/login";
-	}
+//	@GetMapping("/main")
+//	public String main(Model model, HttpSession session) {
+//		if (session.getAttribute("user") != null) {
+//			return "analyze/main"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
+//		}
+//		return "redirect:/mvc/analyze/login";
+//	}
 	
 //	// product addProduct
 //	@GetMapping("/addProduct")
@@ -186,22 +193,22 @@ public class AnalyzeController {
 //		return "analyze/permissionSettings"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
 //	}
 	
-	// 權限設定
-	@GetMapping("/maintainStock")
-	public String maintainStock(Model model) {
-		return "analyze/maintainStock"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
-	}
+//	// 權限設定
+//	@GetMapping("/maintainStock")
+//	public String maintainStock(Model model) {
+//		return "analyze/maintainStock"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
+//	}
 	
 	//---------------------------------------------------------------------------------------------------
 	// 新增商品
-	@PostMapping("/product/addProduct")
-	public String addProduct(@ModelAttribute Product product,  
-							 HttpSession session) {
-			dao.addProduct(product);
-			return "analyze/product/addProduct";
-	}
+//	@PostMapping("/product/addProduct")
+//	public String addProduct(@ModelAttribute Product product,  
+//							 HttpSession session) {
+//			dao.addProduct(product);
+//			return "analyze/product/addProduct";
+//	}
 	
-	
+	/*
 	// POI 批次新增商品 EXCEL 檔案匯入
 	@PostMapping("/addProductUpload")
     @ResponseBody
@@ -317,7 +324,7 @@ public class AnalyzeController {
             return "File is empty.";
         }
     }
-	
+	*/
 	
 	
 	//---------------------------------------------------------------------------------------------------
