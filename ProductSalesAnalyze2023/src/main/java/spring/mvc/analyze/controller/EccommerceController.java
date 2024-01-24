@@ -5,10 +5,8 @@ import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,13 +28,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.databind.deser.impl.ExternalTypeHandler.Builder;
 import com.google.gson.Gson;
 
 import spring.mvc.analyze.dao.ProductDao;
-import spring.mvc.analyze.dao.ProductTypeDao;
 import spring.mvc.analyze.dao.SalesDataDao;
-import spring.mvc.analyze.dao.StockDao;
 import spring.mvc.analyze.dto.SalesDataDto;
 import spring.mvc.analyze.entity.Ecommerce;
 import spring.mvc.analyze.entity.Product;

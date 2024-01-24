@@ -11,6 +11,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -28,13 +30,13 @@ public class ProductDaoResposity implements ProductDao{
 	private JdbcTemplate jdbcTemplate;
 	
 	@Autowired
-	private StockDaoResposity stockDaoResposity;
+	private StockDao stockDaoResposity;
 	
 	@Autowired
-	private ProductTypeDaoResposity productTypeDaoResposity;
+	private ProductTypeDao productTypeDaoResposity;
 	
 	@Autowired
-	private ProductBrandDaoResposity productBrandDaoResposity;
+	private ProductBrandDao productBrandDaoResposity;
 	
 	RowMapper<Product> rowMapper = (ResultSet rs, int rowNum) -> {
 		Product product = new Product();

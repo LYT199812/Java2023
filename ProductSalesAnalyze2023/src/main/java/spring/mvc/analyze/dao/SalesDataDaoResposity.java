@@ -23,10 +23,10 @@ public class SalesDataDaoResposity implements SalesDataDao{
 	private JdbcTemplate jdbcTemplate;
 	
 	@Autowired
-	private ProductDaoResposity productDaoResposity;
+	private ProductDao productDaoResposity;
 	
 	@Autowired
-	private EcommerceDaoResposity ecommerceDaoResposity;
+	private EcommerceDao ecommerceDaoResposity;
 	
 	RowMapper<SalesData> rowMapper = (ResultSet rs, int rowNum) -> {
 		SalesData salesData = new SalesData();

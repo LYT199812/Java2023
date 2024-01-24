@@ -43,7 +43,9 @@
          -->
         <td>
         <c:forEach var="stock" items="${product.inventory}">
-		   <c:out value="${stock.ecommerce.name}" />
+		  <c:if test="${ stock.ecProductQty > 0 }">
+		  	 <c:out value="${stock.ecommerce.name}" />
+		  </c:if>
 		</c:forEach>
 		           
         <!-- 
@@ -58,7 +60,7 @@
         <!-- 
           <a href="${pageContext.request.contextPath}/mvc/product/editProduct/${product.productId}" class="btn btn-primary" onclick="edit('${product.productId}')" role="button" data-bs-toggle="button">編輯</a>
            -->
-          <a href="${ pageContext.request.contextPath }/mvc/product/editProduct2/${product.productId}">
+          <a href="${ pageContext.request.contextPath }/mvc/analyze/product/editProduct2/${product.productId}">
           <button class="btn btn-primary" id="editButton" >編輯</button>
           </a>
           

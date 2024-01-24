@@ -4,11 +4,14 @@ import java.sql.ResultSet;
 import java.util.List;
 import java.util.Optional;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import spring.mvc.analyze.entity.Level;
 import spring.mvc.analyze.entity.Product;
@@ -16,13 +19,13 @@ import spring.mvc.analyze.entity.SalesData;
 import spring.mvc.analyze.entity.Stock;
 
 @Repository
-public class StockDaoResposity implements StockDao{
+public class StockDaoResposity implements StockDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
 	@Autowired
-	private EcommerceDaoResposity ecommerceDaoResposity;
+	private EcommerceDao ecommerceDaoResposity;
 	
 	RowMapper<Stock> rowMapper = (ResultSet rs, int rowNum) -> {
 		Stock stock = new Stock();
@@ -63,6 +66,7 @@ public class StockDaoResposity implements StockDao{
 		}
 	}
 	
+	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public int addStock(Stock stock) {
 		String stockSql = "INSERT INTO stock(productId, ecId, ecProductQty) VALUES (?, ?, ?)";
@@ -83,7 +87,8 @@ public class StockDaoResposity implements StockDao{
 		
 	}
 	
-	
+
+	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public int updateStock(Stock stock) {
 		String sql = "UPDATE stock " +
