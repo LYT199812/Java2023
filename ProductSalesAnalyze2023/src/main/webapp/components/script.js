@@ -137,9 +137,10 @@ function initTable(data) {
 
     }*/
     
-    // 初始化表格 brandSalesTable
+// 初始化表格 brandSalesTable
 let brandGroups = {};
 function initBrandTable(data) {
+
     const tableBody = document.getElementById('brandSalesTable').getElementsByTagName('tbody')[0];
     tableBody.innerHTML = ''; // 清空表格
 
@@ -281,13 +282,12 @@ function calculateTotal(data) {
 
 // 計算加總
 //const productTotal = calculateTotal(filteredAndMergedData);
-const brandTotal = calculateTotal(Object.values(brandGroups));
-
 
 //-----------------------------------------------------------------------------
 // 根據篩選條件更新表格
 
 function filterData() {
+    
     //const modelSelect = document.getElementById('modelSelect');
     const keyword = document.getElementById('keyword').value.toLowerCase();
     const departmentSelect = document.getElementById('departmentSelect');
@@ -351,7 +351,9 @@ initTable(salesData);
 //-----------------------------------------------------------------------------------------------
 // 報表匯出
 function exportFilteredDataToExcel() {
+	
 	console.log("exportFilteredDataToExcel function called");
+    
     // 獲取篩選後的資料
     let { filteredData, filteredTotal } = filterData();
     console.log("filteredData:", filteredData);
@@ -359,25 +361,24 @@ function exportFilteredDataToExcel() {
     
     // 檢查是否有符合條件的資料
     if (filteredData && filteredData.length > 0) {
-		
-		// filteredData 與 analyzeSalesDatas 作比對篩選
-		filteredData = analyzeSalesDatas;
-		
         // 創建一個新的工作簿
         var workbook = XLSX.utils.book_new();
 
 		// 根據篩選模式選擇初始化函式
 	    if (document.getElementById('modelSelect').value === '商品') {
+			filteredData = analyzeSalesDatas;
+			console.log(filteredData);
 	        initTable(filteredData);
 	    } else if (document.getElementById('modelSelect').value === '品牌') {
+			filteredData = Object.values(brandGroups);
+			console.log(filteredData);
 	        initBrandTable(filteredData);
 	    }
 	    
 	    // 設定匯出的資料，這裡假設你的商品模式的資料結構包含加總金額
     	const exportData = document.getElementById('modelSelect').value === '商品' ? 
-    	filteredData.concat([filteredTotal])
-    	: Object.values(brandGroups).concat([brandTotal]);
-
+	    	filteredData.concat([filteredTotal]) : 
+	    	Object.values(brandGroups).concat([calculateTotal(Object.values(brandGroups))]);
 
         // 將篩選後的資料轉換成工作表
         var worksheet = XLSX.utils.json_to_sheet(exportData);
