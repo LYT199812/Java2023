@@ -50,6 +50,7 @@ import spring.mvc.analyze.entity.ProductSubType;
 import spring.mvc.analyze.entity.ProductType;
 import spring.mvc.analyze.entity.Stock;
 import spring.mvc.analyze.exception.StockQtyInquientException;
+import spring.mvc.analyze.service.ProductServiceImpl;
 import spring.mvc.analyze.service.StockServiceImpl;
 
 
@@ -76,6 +77,9 @@ public class ProductController {
 	@Autowired
 	StockServiceImpl stockServiceImpl;
 	
+	@Autowired
+	ProductServiceImpl productServiceImpl;
+	
 	// product addProduct
 	@GetMapping("/addProduct")
 	public String addProduct(Model model) {
@@ -89,40 +93,38 @@ public class ProductController {
 		return "analyze/product/maintainProduct";
 	}
 	
+	/**
+	 * http://localhost:8080/ProductSalesAnalyze2023/mvc/analyze/product/editProduct2/A108?errorMessage=errorTest
+	 * @param productId
+	 * @param errorMessage
+	 * @param model
+	 * @return
+	 */
 	// product editProduct (取的預設資料 2)
 	@GetMapping("/editProduct2/{productId}")
 	public String editProduct(
 			@PathVariable("productId") String productId,
 			@RequestParam(name = "errorMessage", required = false, defaultValue = "") String errorMessage,
 			Model model) {
-		Optional<Product> productOpt = productDao.findProductById(productId);
-		Product product = productOpt.get();
 		
-		// 處理平台上架的標記
-        for (Stock stock : product.getInventory()) {
-            model.addAttribute("platform_" + stock.getEcId() + "_isOnSale", true);
-        }
-        model.addAttribute("product", product);
-        
-        // 取得所有平台-產品-庫存
-        List<EcommerceStockEdit> ecommerceStockEdits = new ArrayList<>();
-        List<Ecommerce> ecommerces = ecommerceDao.findAllEcommerces();
-        ecommerces.forEach(ecommerce-> {
-        	EcommerceStockEdit ecommerceStockEdit = new EcommerceStockEdit();
-        	ecommerceStockEdit.setProductId(productId);
-        	ecommerceStockEdit.setStockQty(0);
-        	ecommerceStockEdit.setIsLaunch(false);
-        	ecommerceStockEdit.setEcommerce(ecommerce);
-        	
-        	Optional<Stock> stockOpt = product.getInventory().stream().filter(s -> s.getEcId().equals(ecommerce.getId())).findFirst();
-        	if(stockOpt.isPresent()) {
-        		int qty = stockOpt.get().getEcProductQty();
-        		ecommerceStockEdit.setStockQty(qty);
-        		ecommerceStockEdit.setIsLaunch(qty == 0 ? false: true);
-        	}
-        	ecommerceStockEdits.add(ecommerceStockEdit);
-        });
-        model.addAttribute("ecommerceStockEdits", ecommerceStockEdits);
+		Optional<Product> productOpt = productServiceImpl.findProductById(productId);
+		if(productOpt.isPresent()) {
+			
+			Product product = productOpt.get();
+			
+			// 處理平台上架的標記
+	        for (Stock stock : product.getInventory()) {
+	            model.addAttribute("platform_" + stock.getEcId() + "_isOnSale", true);
+	        }
+	        model.addAttribute("product", product);
+	        
+	        // 取得所有平台-產品-庫存
+	        List<EcommerceStockEdit> ecommerceStockEdits = productServiceImpl.getEcommerceStockEdits(product);
+	        model.addAttribute("ecommerceStockEdits", ecommerceStockEdits);
+		} else {
+			errorMessage = "無此 Product";
+		}
+	
         model.addAttribute("errorMessage", errorMessage);
 		return "analyze/product/editProduct2";
 	}

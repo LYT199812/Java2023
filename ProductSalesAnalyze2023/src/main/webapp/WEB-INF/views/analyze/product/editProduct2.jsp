@@ -28,6 +28,33 @@ ${ errorMessage }
 	<form class="needs-validation" id="editProductForm" enctype="application/x-www-form-urlencoded"
 	      method="post" 
 	      action="${ pageContext.request.contextPath }/mvc/analyze/product/updateProduct" >
+	   <div class="mb-3">
+	   		<label for="productQty" class="form-label">產品總庫存</label>
+		    <input type="number" class="form-control" id="productQty" value="${product.productQty}">
+	   </div>
+	   <c:forEach items="${ ecommerceStockEdits }" var="ecommerceStockEdit">
+			<div class="mb-3">
+			    <label for="productDescription" class="form-label">上架平台</label>
+				<div class="form-check">
+					<input class="form-check-input" 
+					       type="checkbox" 
+					       value="${ ecommerceStockEdit.isLaunch}" 
+					       ${ ecommerceStockEdit.isLaunch ? 'checked' : ''}
+					       onchange="changeEcCommerce(event.target.checked, ${ecommerceStockEdit.ecommerce.id })" > 
+					<input id="isLaunch${ecommerceStockEdit.ecommerce.id }" 
+					       type="hidden" 
+					       name="isLaunch_${ecommerceStockEdit.ecommerce.id }" 
+					       value="${ ecommerceStockEdit.isLaunch}" >
+					<label class="form-check-label"	for="defaultCheck1"> ${ecommerceStockEdit.ecommerce.name } </label> 
+					<input id="ec${ecommerceStockEdit.ecommerce.id }" 
+					       type="number" 
+					       name="stockQty_${ecommerceStockEdit.ecommerce.id }" 
+					       class="form-control inventory-field" 
+					       placeholder="庫存" 
+					       value="${ecommerceStockEdit.stockQty }">
+				</div>
+			</div>
+		</c:forEach>
 		<div class="mb-3">
 			<label for="productName" class="form-label">產品名稱</label> 
 			<input type="text" class="form-control"  id="productName" value="${product.productName}">
@@ -57,34 +84,6 @@ ${ errorMessage }
 			<textarea class="form-control" id="productDesc" name="productDesc"
 				rows="3" placeholder="輸入商品描述">${product.productDesc}</textarea>
 		</div>
-		<div class="mb-3">
-			<label for="productQty" class="form-label">產品總庫存</label>
-		        <input type="number" class="form-control" id="productQty" value="${product.productQty}">
-		</div>
-		
-		<c:forEach items="${ ecommerceStockEdits }" var="ecommerceStockEdit">
-			<div class="mb-3">
-			    <label for="productDescription" class="form-label">上架平台</label>
-				<div class="form-check">
-					<input class="form-check-input" 
-					       type="checkbox" 
-					       value="${ ecommerceStockEdit.isLaunch}" 
-					       ${ ecommerceStockEdit.isLaunch ? 'checked' : ''}
-					       onchange="changeEcCommerce(event.target.checked, ${ecommerceStockEdit.ecommerce.id })" > 
-					<input id="isLaunch${ecommerceStockEdit.ecommerce.id }" 
-					       type="hidden" 
-					       name="isLaunch_${ecommerceStockEdit.ecommerce.id }" 
-					       value="${ ecommerceStockEdit.isLaunch}" >
-					<label class="form-check-label"	for="defaultCheck1"> ${ecommerceStockEdit.ecommerce.name } </label> 
-					<input id="ec${ecommerceStockEdit.ecommerce.id }" 
-					       type="number" 
-					       name="stockQty_${ecommerceStockEdit.ecommerce.id }" 
-					       class="form-control inventory-field" 
-					       placeholder="庫存" 
-					       value="${ecommerceStockEdit.stockQty }">
-				</div>
-			</div>
-		</c:forEach>
 		<input type="hidden" name="productId" value="${ product.productId }">
 		<div class="mb-5 mt-3">
 			<button type="submit" class="btn btn-primary">修改</button>

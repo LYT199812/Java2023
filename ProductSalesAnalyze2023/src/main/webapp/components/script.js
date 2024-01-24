@@ -353,13 +353,15 @@ initTable(salesData);
 function exportFilteredDataToExcel() {
 	console.log("exportFilteredDataToExcel function called");
     // 獲取篩選後的資料
-    const { filteredData, filteredTotal } = filterData();
+    let { filteredData, filteredTotal } = filterData();
     console.log("filteredData:", filteredData);
     console.log("brandGroups:", Object.values(brandGroups));
-
+    
     // 檢查是否有符合條件的資料
     if (filteredData && filteredData.length > 0) {
 		
+		// filteredData 與 analyzeSalesDatas 作比對篩選
+		filteredData = analyzeSalesDatas;
 		
         // 創建一個新的工作簿
         var workbook = XLSX.utils.book_new();
