@@ -33,7 +33,18 @@ public class StockServiceImpl {
 		
 		Set<String> stockQtySet = formKeySet.stream().filter(key-> key.startsWith("stockQty_")).collect(Collectors.toSet());
 		
+		
+		// 更新商品資訊
 		String productId = String.valueOf(formData.get("productId"));
+	    String productName = String.valueOf(formData.get("productName"));
+	    Integer productPrice = Integer.valueOf(String.valueOf(formData.get("productPrice")));
+		String productBarcode = String.valueOf(formData.get("productBarcode"));
+		Integer productBrandId = Integer.valueOf(String.valueOf(formData.get("productBrandId")));
+		Integer productTypeId = Integer.valueOf(String.valueOf(formData.get("productTypeId")));
+		Integer productSubTypeId = Integer.valueOf(String.valueOf(formData.get("productSubTypeId")));
+		String productDesc = String.valueOf(formData.get("productDesc"));
+		Integer productQty = Integer.valueOf(String.valueOf(formData.get("productQty")));
+		
 		
 		// 更新庫存 by stockQtySet
 		stockQtySet.stream().forEach(stockQty-> {
@@ -64,5 +75,16 @@ public class StockServiceImpl {
 		if (stockQtySum > product.getProductQty()) {
 			throw new StockQtyInquientException(String.format("庫存不足，目前庫存數量為%s", product.getProductQty()));
 		}
+		
+	        product.setProductName(productName);
+	        product.setProductPrice(productPrice);
+	        product.setProductBarcode(productBarcode);
+	        product.setProductBrandId(productBrandId);
+	        product.setProductTypeId(productTypeId);
+	        product.setProductSubTypeId(productSubTypeId);
+	        product.setProductDesc(productDesc);
+	        product.setProductQty(productQty);
+	        productDao.updateProductById(product);
+		
 	}
 }

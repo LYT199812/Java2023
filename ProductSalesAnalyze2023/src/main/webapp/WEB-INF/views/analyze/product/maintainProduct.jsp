@@ -7,11 +7,17 @@
 	body {
 		background-color: #F0F0F0
 	}
+	.chartBox {
+	    	background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    	}
+	
 </style>
 
 <!--  產品表格 -->
-<div class="container mt-3 mb-5">
-  <h2>產品表格</h2>
+<div class="container mt-4 mb-5 chartBox">
+  <h2>所有上架產品</h2>
   <table class="table">
     <thead>
       <tr>
@@ -33,7 +39,7 @@
         <td><c:out value="${product.productName}" /></td>
         <td><c:out value="${product.productPrice}" /></td>
         <td><c:out value="${product.productBarcode}" /></td>
-        <td><c:out value="${product.productBrand}" /></td>
+        <td><c:out value="${product.productBrand.name}" /></td>
         <td>
         <c:out value="${product.productType.name}" />
         </td>
@@ -57,14 +63,20 @@
           -->
         </td>
         <td>
-        <!-- 
-          <a href="${pageContext.request.contextPath}/mvc/product/editProduct/${product.productId}" class="btn btn-primary" onclick="edit('${product.productId}')" role="button" data-bs-toggle="button">編輯</a>
-           -->
+        
+        <div class="d-flex">
           <a href="${ pageContext.request.contextPath }/mvc/analyze/product/editProduct2/${product.productId}">
           <button class="btn btn-primary" id="editButton" >編輯</button>
           </a>
           
-          <button class="btn btn-danger">刪除</button>
+          <a href="${ pageContext.request.contextPath }/mvc/analyze/product/deleteProduct/${product.productId}">
+	          <form action="${ pageContext.request.contextPath }/mvc/analyze/product/deleteProduct/${product.productId}" method="post">
+		          <input type="hidden" name="_method" value="delete">
+		          <button class="btn btn-danger ms-2" id="deleteButton">刪除</button>
+	          </form>
+          </a>
+        </div>
+          
         </td>
       </tr>
       </c:forEach>

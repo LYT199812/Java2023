@@ -125,19 +125,34 @@ public class EccommerceController {
 			salesDataDtos.add(salesDataDto);
 		}
 
+		// 根據 ecId 生成標題
+	    String pageTitle;
+	    if (ecId.equals(1)) {
+	        pageTitle = "Momo 銷售分析表";
+	    } else if (ecId.equals(2)) {
+	        pageTitle = "PChome 銷售分析表";
+	    } else if (ecId.equals(3)) {
+	        pageTitle = "蝦皮 銷售分析表";
+	    } else {
+	        pageTitle = "Sales Analysis";
+	    }
+		
+		
 		model.addAttribute("salesData", new Gson().toJson(salesDataDtos));
+		model.addAttribute("pageTitle", pageTitle);
 		
 		return "/analyze/ecWebsite/eccommerce";
 	}
 	
 	// 大量匯入銷售原始資料
-	@PostMapping("/upload")
+	@PostMapping("/upload/{ecId}")
     @ResponseBody
-    public String handleFileUpload(@RequestParam("source") String source, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request, Model model) {
+    public String handleFileUpload(@PathVariable("ecId") Integer ecId, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request, Model model) {
 		
 		//------設定source----------------------------------------------
 		// 根據 source 確定對應的 ecId
-	    int ecId;
+	    /*
+		int ecId;
 	    switch (source) {
 	        case "momo":
 	            ecId = 1;
@@ -152,7 +167,7 @@ public class EccommerceController {
 	            // 預設為 0 或其他處理方式
 	            ecId = 0;
 	            break;
-	    }
+	    }*/
 	    
 		if (!uploadFile.isEmpty()) {
             try (InputStream inputStream = uploadFile.getInputStream()) {
@@ -283,132 +298,162 @@ public class EccommerceController {
         }
     }
 	
-	
-	
 	/*
-	@PostMapping("/upload")
-    @ResponseBody
-    public String handleFileUpload(@RequestParam("uploadFile") MultipartFile uploadFile, Model model) {
-        if (!uploadFile.isEmpty()) {
-            try (InputStream inputStream = uploadFile.getInputStream()) {
-                Workbook workbook = new XSSFWorkbook(inputStream); // 使用XSSFWorkbook處理xlsx格式的Excel
+	// 大量匯入銷售原始資料
+		@PostMapping("/upload")
+	    @ResponseBody
+	    public String handleFileUpload(@RequestParam("source") String source, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request, Model model) {
+			
+			//------設定source----------------------------------------------
+			// 根據 source 確定對應的 ecId
+		    int ecId;
+		    switch (source) {
+		        case "momo":
+		            ecId = 1;
+		            break;
+		        case "pchome":
+		            ecId = 2;
+		            break;
+		        case "shopee":
+		            ecId = 3;
+		            break;
+		        default:
+		            // 預設為 0 或其他處理方式
+		            ecId = 0;
+		            break;
+		    }
+		    
+			if (!uploadFile.isEmpty()) {
+	            try (InputStream inputStream = uploadFile.getInputStream()) {
+	                Workbook workbook = new XSSFWorkbook(inputStream); // 使用XSSFWorkbook處理xlsx格式的Excel
 
-                Sheet sheet = workbook.getSheetAt(0); // 假設只有一個工作表，根據實際情況調整索引
+	                Sheet sheet = workbook.getSheetAt(0); // 假設只有一個工作表，根據實際情況調整索引
 
-                List<SalesData> dataList = new ArrayList<>();
-                
-                // 遍歷每一行
-                int rowIndex = 0;  // 用於追蹤行索引
-                for (Row row : sheet) {
-                	// 跳過第一行（表頭）
-                    if (rowIndex == 0) {
-                        rowIndex++;
-                        continue;}
-                	
-                	SalesData salesData = new SalesData();
-                    
-                	// 遍歷每一列
-                    for (Cell cell : row) {
-                    	int columnIndex = cell.getColumnIndex();
-                        // 根據單元格的索引將資料映射到對應的屬性
-                        switch (columnIndex) {
-                            case 0:
-                            	//強制設定單元格cell類型
-                            	cell.setCellType(CellType.STRING);
-                            	salesData.setEcOrderNumber(cell.getStringCellValue());
-                                break;
-                            case 1:
-                            	cell.setCellType(CellType.STRING);
-                            	salesData.setEcProductCode(cell.getStringCellValue());
-                                break;
-                            case 2:
-                            	cell.setCellType(CellType.STRING);
-                            	salesData.setProductId(cell.getStringCellValue());
-                                break;
-                            case 3:
-                            	cell.setCellType(CellType.STRING);
-                            	salesData.setEcProductType(cell.getStringCellValue());
-                                break;
-                            case 4:
-                            	cell.setCellType(CellType.STRING);
-                            	salesData.setEcProductSubType(cell.getStringCellValue());
-                                break;
-                            case 5:
-                            	cell.setCellType(CellType.STRING);
-                            	salesData.setEcWarehouse(cell.getStringCellValue());
-                                break;
-                            case 6:
-                            	if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-                                    salesData.setEcSalesQty((int) cell.getNumericCellValue());
-                                } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-                                    String salesStringValue = cell.getStringCellValue().trim();;
-                                    try {
-                                        salesData.setEcSalesQty(Integer.parseInt(salesStringValue));
-                                    } catch (NumberFormatException e) {
-                                        // 處理轉換失敗的情況，例如文字不是合法的整數格式
-                                        salesData.setEcSalesQty(0); // 或者設定為預設值
-                                    }
-                                }
-                                break;
-                            	
-                            	//salesData.setSales((int)(cell.getNumericCellValue()));
-                                //break;
-                            case 7:
-                                if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-                                    salesData.setEcSalesPrice((int) cell.getNumericCellValue());
-                                } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-                                    String priceStringValue = cell.getStringCellValue().trim();
-                                    try {
-                                        salesData.setEcSalesPrice(Integer.parseInt(priceStringValue));
-                                    } catch (NumberFormatException e) {
-                                        // 處理轉換失敗的情況，例如文字不是合法的整數格式
-                                        salesData.setEcSalesPrice(0); // 或者設定為預設值
-                                    }
-                                }
-                                break;
-                            	
-                            	//salesData.setPrice((int)(cell.getNumericCellValue()));
-                                //break;
-                            case 8:
-                                if (DateUtil.isCellDateFormatted(cell)) {
-                                    salesData.setEcSalesDate(cell.getDateCellValue());
-                                } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-                                    String salesDateStringValue = cell.getStringCellValue().trim();
-                                    // 根據實際情況進行日期解析，這裡僅提供示例
-                                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                                    try {
-                                        Date salesDate = dateFormat.parse(salesDateStringValue);
-                                        salesData.setEcSalesDate(salesDate);
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                        // 處理日期解析失敗的情況
-                                    }
-                                }
-                                break;
+	                List<SalesData> dataList = new ArrayList<>();
+	                
+	                
+	                // 遍歷每一行
+	                int rowIndex = 0;  // 用於追蹤行索引
+	                for (Row row : sheet) {
+	                	// 跳過第一行（表頭）
+	                    if (rowIndex == 0) {
+	                        rowIndex++;
+	                        continue;}
+	                	
+	                	SalesData salesData = new SalesData();
+	                	Product product = new Product();
+	                	salesData.setEcommerce(Ecommerce.builder().id(ecId).build());
+	                    
+	                	// 遍歷每一列
+	                    for (Cell cell : row) {
+	                    	int columnIndex = cell.getColumnIndex();
+	                        // 根據單元格的索引將資料映射到對應的屬性
+	                        switch (columnIndex) {
+	                            case 0:
+	                            	//強制設定單元格cell類型
+	                            	cell.setCellType(CellType.STRING);
+	                            	salesData.setEcOrderNumber(cell.getStringCellValue());
+	                                break;
+	                            case 1:
+	                            	cell.setCellType(CellType.STRING);
+	                            	salesData.setEcProductCode(cell.getStringCellValue());
+	                                break;
+	                            case 2:
+	                            	cell.setCellType(CellType.STRING);
+	                            	product.setProductName(cell.getStringCellValue());
+	                                break;
+	                            case 3:
+	                            	cell.setCellType(CellType.STRING);
+	                            	salesData.setProductId(cell.getStringCellValue());
+	                                break;
+	                            case 4:
+	                            	cell.setCellType(CellType.STRING);
+	                            	salesData.setEcProductType(cell.getStringCellValue());
+	                                break;
+	                            case 5:
+	                            	cell.setCellType(CellType.STRING);
+	                            	salesData.setEcProductSubType(cell.getStringCellValue());
+	                                break;
+	                            case 6:
+	                            	cell.setCellType(CellType.STRING);
+	                            	salesData.setEcWarehouse(cell.getStringCellValue());
+	                                break;
+	                            case 7:
+	                            	if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+	                                    salesData.setEcSalesQty((int) cell.getNumericCellValue());
+	                                } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+	                                    String salesStringValue = cell.getStringCellValue().trim();;
+	                                    try {
+	                                        salesData.setEcSalesQty(Integer.parseInt(salesStringValue));
+	                                    } catch (NumberFormatException e) {
+	                                        // 處理轉換失敗的情況，例如文字不是合法的整數格式
+	                                        salesData.setEcSalesQty(0); // 或者設定為預設值
+	                                    }
+	                                }
+	                                break;
+	                            	
+	                            	//salesData.setSales((int)(cell.getNumericCellValue()));
+	                                //break;
+	                            case 8:
+	                                if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+	                                    salesData.setEcSalesPrice((int) cell.getNumericCellValue());
+	                                } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+	                                    String priceStringValue = cell.getStringCellValue().trim();
+	                                    try {
+	                                        salesData.setEcSalesPrice(Integer.parseInt(priceStringValue));
+	                                    } catch (NumberFormatException e) {
+	                                        // 處理轉換失敗的情況，例如文字不是合法的整數格式
+	                                        salesData.setEcSalesPrice(0); // 或者設定為預設值
+	                                    }
+	                                }
+	                                break;
+	                            	
+	                            	//salesData.setPrice((int)(cell.getNumericCellValue()));
+	                                //break;
+	                            case 9:
+	                            	if (DateUtil.isCellDateFormatted(cell)) {
+	                                    salesData.setEcSalesDate(cell.getDateCellValue());
+	                                } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+	                                    String salesDateStringValue = cell.getStringCellValue().trim();
+	                                    System.out.println("Trying to parse date: " + salesDateStringValue);
+	                                    // 根據實際情況進行日期解析，這裡僅提供示例
+	                                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	                                    try {
+	                                        Date salesDate = dateFormat.parse(salesDateStringValue);
+	                                        salesData.setEcSalesDate(salesDate);
+	                                    } catch (ParseException e) {
+	                                        e.printStackTrace();
+	                                        // 處理日期解析失敗的情況
+	                                    }
+	                                }
+	                                break;
+									
+	                            case 10:
+	                            	cell.setCellType(CellType.STRING);
+	                            	salesData.setEcSalesStatus(cell.getStringCellValue());
+	                                break;                               
+	                            // 忽略不需要的列
+	                            default:
+	                            	break;
+	                        }
+	                    }
+	                    dataList.add(salesData);
+	                }
+	                // 將 SalesData 物件保存到資料庫
+	                salesDataDao.addSalesDataByExcel(dataList);
 
-                            case 9:
-                            	cell.setCellType(CellType.STRING);
-                            	salesData.setEcSalesStatus(cell.getStringCellValue());
-                                break;                               
-                            // 忽略不需要的列
-                            default:
-                            	break;
-                        }
-                    }
-                    dataList.add(salesData);
-                }
-                // 將 SalesData 物件保存到資料庫
-                salesDataDao.addSalesDataByExcel(dataList);
-
-                return "File uploaded and processed successfully.";
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                return "Error processing the file.";
-            }
-        } else {
-            return "File is empty.";
-        }
-    }
-	*/
+	                return "File uploaded and processed successfully.";
+	            } catch (IOException ex) {
+	                ex.printStackTrace();
+	                return "Error processing the file.";
+	            }
+	        } else {
+	            return "File is empty.";
+	        }
+	    }
+		*/
+	
+	
+	
 	
 }

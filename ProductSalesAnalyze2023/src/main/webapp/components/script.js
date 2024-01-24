@@ -16,7 +16,7 @@ function initTable(data) {
 	    salesData.salesFigures = price;
 	    analyzeSalesDatas.push(salesData);
 	}
-    //console.log(analyzeSalesDatas);
+   
 
     // 將資料插入表格
     analyzeSalesDatas.forEach(item => {
@@ -140,9 +140,12 @@ function initTable(data) {
 // 初始化表格 brandSalesTable
 let brandGroups = {};
 function initBrandTable(data) {
-
+	console.log("brandGroups:", Object.values(brandGroups));
     const tableBody = document.getElementById('brandSalesTable').getElementsByTagName('tbody')[0];
     tableBody.innerHTML = ''; // 清空表格
+
+	// 在重新初始化之前保存旧的数据
+    const oldBrandGroups = { ...brandGroups };
 
     brandGroups = {};
 
@@ -155,8 +158,8 @@ function initBrandTable(data) {
             if (!brandGroups[key]) {
                 brandGroups[key] = {
                     brand: sale.brand, // 新增品牌資訊
-                    department: sale.productDepartment, // 新增部門資訊
-                    type: sale.productType, // 新增類型資訊
+                    productDepartment: sale.productDepartment, // 新增部門資訊
+                    productType: sale.productType, // 新增類型資訊
                     date: sale.date,
                     sales: 0,
                     salesFigures: 0,
@@ -178,8 +181,8 @@ function initBrandTable(data) {
 
             row.insertCell(0).textContent = ''; // 暫時不處理 number
             row.insertCell(1).textContent = brandGroups[key].brand; // 顯示品牌資訊
-            row.insertCell(2).textContent = brandGroups[key].department; // 顯示部門資訊
-            row.insertCell(3).textContent = brandGroups[key].type; // 顯示類型資訊
+            row.insertCell(2).textContent = brandGroups[key].productDepartment; // 顯示部門資訊
+            row.insertCell(3).textContent = brandGroups[key].productType; // 顯示類型資訊
             //row.insertCell(4).textContent = '';
             //row.insertCell(5).textContent = '';
             row.insertCell(4).textContent = brandGroups[key].sales;
@@ -323,7 +326,6 @@ function filterData() {
     
     console.log("Filtered Data:", filteredData); // 新增這行除錯語句
     console.log("brandGroups:", Object.values(brandGroups));
-    //return {filteredDataResult,filteredTotal}; // 確保返回一個陣列
     return {filteredData, filteredTotal }; // 確保返回一個陣列
 }
 
@@ -347,16 +349,18 @@ function clearFilters() {
 
 // 初始載入時顯示所有資料
 initTable(salesData);
+initBrandTable(salesData);
 
 //-----------------------------------------------------------------------------------------------
 // 報表匯出
+
 function exportFilteredDataToExcel() {
 	
 	console.log("exportFilteredDataToExcel function called");
-    
-    // 獲取篩選後的資料
     let { filteredData, filteredTotal } = filterData();
-    console.log("filteredData:", filteredData);
+    // 獲取篩選後的資料
+    //let { filteredData, filteredTotal } = filterData();
+    //console.log("filteredData:", filteredData);
     console.log("brandGroups:", Object.values(brandGroups));
     
     // 檢查是否有符合條件的資料
@@ -367,7 +371,6 @@ function exportFilteredDataToExcel() {
 		// 根據篩選模式選擇初始化函式
 	    if (document.getElementById('modelSelect').value === '商品') {
 			filteredData = analyzeSalesDatas;
-			console.log(filteredData);
 	        initTable(filteredData);
 	    } else if (document.getElementById('modelSelect').value === '品牌') {
 			filteredData = Object.values(brandGroups);
@@ -378,7 +381,7 @@ function exportFilteredDataToExcel() {
 	    // 設定匯出的資料，這裡假設你的商品模式的資料結構包含加總金額
     	const exportData = document.getElementById('modelSelect').value === '商品' ? 
 	    	filteredData.concat([filteredTotal]) : 
-	    	Object.values(brandGroups).concat([calculateTotal(Object.values(brandGroups))]);
+	    	filteredData.concat([calculateTotal(Object.values(brandGroups))]);
 
         // 將篩選後的資料轉換成工作表
         var worksheet = XLSX.utils.json_to_sheet(exportData);
@@ -413,3 +416,21 @@ function exportFilteredDataToExcel() {
         console.error("No data to export or filteredData is not an array.");
     }
 }
+
+//----------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

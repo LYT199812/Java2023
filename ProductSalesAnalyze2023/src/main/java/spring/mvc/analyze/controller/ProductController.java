@@ -25,6 +25,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -108,6 +109,10 @@ public class ProductController {
 			Model model) {
 		
 		Optional<Product> productOpt = productServiceImpl.findProductById(productId);
+		List<ProductType> productTypes = productTypeDao.findAllProductTypes();
+		List<ProductSubType> productSubTypes = productTypeDao.findAllProductSubTypes();
+		List<ProductBrand> productBrands = productBrandDao.findAllProductBrands();
+		
 		if(productOpt.isPresent()) {
 			
 			Product product = productOpt.get();
@@ -126,6 +131,9 @@ public class ProductController {
 		}
 	
         model.addAttribute("errorMessage", errorMessage);
+        model.addAttribute("productTypes", productTypes);
+        model.addAttribute("productSubTypes", productSubTypes);
+        model.addAttribute("productBrands", productBrands);
 		return "analyze/product/editProduct2";
 	}
 	
@@ -165,8 +173,17 @@ public class ProductController {
 		return "redirect:/mvc/analyze/product/maintainProduct";
 	}
 	
-
-	// 首頁基礎資料
+	// 刪除員工
+	@DeleteMapping("/deleteProduct/{productId}")
+	public String deleteProduct(@PathVariable("productId") String productId) {
+		int rowcount = productDao.removeProductById(productId);
+		//System.out.println("delete User rowcount =" + rowcount);
+		 
+		return "redirect:/mvc/analyze/product/maintainProduct";
+	}
+	
+	
+	// 產品列表基礎資料
 	private void addBasicModel(Model model) {
 		List<Product> products = productDao.findAllProducts();
 		List<ProductType> productTypes =productTypeDao.findAllProductTypes();

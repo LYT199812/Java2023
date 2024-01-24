@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,6 +22,7 @@
 
 </style>
 
+
 </head>
 <!-- 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -28,16 +31,17 @@
 <!-- SheetJS library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
 
-
 <body>
 	<div class="d-flex bd-highlight px-5">
 		<div class="p-2 flex-grow-1 bd-highlight">
-			<h2 class="d-flex">MOMO Sales Analysis</h2>
+			<h2 class="d-flex" id="salesAnalysisTitle"> ${pageTitle}</h2>
 		</div>
-		<form id="excelForm" method="post" action="./upload"
+		<form id="excelForm" method="post" action="${ pageContext.request.contextPath }/mvc/analyze/eccommerce/upload"
 			enctype="multipart/form-data">
 			<div class="p-2 bd-highlight">
 				<div class="input-group d-flex">
+				 <!-- 动态设置 ecId 值 -->
+	            <input type="hidden" id="ecId" name="ecId" value="${ecId}">
 				<!-- 
 				 <input type="hidden" name="originalUri" value="${request.getRequestURI()}" />
 				  -->
@@ -220,6 +224,11 @@
 	
 	<script>
 		const salesData = ${salesData};
+	</script>
+
+	<script>
+    // 使用 JavaScript 动态设置 action 属性
+    document.getElementById("excelForm").action += "/" + document.getElementById("ecId").value;
 	</script>
 
 <div class="mb-5">

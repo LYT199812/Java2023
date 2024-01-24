@@ -196,7 +196,8 @@ CREATE TABLE IF NOT EXISTS `analyze`.`salesData` (
   INDEX `salesdata_ec_id_idx` (`ecId` ASC) VISIBLE,
   CONSTRAINT `sales_productId`
     FOREIGN KEY (`productId`)
-    REFERENCES `analyze`.`product` (`productId`),
+    REFERENCES `analyze`.`product` (`productId`)
+    ON DELETE CASCADE,
   CONSTRAINT `salesdata_ec_id`
     FOREIGN KEY (`ecId`)
     REFERENCES `analyze`.`ecommerce` (`id`))
@@ -222,7 +223,8 @@ CREATE TABLE IF NOT EXISTS `analyze`.`stock` (
     REFERENCES `analyze`.`ecommerce` (`id`),
   CONSTRAINT `stock_product_id`
     FOREIGN KEY (`productId`)
-    REFERENCES `analyze`.`product` (`productId`))
+    REFERENCES `analyze`.`product` (`productId`)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
