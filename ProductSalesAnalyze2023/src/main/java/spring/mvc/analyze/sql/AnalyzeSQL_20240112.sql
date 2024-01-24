@@ -138,8 +138,8 @@ CREATE TABLE IF NOT EXISTS `analyze`.`product` (
   `productSubTypeId` INT NULL DEFAULT NULL,
   `productImg` VARCHAR(1000) NULL,
   `productDesc` VARCHAR(2000) NULL,
+  `productQty` INT NOT NULL DEFAULT 0,
   `isLaunch` INT NOT NULL DEFAULT 0,
-  -- `productQty` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`productId`),
   UNIQUE INDEX `productId` (`productId` ASC) VISIBLE,
   INDEX `product_productCategory_idx` (`productTypeId` ASC) VISIBLE,
@@ -196,7 +196,6 @@ DROP TABLE IF EXISTS `analyze`.`stock` ;
 CREATE TABLE IF NOT EXISTS `analyze`.`stock` (
   `productId` VARCHAR(50) NOT NULL,
   `ecId` INT NOT NULL,
-  `productQty` INT NOT NULL DEFAULT 0,
   `ecProductQty` INT NULL,
   PRIMARY KEY (`productId`, `ecId`),
   INDEX `stock_ec_id_idx` (`ecId` ASC) VISIBLE,

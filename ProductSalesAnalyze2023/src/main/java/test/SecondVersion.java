@@ -113,6 +113,60 @@ public class SecondVersion {
 	    }
 		*/
 		
+		//----------------------------------------------------------------------------
+		/**為了透過網址抓ecId
+		 * //-------抓網址最後一個資料-------------------------------------------------------
+//		System.out.println("Original URI: " + originalUri);
+//		// 獲取 URI
+//	    String uri = request.getRequestURI();
+//
+//	    // 將 URI 拆分成路徑片段
+//	    String[] pathSegments = uri.split("/");
+//	    
+//	 // 在控制台輸出 URI 解析結果
+//	    System.out.println("URI: " + uri);
+//	    System.out.println("Path Segments: " + Arrays.toString(pathSegments));
+//
+//	    // 確認 pathSegments 不為空並獲取最後一個值
+//	    String lastSegment = pathSegments.length > 0 ? pathSegments[pathSegments.length - 1] : null;
+//
+//	    // 如果有最後一個值，進行相應的操作
+//	    if (lastSegment != null) {
+//	        // 這裡的 lastSegment 就是最後一個值，可以轉換為整數，如果需要
+//	        try {
+//	            int ecId = Integer.parseInt(lastSegment);
+//	            SalesData salesData = new SalesData();
+//	            salesData.setEcommerce(Ecommerce.builder().id(ecId).build());
+//	            // 將 ecId 用於相應的邏輯
+//	            // ...
+//	        } catch (NumberFormatException e) {
+//	        	e.printStackTrace();
+//	            return "Invalid ecId format.";
+//	        }
+//	    } else {
+//	        return "Unable to extract ecId from the URI.";
+//	    }
+//		
+		
+		//-----獲取參數版本用httpservlet---------------------------------------------------------
+//		// 獲取當前網址的 ecId 參數
+//	    String ecIdString = request.getParameter("uploadFile");
+//		System.out.println(params);
+	    // 確保 ecId 不為空
+//	    if (ecIdString == null || ecIdString.isEmpty()) {
+//	        return "Invalid ecId parameter.";
+//	    }
+	    
+		// 將 ecId 轉換為整數
+//	    int ecId;
+//	    try {
+//	        ecId = Integer.parseInt(ecIdString);
+//	    } catch (NumberFormatException e) {
+//	        return "Invalid ecId format.";
+//	    }
+		 */
+		
+		//------------------------------------------------------------------------
 		
 		/*
 		 * 寫入進SQL，不使用LIST而是單筆單筆寫入
@@ -259,6 +313,26 @@ public class SecondVersion {
 		    return String.format("UPDATE %s SET %s WHERE %s = ?", tableName, setClause, idField);
 		}
 		*/
+		
+		//------------------------------------------------------------
+		// main controller 
+		
+		// 合併相同 ecId 的資料
+//	    List<SalesData> analyzeSalesDatas = salesDatas.stream()
+//	            .collect(Collectors.groupingBy(SalesData::getEcId))
+//	            .values()
+//	            .stream()
+//	            .map(salesList -> {
+//	                int qty = salesList.stream().mapToInt(SalesData::getEcSalesQty).sum();
+//	                int price = salesList.stream().mapToInt(SalesData::getEcSalesPrice).sum();
+//	                SalesData salesData = salesList.get(0);
+//	                salesData.setEcSalesQty(qty);
+//	                salesData.setEcSalesPrice(price);
+//	                return salesData;
+//	            })
+//	            .collect(Collectors.toList());
+		
+		
 		
 	}
 

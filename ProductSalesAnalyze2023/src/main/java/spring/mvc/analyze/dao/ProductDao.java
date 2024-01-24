@@ -17,9 +17,9 @@ public interface ProductDao {
 	
 	int addProduct (Product product);
 	
-	void saveProductExcelData(List<Product> productList);
+	void addProductByExcel(List<Product> productList);
 	
-	public int updateProduct(Product product);
+	public int updateProductById(Product product);
 	
 	public int removeProductById(String productId);
 	

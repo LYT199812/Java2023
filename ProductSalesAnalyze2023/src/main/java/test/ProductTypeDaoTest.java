@@ -45,15 +45,15 @@ public class ProductTypeDaoTest {
 		
 		
 		// 測試修改功能
-		ProductType productType = new ProductType();
-		ProductSubType productSubType = new ProductSubType();
-		productType.setId(1);
-		productType.setName("餐廚");
-		productSubType.setId(1);
-		productSubType.setName("鍋鏟");
-		int rowcount1 = productTypeDaoResposity.updateProductType(productType);
-		int rowcount2 = productTypeDaoResposity.updateProductSubType(productSubType);
-		System.out.println(rowcount1 + rowcount2);
+//		ProductType productType = new ProductType();
+//		ProductSubType productSubType = new ProductSubType();
+//		productType.setId(1);
+//		productType.setName("餐廚");
+//		productSubType.setId(1);
+//		productSubType.setName("鍋鏟");
+//		int rowcount1 = productTypeDaoResposity.updateProductType(productType);
+//		int rowcount2 = productTypeDaoResposity.updateProductSubType(productSubType);
+//		System.out.println(rowcount1 + rowcount2);
 		
 		
 		

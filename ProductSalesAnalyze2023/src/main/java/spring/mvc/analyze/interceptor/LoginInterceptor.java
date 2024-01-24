@@ -18,20 +18,35 @@ public class LoginInterceptor implements HandlerInterceptor{
 		// 檢查 session 中是否有 user 的物件資料(意味著用戶已經登入)
 		if (session.getAttribute("user") != null) {
 			User user = (User)session.getAttribute("user");
-			/*
+			
 			// 路徑的權限檢查
-			// "/group_buy/backend"，user level = 2 才可以進入
+			// "/eccommerce"，user level = 1、3 才可以進入
 			System.out.println("RequestURI = " + request.getRequestURI());
-			if(request.getRequestURI().contains("/group_buy/backend")) { // 後台
-				if(user.getLevel() == 2) {
+			if(request.getRequestURI().contains("/eccommerce")) { // 電商
+				if(user.getLevelId() == 1 || user.getLevelId() == 3) {
 					return true; // 放行
-				} else {
-					response.sendRedirect(request.getServletContext().getContextPath() + "/mvc/group_buy/login");
+				}  else {
+					response.sendRedirect(request.getServletContext().getContextPath() + "/mvc/analyze/login");
 					return false; // 不放行
 				}
-			} 
-			*/
+			// "/product"，user level = 2、3 才可以進入
+			} else if (request.getRequestURI().contains("/product")) { //產品
+				if(user.getLevelId() == 2 || user.getLevelId() == 3) {
+					return true; // 放行
+				}  else {
+					response.sendRedirect(request.getServletContext().getContextPath() + "/mvc/analyze/login");
+					return false; // 不放行
+				}
+			} else if (request.getRequestURI().contains("/user")) { //產品
+				if(user.getLevelId() == 3) {
+					return true; // 放行
+				}  else {
+					response.sendRedirect(request.getServletContext().getContextPath() + "/mvc/analyze/login");
+					return false; // 不放行
+				}
+			}
 			return true; // 放行
+		
 		}
 		// 未登入，導入到登入頁面
 		response.sendRedirect(request.getServletContext().getContextPath()+ "/mvc/analyze/login");	

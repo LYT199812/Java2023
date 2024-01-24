@@ -28,6 +28,8 @@ public class User {
 	
 	String password;
 	
+	Integer levelId;
+	
 	Level level;
 	
 	List<Service> menu;

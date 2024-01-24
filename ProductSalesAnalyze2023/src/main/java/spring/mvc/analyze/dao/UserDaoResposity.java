@@ -13,6 +13,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import spring.mvc.analyze.entity.Product;
 import spring.mvc.analyze.entity.User;
 
 @Repository
@@ -32,6 +33,7 @@ public class UserDaoResposity implements UserDao{
 		user.setUserId(rs.getInt("userId"));
 		user.setUsername(rs.getString("username"));
 		user.setPassword(rs.getString("password"));
+		user.setLevelId(rs.getInt("levelId"));
 		user.setLevel(levelDaoResposity.findLevelById(rs.getInt("levelId")).get());
 		user.setMenu(serviceDaoResposity.findSevicesByUserId(rs.getInt("userId")));
 		return user;
@@ -69,14 +71,14 @@ public class UserDaoResposity implements UserDao{
 	}
 
 	@Override
-	public int save(User user) {
+	public int addUser(User user) {
 		String sql = "insert into user(username, password, levelId) value (?, ?, ?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowcount = jdbcTemplate.update(conn -> {
         	PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         	pstmt.setString(1, user.getUsername());
         	pstmt.setString(2, user.getPassword());
-        	pstmt.setInt(3,  user.getLevel().getLevelId());
+        	pstmt.setInt(3,  user.getLevelId());
         	return pstmt;
         }, keyHolder);
         if(rowcount > 0) {
@@ -86,4 +88,19 @@ public class UserDaoResposity implements UserDao{
 		return rowcount;
 	}
 
+	@Override
+	public int updateUserLevelIdAndName(Integer userId, Integer levelId, String name) {
+		String sql = "update user set levelId = ?, username = ? where userId = ?";
+		int rowcount = jdbcTemplate.update(sql, levelId, name , userId);
+		return rowcount ;
+	}
+
+	@Override
+	public int removeProductById(Integer userId) {
+		String sql = "delete from user where userId = ?";
+		return jdbcTemplate.update(sql, userId);
+	}
+
+	
+	
 }

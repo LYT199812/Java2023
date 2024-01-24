@@ -14,8 +14,11 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.google.gson.Gson;
 
+import spring.mvc.analyze.dao.EcommerceDao;
+import spring.mvc.analyze.dao.EcommerceDaoResposity;
 import spring.mvc.analyze.dao.ProductDaoResposity;
 import spring.mvc.analyze.dao.StockDaoResposity;
+import spring.mvc.analyze.entity.Ecommerce;
 import spring.mvc.analyze.entity.Product;
 import spring.mvc.analyze.entity.ProductSubType;
 import spring.mvc.analyze.entity.ProductType;
@@ -30,12 +33,14 @@ public class ProductDaoTest {
 		
 		ProductDaoResposity productDaoResposity = ctx.getBean("productDaoResposity", ProductDaoResposity.class);
 		StockDaoResposity stockDaoResposity = ctx.getBean("stockDaoResposity", StockDaoResposity.class);
+		EcommerceDaoResposity ecommerceDaoResposity = ctx.getBean("ecommerceDaoResposity", EcommerceDaoResposity.class);
 		
 		// 測試查詢功能
-//		List<Product> product1 = productDaoResposity.findAllProducts();
+		List<Product> product1 = productDaoResposity.findAllProducts();
 //		Product product1 = productDaoResposity.findProductById("A101").get();
+//		Ecommerce Ecommerce = ecommerceDaoResposity.findEcById(1).get();
 //		Product product1 = productDaoResposity.findProductByProductname("好用鍋鏟").get();
-//		System.out.println(new Gson().toJson(product1));
+		System.out.println(new Gson().toJson(product1));
 		
 		// 測試新增功能
 //		Product product = new Product();
@@ -71,7 +76,7 @@ public class ProductDaoTest {
 //        int updateRowCount = productDaoResposity.updateProduct(product);
 //        System.out.println("Update Product Rows: " + updateRowCount);
 		
-
+		/*
         // 刪除產品
         String productIdToDelete = "C101";
 
@@ -85,7 +90,7 @@ public class ProductDaoTest {
         } else {
             System.out.println("Product deletion failed. Product with ID " + productIdToDelete + " not found.");
         }
-        
+        */
         
        
     }

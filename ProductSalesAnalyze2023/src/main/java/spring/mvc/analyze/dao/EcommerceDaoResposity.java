@@ -6,11 +6,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import spring.mvc.analyze.entity.Product;
 import spring.mvc.analyze.entity.ProductType;
 import spring.mvc.analyze.entity.Ecommerce;
 
+@Repository
 public class EcommerceDaoResposity implements EcommerceDao{
 
 	@Autowired

@@ -15,7 +15,9 @@ public interface StockDao {
 	
 	public Optional<Stock> findStockByProductIdAndEcId(String productId, Integer ecId);
 	
-	int addStock (Stock stock);
+	public int addStock (Stock stock);
+	
+	public void addStockByExcel(List<Stock> stockList);
 	
 	public int updateStock (Stock stock);
 	
