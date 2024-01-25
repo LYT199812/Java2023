@@ -49,35 +49,35 @@ const datactxByEcLineChart = {
 	  {
 	    label: 'Momo',
 	    data: moData,
-	    backgroundColor: [      // 设置每个柱形图的背景颜色
+	    backgroundColor: [      // 設置每個長條圖的背景颜色
 	      'rgb(221, 160, 221)',
 	    ],
-	    borderColor: [     //设置每个柱形图边框线条颜色
+	    borderColor: [     //設置每個長條圖边框线条颜色
 	      'rgba(221, 160, 221, 0.8)',
 	    ],
-	    borderWidth: 4     // 设置线条宽度
+	    borderWidth: 3     // 设置线条宽度
   		},
 	  {
 		label: 'pchome',
 	    data: pcData,
-	    backgroundColor: [      // 设置每个柱形图的背景颜色
+	    backgroundColor: [      // 設置每個長條圖的背景颜色
 	      'rgb(30, 144, 255)',
 	    ],
-	    borderColor: [     //设置每个柱形图边框线条颜色
+	    borderColor: [     //設置每個長條圖边框线条颜色
 	      'rgba(30, 144, 255, 0.8)',
 	    ],
-	    borderWidth: 4     // 设置线条宽度
+	    borderWidth: 3     // 设置线条宽度
 	  },
   	{
 		label: '蝦皮',
 	    data: spData,
-	    backgroundColor: [      // 设置每个柱形图的背景颜色
+	    backgroundColor: [      // 設置每個長條圖的背景颜色
 	      'rgb(255, 222, 173)',
 	    ],
-	    borderColor: [     //设置每个柱形图边框线条颜色
+	    borderColor: [     //設置每個長條圖边框线条颜色
 	      'rgba(255, 222, 173, 0.8)',
 	    ],
-	    borderWidth: 4     // 设置线条宽度
+	    borderWidth: 3     // 设置线条宽度
 	  }
   ]
 };
@@ -107,12 +107,12 @@ const dataByEcPieChart = {
 	  {
 	    label: '電商佔比',
 	    data: salesByECValues,
-	    backgroundColor: [      // 设置每个柱形图的背景颜色
+	    backgroundColor: [      // 設置每個長條圖的背景颜色
 	      'rgba(221, 160, 221, 0.8)',
 	      'rgba(30, 144, 255, 0.8)',
 	      'rgba(255, 222, 173, 0.8)',
 	    ],
-	    borderColor: [     //设置每个柱形图边框线条颜色
+	    borderColor: [     //設置每個長條圖边框线条颜色
 	      'rgb(221, 160, 221)',
 	      'rgb(30, 144, 255)',
 	      'rgb(255, 222, 173)',
@@ -144,6 +144,8 @@ var uniqueMonths2 = Array.from(new Set(salesDataByBrandAndDate.map(entry => entr
 var aaData = Array(uniqueMonths2.length).fill(0);
 var bbData = Array(uniqueMonths2.length).fill(0);
 var ccData = Array(uniqueMonths2.length).fill(0);
+var ddData = Array(uniqueMonths2.length).fill(0);
+var eeData = Array(uniqueMonths2.length).fill(0);
 
 // 將資料填入對應的月份位置
 salesDataByBrandAndDate.forEach(function(entry) {
@@ -154,6 +156,10 @@ salesDataByBrandAndDate.forEach(function(entry) {
         bbData[monthIndex2] += entry.sales;
     } else if (entry.brand === "CCC") {
         ccData[monthIndex2] += entry.sales;
+    } else if (entry.brand === "DDD") {
+        ddData[monthIndex2] += entry.sales;
+    } else if (entry.brand === "EEE") {
+        eeData[monthIndex2] += entry.sales;
     }
 });
 
@@ -166,36 +172,60 @@ const datactxByBrandLineChart = {
 	  {
 	    label: 'AAA',
 	    data: aaData,
-	    backgroundColor: [      // 设置每个柱形图的背景颜色
+	    backgroundColor: [      // 設置每個長條圖的背景颜色
 	      'rgb(0, 71, 125)',
 	    ],
-	    borderColor: [     //设置每个柱形图边框线条颜色
+	    borderColor: [     //設置每個長條圖边框线条颜色
 	      'rgba(0, 71, 125, 0.8)',
 	    ],
-	    borderWidth: 4     // 设置线条宽度
+	    borderWidth: 3     // 设置线条宽度
   		},
 	  {
 		label: 'BBB',
 	    data: bbData,
-	    backgroundColor: [      // 设置每个柱形图的背景颜色
+	    backgroundColor: [      // 設置每個長條圖的背景颜色
 	      'rgb(255, 191, 0)',
 	    ],
-	    borderColor: [     //设置每个柱形图边框线条颜色
+	    borderColor: [     //設置每個長條圖边框线条颜色
 	      'rgba(255, 191, 0, 0.8)',
 	    ],
-	    borderWidth: 4     // 设置线条宽度
+	    borderWidth: 3     // 设置线条宽度
 	  },
   	{
 		label: 'CCC',
 	    data: ccData,
-	    backgroundColor: [      // 设置每个柱形图的背景颜色
+	    backgroundColor: [      // 設置每個長條圖的背景颜色
 	      'rgb(204, 119, 34)',
 	    ],
-	    borderColor: [     //设置每个柱形图边框线条颜色
+	    borderColor: [     //設置每個長條圖边框线条颜色
 	      'rgba(204, 119, 34, 0.8)',
 	    ],
-	    borderWidth: 4     // 设置线条宽度
+	    borderWidth: 3     // 设置线条宽度
+	  },
+	  /*
+	  {
+		label: 'DDD',
+	    data: ddData,
+	    backgroundColor: [      // 設置每個長條圖的背景颜色
+	      'rgb(171, 215, 94)',
+	    ],
+	    borderColor: [     //設置每個長條圖边框线条颜色
+	      'rgba(171, 215, 94, 0.8)',
+	    ],
+	    borderWidth: 3     // 设置线条宽度
+	  },
+	  {
+		label: 'EEE',
+	    data: eeData,
+	    backgroundColor: [      // 設置每個長條圖的背景颜色
+	      'rgb(255, 134, 216)',
+	    ],
+	    borderColor: [     //設置每個長條圖边框线条颜色
+	      'rgba(255, 134, 216, 0.8)',
+	    ],
+	    borderWidth: 3     // 设置线条宽度
 	  }
+	  */
   ]
 };
 
@@ -223,12 +253,12 @@ const dataByBrandPieChart = {
 	  {
 	    label: '品牌佔比',
 	    data: salesByBrandValues,
-	    backgroundColor: [      // 设置每个柱形图的背景颜色
+	    backgroundColor: [      // 設置每個長條圖的背景颜色
 	      'rgba(0, 71, 125, 0.8)',
 	      'rgba(255, 191, 0, 0.8)',
 	      'rgba(204, 119, 34, 0.8)',
 	    ],
-	    borderColor: [     //设置每个柱形图边框线条颜色
+	    borderColor: [     //設置每個長條圖边框线条颜色
 	      'rgb(0, 71, 125)',
 	      'rgb(255, 191, 0)',
 	      'rgb(204, 119, 34)',
@@ -282,35 +312,35 @@ const datactxByTypeLineChart = {
 	  {
 	    label: '餐廚',
 	    data: kcData,
-	    backgroundColor: [      // 设置每个柱形图的背景颜色
+	    backgroundColor: [      // 設置每個長條圖的背景颜色
 	      'rgb(107, 160, 127)',
 	    ],
-	    borderColor: [     //设置每个柱形图边框线条颜色
+	    borderColor: [     //設置每個長條圖边框线条颜色
 	      'rgba(107, 160, 127, 0.8)',
 	    ],
-	    borderWidth: 4     // 设置线条宽度
+	    borderWidth: 3     // 设置线条宽度
   		},
 	  {
 		label: '烘焙',
 	    data: baData,
-	    backgroundColor: [      // 设置每个柱形图的背景颜色
+	    backgroundColor: [      // 設置每個長條圖的背景颜色
 	      'rgb(139, 127, 181)',
 	    ],
-	    borderColor: [     //设置每个柱形图边框线条颜色
+	    borderColor: [     //設置每個長條圖边框线条颜色
 	      'rgba(139, 127, 181, 0.8)',
 	    ],
-	    borderWidth: 4     // 设置线条宽度
+	    borderWidth: 3     // 设置线条宽度
 	  },
   	{
 		label: '旅遊',
 	    data: trData,
-	    backgroundColor: [      // 设置每个柱形图的背景颜色
+	    backgroundColor: [      // 設置每個長條圖的背景颜色
 	      'rgb(164, 129, 27)',
 	    ],
-	    borderColor: [     //设置每个柱形图边框线条颜色
+	    borderColor: [     //設置每個長條圖边框线条颜色
 	      'rgba(164, 129, 27, 0.8)',
 	    ],
-	    borderWidth: 4     // 设置线条宽度
+	    borderWidth: 3     // 设置线条宽度
 	  }
   ]
 };
@@ -339,7 +369,7 @@ const dataBySubTypeBarChart = {
 	  {
 	    label: '中分類銷售額',
 	    data: salesBySubTypeValues,
-	    backgroundColor: [      // 设置每个柱形图的背景颜色
+	    backgroundColor: [      // 設置每個長條圖的背景颜色
 	      'rgba(181, 205, 73, 0.8)',
 	      'rgba(106, 174, 53, 0.8)',
 	      'rgba(0, 136, 117, 0.8)',
@@ -356,7 +386,7 @@ const dataBySubTypeBarChart = {
 	      'rgba(245, 206, 96, 0.8)',
 	      'rgba(245, 222, 0, 0.8)',
 	    ],
-	    borderColor: [     //设置每个柱形图边框线条颜色
+	    borderColor: [     //設置每個長條圖边框线条颜色
 	      'rgb(181, 205, 73)',
 	      'rgb(106, 174, 53)',
 	      'rgb(0, 136, 117)',

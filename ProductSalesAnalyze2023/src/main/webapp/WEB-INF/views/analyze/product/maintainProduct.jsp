@@ -17,12 +17,12 @@
 
 <!--  產品表格 -->
 <div class="container mt-4 mb-5 chartBox">
-  <h2>所有上架產品</h2>
+  <h2>所有上架商品</h2>
   <table class="table">
     <thead>
       <tr>
-      	<th>產品型號</th>
-        <th>產品名稱</th>
+      	<th>商品型號</th>
+        <th>商品名稱</th>
         <th>價格</th>
         <th>條碼</th>
         <th>品牌</th>

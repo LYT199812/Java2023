@@ -64,7 +64,10 @@
 	      </ul>
 	    </div>
 	    <i class="bi bi-person-circle text-light h5 pe-4 mb-0 d-none d-md-block">${user.username}</i>
-	    <i class="bi bi-box-arrow-right text-light ml-3" role="button" onclick="window.location.href='${ pageContext.request.contextPath }/mvc/analyze/logout'">登出</i>
+	    <a role="button" onclick="window.location.href='${ pageContext.request.contextPath }/mvc/analyze/logout'">
+		    <i class="bi bi-box-arrow-right text-light ml-3"></i>
+		    <span class="text-white">登出</span>
+	    </a>
 	  </div>
 	</nav>
 	

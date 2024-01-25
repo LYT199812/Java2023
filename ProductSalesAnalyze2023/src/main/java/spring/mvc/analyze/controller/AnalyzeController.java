@@ -70,7 +70,7 @@ public class AnalyzeController {
 		// 2. 建立畫布
 		Graphics g = img.getGraphics();
 		// 3. 設定顏色
-		g.setColor(Color.YELLOW);
+		g.setColor(Color.LIGHT_GRAY);
 		// 4. 塗滿背景
 		g.fillRect(0, 0, 80, 30);
 		// 5. 設定顏色(字的)
@@ -119,14 +119,15 @@ public class AnalyzeController {
 	// 前台登入處理
 	@PostMapping("/login")
 	public String login(@RequestParam(value ="username") String username, 
-						@RequestParam(value = "password") String password, 
+						@RequestParam(value = "password") String password,
+						@RequestParam("code") String code,
 						HttpSession session, Model model) {
 		// 比對驗證碼
-//			if (!code.equals(session.getAttribute("code")+"")) {//session.getAttribute("code")原本是物件，加 +"" java會自動拆裝箱轉成字串的來比對
-//				session.invalidate(); // session 過期失效
-//				model.addAttribute("loginMessage", "驗證碼錯誤");
-//				return "group_buy/login";
-//			}
+			if (!code.equals(session.getAttribute("code")+"")) {//session.getAttribute("code")原本是物件，加 +"" java會自動拆裝箱轉成字串的來比對
+				session.invalidate(); // session 過期失效
+				model.addAttribute("loginMessage", "驗證碼錯誤!");
+				return "analyze/login";
+			}
 		
 		// 根據 username 查找 user 物件
 		Optional<User> userOpt = dao.findUserByUsername(username);
@@ -142,12 +143,12 @@ public class AnalyzeController {
 				return "redirect:/mvc/analyze/chart/main"; //login ok，導前台首頁
 			}else {
 				session.invalidate(); // session 過期失效
-				model.addAttribute("loginMessage", "密碼錯誤");
+				model.addAttribute("loginMessage", "密碼錯誤!");
 				return "analyze/login";
 			}
 		}else {
 			session.invalidate(); // session 過期失效
-			model.addAttribute("loginMessage", "無此使用者");
+			model.addAttribute("loginMessage", "無此使用者!");
 			return "analyze/login"; // 自己渲染給jsp，再呈現給前端
 		}
 		

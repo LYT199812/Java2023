@@ -14,26 +14,30 @@
 	body {
 		background-color: #F0F0F0
 	}
+	.error-text {
+    color: red;
+  }
 </style>
 
 <div class="container mt-4">
 	<div class="d-flex justify-content-between">
 	  <h2 class="mb-4">編輯 ${product.productId} 資訊</h2>
+	  <form class="needs-validation" id="editProductForm" enctype="application/x-www-form-urlencoded"
+	      method="post" 
+	      action="${ pageContext.request.contextPath }/mvc/analyze/product/updateProduct" >
 	  <div class="mb-5 ">
 		 <button type="submit" class="btn btn-primary">修改</button>
 	  </div>
 	</div>
-  
-	<form class="needs-validation" id="editProductForm" enctype="application/x-www-form-urlencoded"
-	      method="post" 
-	      action="${ pageContext.request.contextPath }/mvc/analyze/product/updateProduct" >
+	
 	   <div class="mb-3">
-	   		<label for="productQty" class="form-label">產品總庫存</label>
+	   		<label for="productQty" class="form-label">商品總庫存</label>
 		    <input type="number" class="form-control" id="productQty" name="productQty" value="${product.productQty}">
 	   </div>
 	   <c:forEach items="${ ecommerceStockEdits }" var="ecommerceStockEdit">
 			<div class="mb-3">
-			    <label for="productDescription" class="form-label">上架平台</label>
+			    <label for="productDescription" class="form-label">上架平台 & 庫存</label>
+	   			<span class="error-text">${ errorMessage }</span>
 				<div class="form-check">
 					<input class="form-check-input" 
 					       type="checkbox" 
@@ -55,19 +59,24 @@
 			</div>
 		</c:forEach>
 		<div class="mb-3">
-			<label for="productName" class="form-label">產品名稱</label> 
-			<input type="text" class="form-control"  id="productName" name="productName" value="${product.productName}">
+			<label for="productName" class="form-label">商品名稱</label>
+			<div class="input-group has-validation"> 
+				<input type="text" class="form-control"  id="productName" name="productName" value="${product.productName}" required>
+				<div class="invalid-feedback">
+					     請輸入商品名稱!
+		        </div>
+	        </div>
 		</div>
 		<div class="mb-3">
-			<label for="productPrice" class="form-label">產品價格</label>
-			<input type="number" class="form-control"  id="productPrice" name="productPrice" value="${product.productPrice}">
+			<label for="productPrice" class="form-label">商品價格</label>
+			<input type="number" class="form-control"  id="productPrice" name="productPrice" value="${product.productPrice}" required>
 		</div>
 		<div class="mb-3">
-			<label for="productBarcode" class="form-label">產品條碼</label>
-			<input type="text" class="form-control"  id="productBarcode" name="productBarcode" value="${product.productBarcode}">
+			<label for="productBarcode" class="form-label">商品條碼</label>
+			<input type="text" class="form-control"  id="productBarcode" name="productBarcode" value="${product.productBarcode}" required>
 		</div>
 		<div class="mb-3">
-			<label for="productBrandId" class="form-label">產品品牌</label> 
+			<label for="productBrandId" class="form-label">商品品牌</label> 
 			<select class="form-select" id="productBrandId" name="productBrandId">
             	<c:forEach var="productBrand" items="${ productBrands }">
                 <c:set var="selected" value="${productBrand.id eq product.productBrandId}"/> <!-- Check if it's the product's type -->
@@ -76,7 +85,7 @@
             </select>
 		</div>
 		<div class="mb-3">
-			<label for="productTypeId" class="form-label">產品大分類</label>
+			<label for="productTypeId" class="form-label">商品大分類</label>
 			<select class="form-select" id="productTypeId" name="productTypeId">
             	<c:forEach var="productType" items="${ productTypes }">
                 <c:set var="selected" value="${productType.id eq product.productTypeId}"/> <!-- Check if it's the product's type -->
@@ -85,7 +94,7 @@
             </select>
 		</div>
 		<div class="mb-3">
-			<label for="productSubTypeId" class="form-label">產品中分類</label> 
+			<label for="productSubTypeId" class="form-label">商品中分類</label> 
 			<select class="form-select" id="productSubTypeId" name="productSubTypeId">
             	<c:forEach var="productSubType" items="${ productSubTypes }">
                 <c:set var="selected" value="${productSubType.id eq product.productSubTypeId}"/> <!-- Check if it's the product's type -->
@@ -127,6 +136,30 @@
 	    var inventoryField = document.getElementById(checkbox.id + "-inventory");
 	    inventoryField.disabled = !checkbox.checked;
 	}
+
+	
+	//表單驗證
+	// Example starter JavaScript for disabling form submissions if there are invalid fields
+	(function () {
+	  'use strict'
+
+	  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+	  var forms = document.querySelectorAll('.needs-validation')
+
+	  // Loop over them and prevent submission
+	  Array.prototype.slice.call(forms)
+	    .forEach(function (form) {
+	      form.addEventListener('submit', function (event) {
+	        if (!form.checkValidity()) {
+	          event.preventDefault()
+	          event.stopPropagation()
+	        }
+
+	        form.classList.add('was-validated')
+	      }, false)
+	    })
+	})()
+	
 
 </script>
 

@@ -66,7 +66,7 @@
 	</div>
 
 
-	<div class="container mt-3 px-0">
+	<div class="container mt-3 mb-5 px-0">
 		<!-- 篩選條件 -->
 		<div class="row mb-3 d-flex align-items-start">
 			<div class="col-md-1">
@@ -87,27 +87,21 @@
 					<option value="" selected>館別</option>
 					<option value="餐廚">餐廚</option>
 					<option value="烘焙">烘焙</option>
-					<option value="傢俱">傢俱</option>
 					<option value="旅遊">旅遊</option>
 				</select>
 			</div>
 			<div class="col-md-1">
 				<select class="form-select" name='name' id="typeSelect">
 					<option value="" selected>分類</option>
-					<option value="鍋鏟">鍋鏟</option>
 					<option value="平底鍋">平底鍋</option>
+					<option value="鍋鏟">鍋鏟</option>
 					<option value="主廚刀">主廚刀</option>
 					<option value="餅乾模">餅乾模</option>
-					<option value="醬料刷">醬料刷</option>
-					<option value="量杯">量杯</option>
-					<option value="量匙">量匙</option>
-					<option value="電子秤">電子秤</option>
-					<option value="隔熱手套">隔熱手套</option>
-					<option value="派烤盤">派烤盤</option>
-					<option value="蛋糕烤盤">蛋糕烤盤</option>
-					<option value="可麗露模">可麗露模</option>
+					<option value="麵粉篩">麵粉篩</option>
 					<option value="烘焙紙">烘焙紙</option>
-					<option value="計時器">計時器</option>
+					<option value="頸枕">頸枕</option>
+					<option value="收納袋">收納袋</option>
+					<option value="背包">背包</option>
 				</select>
 			</div>
 			<div class="col-md-1">
@@ -119,12 +113,12 @@
 				</select>
 			</div>
 			<div class="form-floating col-md-2">
-				<input type="date" class="form-control" id="startDate"> <label
-					for="startDate">開始日期</label>
+				<input type="date" class="form-control" id="startDate"> 
+				<label class="ms-2" for="startDate">開始日期</label>
 			</div>
 			<div class="form-floating col-md-2">
-				<input type="date" class="form-control" id="endDate"> <label
-					for="endDate">結束日期</label>
+				<input type="date" class="form-control" id="endDate"> 
+				<label class="ms-2" for="endDate">結束日期</label>
 			</div>
 			<div class="col-md-2 ">
 				<button class="btn btn-primary me-2" onclick="filterData()">篩選</button>
@@ -134,7 +128,7 @@
 
 
 		<!-- 產品銷售資料表格 -->
-		<table class="table" id="salesTable">
+		<table class="table mb-3" id="salesTable">
 			<!-- 表格標頭 -->
 			<thead>
 				<tr>
@@ -149,7 +143,6 @@
 					<th>總庫存</th>
 					<th>銷售量</th>
 					<th>銷售額</th>
-					<th>YOY</th>
 					<!-- 其他欄位... -->
 				</tr>
 			</thead>
@@ -160,17 +153,16 @@
 			<!-- 表格總計 -->
 		    <tfoot>
 		        <tr>
-		            <td colspan="8">總計：</td>
-		            <td id="totalQty" class="text-danger">></td>
+		            <td colspan="9">總計：</td>
 		            <td id="totalSalesQty" class="text-danger">></td>
 		            <td id="totalSalesFigures" class="text-danger">></td>
-		            <td colspan="3"></td> <!-- 如果有其他欄位，調整 colspan 的值 -->
+		             <!-- 如果有其他欄位，調整 colspan 的值 -->
 		        </tr>
 		    </tfoot>
 		</table>
 		
 		<!-- 品牌銷售資料表格 -->
-		<table class="table" id="brandSalesTable">
+		<table class="table mb-3" id="brandSalesTable">
 			<!-- 表格標頭 -->
 			<thead>
 				<tr>
@@ -180,7 +172,6 @@
 					<th>產品分類</th>
 					<th>銷售量</th>
 					<th>銷售額</th>
-					<th>YOY</th>
 					<!-- 其他欄位... -->
 				</tr>
 			</thead>
@@ -194,31 +185,10 @@
 		            <td colspan="4">總計：</td>
 		            <td id="brandTotalSalesQty" class="text-danger">></td>
 		            <td id="brandTotalSalesFigures" class="text-danger">></td>
-		            <td colspan="2"></td> <!-- 如果有其他欄位，調整 colspan 的值 -->
+		             <!-- 如果有其他欄位，調整 colspan 的值 -->
 		        </tr>
 		    </tfoot>
 		</table>
-		
-		<div id="pagination" class="mt-3">
-		    <nav aria-label="Page navigation example">
-			  <ul class="pagination justify-content-end">
-			    <li class="page-item">
-			      <a class="page-link" href="#" aria-label="Previous">
-			        <span aria-hidden="true">&laquo;</span>
-			      </a>
-			    </li>
-			    <li class="page-item"><a class="page-link" href="#">1</a></li>
-			    <li class="page-item"><a class="page-link" href="#">2</a></li>
-			    <li class="page-item"><a class="page-link" href="#">3</a></li>
-			    <li class="page-item">
-			      <a class="page-link" href="#" aria-label="Next">
-			        <span aria-hidden="true">&raquo;</span>
-			      </a>
-		      	</li>
-			  </ul>
-			</nav>
-		</div>
-		
 		
 	</div>
 	
@@ -231,9 +201,6 @@
     document.getElementById("excelForm").action += "/" + document.getElementById("ecId").value;
 	</script>
 
-<div class="mb-5">
-    <canvas id="salesBarChart" width="400" height="200"></canvas>
-</div>
 
 	<script type="text/javascript" src="<%=request.getContextPath()%>/components/script.js"></script>	
 </body>

@@ -73,7 +73,7 @@ public class StockServiceImpl {
 		List<Stock> stocks = stockDao.findStockByProductId(productId);
 		int stockQtySum = stocks.stream().mapToInt(Stock::getEcProductQty).sum();
 		if (stockQtySum > product.getProductQty()) {
-			throw new StockQtyInquientException(String.format("庫存不足，目前庫存數量為%s", product.getProductQty()));
+			throw new StockQtyInquientException(String.format("修改失敗：總庫存不足，目前商品總庫存數量為%s", product.getProductQty()));
 		}
 		
 	        product.setProductName(productName);

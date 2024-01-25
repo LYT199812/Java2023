@@ -37,17 +37,18 @@ function initTable(data) {
 	    dateCell.textContent = item.date;
 	    dateCell.style.display = 'none'; // 隱藏 date 欄位
 	    
-        row.insertCell(12).textContent = item.yoy;
+	    
+        //row.insertCell(12).textContent = item.yoy;
         // 插入其他欄位...
     });
     
     // 處理總計
     // 總庫存
-    let quantitys = 0;
-    analyzeSalesDatas.forEach(item => {
-		quantitys += item.quantity;
-	});
-	document.getElementById('totalQty').innerText = quantitys;
+    //let quantitys = 0;
+    //analyzeSalesDatas.forEach(item => {
+	//	quantitys += item.quantity;
+	//});
+	//document.getElementById('totalQty').innerText = quantitys;
 	//總銷量
 	let salesQuantitys = 0;
     analyzeSalesDatas.forEach(item => {
@@ -154,7 +155,7 @@ function initBrandTable(data) {
         // 相同品牌、同館別、同分類 合併 銷售數量 + 銷售額 + 平台庫存 + 總庫存
 
         data.forEach(sale => {
-            let key = `${sale.brand}_${sale.productDepartment}_${sale.productType}_${sale.yoy}_${sale.date}`;
+            let key = `${sale.brand}_${sale.productDepartment}_${sale.productType}_${sale.date}`;
             if (!brandGroups[key]) {
                 brandGroups[key] = {
                     brand: sale.brand, // 新增品牌資訊
@@ -163,7 +164,7 @@ function initBrandTable(data) {
                     date: sale.date,
                     sales: 0,
                     salesFigures: 0,
-                    yoy: sale.yoy,
+                    //yoy: sale.yoy,
                     //ecQuantity: 0,
                     //quantity: 0
                 };
@@ -177,7 +178,7 @@ function initBrandTable(data) {
         // 將資料插入表格
         Object.keys(brandGroups).forEach(key => {
             const row = tableBody.insertRow();
-            const [brand, department, type, yoy, date] = key.split('_');
+            const [brand, department, type, date] = key.split('_');
 
             row.insertCell(0).textContent = ''; // 暫時不處理 number
             row.insertCell(1).textContent = brandGroups[key].brand; // 顯示品牌資訊
@@ -195,7 +196,7 @@ function initBrandTable(data) {
             dateCell.style.display = 'none'; // 隱藏 date 欄位
 
             // 處理 yoy
-            row.insertCell(7).textContent = brandGroups[key].yoy; // 暫時不處理 yoy
+            //row.insertCell(7).textContent = brandGroups[key].yoy; // 暫時不處理 yoy
             // 插入其他欄位...
         });
     } else {

@@ -32,6 +32,7 @@ import com.google.gson.Gson;
 
 import spring.mvc.analyze.dao.ProductDao;
 import spring.mvc.analyze.dao.SalesDataDao;
+import spring.mvc.analyze.dao.StockDao;
 import spring.mvc.analyze.dto.SalesDataDto;
 import spring.mvc.analyze.entity.Ecommerce;
 import spring.mvc.analyze.entity.Product;
@@ -50,6 +51,9 @@ public class EccommerceController {
 	
 	@Autowired
 	ProductDao productDao;
+	
+	@Autowired
+	StockDao stockDao;
 
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
@@ -121,7 +125,7 @@ public class EccommerceController {
 			salesDataDto.setSales(salesData.getEcSalesQty());
 			salesDataDto.setSalesFigures(salesData.getEcSalesPrice());
 			salesDataDto.setDate(sdf.format(salesData.getEcSalesDate()));
-			salesDataDto.setYoy(50); // 之後要算，先寫死
+			//salesDataDto.setYoy(50); // 之後要算，先寫死
 			salesDataDtos.add(salesDataDto);
 		}
 

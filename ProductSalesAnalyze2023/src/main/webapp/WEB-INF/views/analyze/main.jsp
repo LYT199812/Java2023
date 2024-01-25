@@ -42,7 +42,10 @@
 	    	<h2>平均客單</h2>
 	    	<h1>${ AOV }</h1>
 	    </div>
-	    <div class="col chartBox"><h2>月增率</h2></div>
+	    <div class="col chartBox">
+	    <h2>月增率</h2>
+	    <h1>20%</h1>
+	    </div>
    </div>
    <div class="row mt-4">
 	    <div class="col chartBox me-4">

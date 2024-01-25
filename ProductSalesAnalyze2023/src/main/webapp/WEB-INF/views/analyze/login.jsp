@@ -27,6 +27,9 @@
             width: 500px;
             height: auto;
     	}
+    	.error-text {
+		    color: red;
+		  }
     </style>
 		
 	</head>
@@ -58,20 +61,17 @@
 		  </div>
 		 
 		  
-		  <div class="mt-3">
+		  <div class="mt-3 ">
 		    <label for="verificationCode">驗證碼</label>
 		    <div class="d-flex">
-		    <input type="text" class="form-control" id="code" name="code" >
-		    <img src="./getcode" alt="驗證碼" valign="middle" class="d-flex">
-		    </div>
-		    <div class="invalid-feedback">
-		      請輸入驗證碼!
-		    </div>
+			    <input type="text" class="form-control" id="code" name="code" placeholder="請輸入驗證碼" required>
+			    <img src="./getcode" alt="驗證碼" valign="middle" class="d-flex">
+			</div>
 		  </div>
-		  
+		  <span class="error-text">${ loginMessage }</span> 
 		  
 		  <div class="d-flex justify-content-center mt-3">
-		    <button class="btn btn-primary" type="submit">Submit form</button>
+		    <button class="btn btn-primary" type="submit">登入</button>
 		  </div>
 		   
 		   
