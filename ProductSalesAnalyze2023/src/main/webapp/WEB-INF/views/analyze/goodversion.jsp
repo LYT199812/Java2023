@@ -64,8 +64,17 @@
 		</div>
 
 	</div>
-
-
+	
+	<div class="d-flex justify-content-end me-5 pe-5">
+		<!-- 批次新增商品，匯入成功or失敗訊息 -->
+		<c:if test="${not empty successMessage}">
+		       <span style="color: red;"> ${successMessage} </span>
+		</c:if>
+		<c:if test="${not empty errorMessage}">
+		      <span style="color: red;"> ${errorMessage} </span>
+		</c:if>
+	</div>
+	
 	<div class="container mt-3 mb-5 px-0">
 		<!-- 篩選條件 -->
 		<div class="row mb-3 d-flex align-items-start">
@@ -197,12 +206,14 @@
 	</script>
 
 	<script>
-    // 使用 JavaScript 动态设置 action 属性
+    // 使用 JavaScript 動態設置 action 属性
     document.getElementById("excelForm").action += "/" + document.getElementById("ecId").value;
 	</script>
-
-
+	
 	<script type="text/javascript" src="<%=request.getContextPath()%>/components/script.js"></script>	
+
+	
+
 </body>
 
 

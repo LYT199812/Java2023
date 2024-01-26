@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ch.qos.logback.classic.net.SMTPAppender;
 import spring.mvc.analyze.dao.EcommerceDao;
@@ -173,7 +174,7 @@ public class ProductController {
 		return "redirect:/mvc/analyze/product/maintainProduct";
 	}
 	
-	// 刪除員工
+	// 刪除產品
 	@DeleteMapping("/deleteProduct/{productId}")
 	public String deleteProduct(@PathVariable("productId") String productId) {
 		int rowcount = productDao.removeProductById(productId);
@@ -201,124 +202,109 @@ public class ProductController {
 	}
 	
 	
-	//----------------------------------------------------------------------------------------
-	// POI 批次新增商品 EXCEL 檔案匯入
-	@PostMapping("/addProductUpload")
-    @ResponseBody
-    public String addProductFileUpload(@RequestParam("addProductUploadFile") MultipartFile addProductUploadFile, Model model) {
-        
+	 //----------------------------------------------------------------------------------------
+	 // POI 批次新增商品 EXCEL 檔案匯入
+	 @PostMapping("/addProductUpload")
+	 public String addProductFileUpload(@RequestParam("addProductUploadFile") MultipartFile addProductUploadFile, Model model, RedirectAttributes redirectAttributes) {
+	     
 		try (InputStream inputStream = addProductUploadFile.getInputStream()) {
-            Workbook workbook = new XSSFWorkbook(inputStream);
-            Sheet sheet = workbook.getSheetAt(0);
-
-            int rowIndex = 0;
-            for (Row row : sheet) {
-                if (rowIndex == 0) {
-                    rowIndex++;
-                    continue;
-                }
-
-                Product product = createProductFromRow(row);
-                List<Stock> stock = createStockFromRow(row, product.getProductId());
-
-                productDao.addProduct(product);
-                stockDao.addStockByExcel(stock);
-
-                rowIndex++;
-            }
-
-            return "Excel data imported successfully.";
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "Error importing Excel data.";
-        }
-    }
-
-    private Product createProductFromRow(Row row) {
-        Product product = new Product();
-        product.setProductId(getCellValueAsString(row.getCell(0)));
-        product.setProductName(getCellValueAsString(row.getCell(1)));
-        product.setProductPrice(getCellValueAsInt(row.getCell(2)));
-        product.setProductBarcode(getCellValueAsString(row.getCell(3)));
-        product.setProductBrandId(getCellValueAsInt(row.getCell(4)));
-        product.setProductTypeId(getCellValueAsInt(row.getCell(5)));
-        product.setProductSubTypeId(getCellValueAsInt(row.getCell(6)));
-        product.setProductImg(getCellValueAsString(row.getCell(7)));
-        product.setProductDesc(getCellValueAsString(row.getCell(8)));
-        product.setProductQty(getCellValueAsInt(row.getCell(9)));
-        product.setIsLaunch(getCellValueAsBoolean(row.getCell(10)));
-
-        return product;
-    }
-
-    private List<Stock> createStockFromRow(Row row, String productId) {
-        
-    	List<Stock> stocks = new ArrayList<>();
-
-        // Assuming that ecId_1, ecId_2, ecId_3 are in consecutive columns starting from the 11th column
-        for (int i = 1; i <= 3; i++) {
-            Stock stock = new Stock();
-            stock.setProductId(productId);
-            stock.setEcId(getCellValueAsInt(row.getCell(10 + i)));
-            stock.setEcProductQty(getCellValueAsInt(row.getCell(13 + i)));
-
-            stocks.add(stock);
-        }
-        return stocks;
-    }
-
-    private String getCellValueAsString(Cell cell) {
-        cell.setCellType(CellType.STRING);
-        return cell.getStringCellValue();
-    }
-
-    private int getCellValueAsInt(Cell cell) {
-        
-    	if (cell == null) {
-            return 1; 
-        }
-
-        int cellType = cell.getCellType();
-        switch (cellType) {
-            case Cell.CELL_TYPE_NUMERIC:
-                return (int) cell.getNumericCellValue();
-            case Cell.CELL_TYPE_STRING:
-                try {
-                    return Integer.parseInt(cell.getStringCellValue());
-                } catch (NumberFormatException e) {
-                    // 轉換失敗處理邏輯
-                    return 0; 
-                }
-            default:
-                return 0;} // 或者你想要的默認值
-    	
-    	/*
-    	if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-            return (int) cell.getNumericCellValue();
-        } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-            String stringValue = cell.getStringCellValue().trim();
-            try {
-                return Integer.parseInt(stringValue);
-            } catch (NumberFormatException e) {
-                return 0;
-            }
-        } else {
-            return 0;
-        }
-        */
-    }
+	         Workbook workbook = new XSSFWorkbook(inputStream);
+	         Sheet sheet = workbook.getSheetAt(0);
+	
+	         int rowIndex = 0;
+	         for (Row row : sheet) {
+	             if (rowIndex == 0) {
+	                 rowIndex++;
+	                 continue;
+	             }
+	
+	             Product product = createProductFromRow(row);
+	             List<Stock> stock = createStockFromRow(row, product.getProductId());
+	
+	             productDao.addProduct(product);
+	             stockDao.addStockByExcel(stock);
+	
+	             rowIndex++;
+	         }
+	
+	         redirectAttributes.addFlashAttribute("successMessage", "商品批次匯入新增成功");
+	     } catch (IOException e) {
+	         e.printStackTrace();
+	         redirectAttributes.addFlashAttribute("errorMessage", "商品批次匯入新增失敗");
+	     }
+		return "redirect:/mvc/analyze/product/maintainProduct"; // 將網址導回商品管理頁面
+	 }
+	
+	 private Product createProductFromRow(Row row) {
+	     Product product = new Product();
+	     product.setProductId(getCellValueAsString(row.getCell(0)));
+	     product.setProductName(getCellValueAsString(row.getCell(1)));
+	     product.setProductPrice(getCellValueAsInt(row.getCell(2)));
+	     product.setProductBarcode(getCellValueAsString(row.getCell(3)));
+	     product.setProductBrandId(getCellValueAsInt(row.getCell(4)));
+	     product.setProductTypeId(getCellValueAsInt(row.getCell(5)));
+	     product.setProductSubTypeId(getCellValueAsInt(row.getCell(6)));
+	     product.setProductImg(getCellValueAsString(row.getCell(7)));
+	     product.setProductDesc(getCellValueAsString(row.getCell(8)));
+	     product.setProductQty(getCellValueAsInt(row.getCell(9)));
+	     product.setIsLaunch(getCellValueAsBoolean(row.getCell(10)));
+	
+	     return product;
+	 }
+	
+	 private List<Stock> createStockFromRow(Row row, String productId) {
+	     
+	 	List<Stock> stocks = new ArrayList<>();
+	
+	     // Assuming that ecId_1, ecId_2, ecId_3 are in consecutive columns starting from the 11th column
+	     for (int i = 1; i <= 3; i++) {
+	         Stock stock = new Stock();
+	         stock.setProductId(productId);
+	         stock.setEcId(getCellValueAsInt(row.getCell(10 + i)));
+	         stock.setEcProductQty(getCellValueAsInt(row.getCell(13 + i)));
+	
+	         stocks.add(stock);
+	     }
+	     return stocks;
+	 }
+	
+	 private String getCellValueAsString(Cell cell) {
+	     cell.setCellType(CellType.STRING);
+	     return cell.getStringCellValue();
+	 }
+	
+	 private int getCellValueAsInt(Cell cell) {
+	     
+	 	if (cell == null) {
+	         return 1; 
+	     }
+	
+	     int cellType = cell.getCellType();
+	     switch (cellType) {
+	         case Cell.CELL_TYPE_NUMERIC:
+	             return (int) cell.getNumericCellValue();
+	         case Cell.CELL_TYPE_STRING:
+	             try {
+	                 return Integer.parseInt(cell.getStringCellValue());
+	             } catch (NumberFormatException e) {
+	                 // 轉換失敗處理邏輯
+	                 return 0; 
+	             }
+	         default:
+	             return 0;} 
+	 }
 		
-    // 新增一個用於處理 Boolean 型別的方法
-    private Boolean getCellValueAsBoolean(Cell cell) {
-        if (cell.getCellType() == Cell.CELL_TYPE_BOOLEAN) {
-            return cell.getBooleanCellValue();
-        } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-            String stringValue = cell.getStringCellValue().trim();
-            return Boolean.parseBoolean(stringValue);
-        }
-        return false; // 或者設定為預設值
-    }
-  
+	 // 新增一個用於處理 Boolean 型別的方法
+	 private Boolean getCellValueAsBoolean(Cell cell) {
+	     if (cell.getCellType() == Cell.CELL_TYPE_BOOLEAN) {
+	         return cell.getBooleanCellValue();
+	     } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+	         String stringValue = cell.getStringCellValue().trim();
+	         return Boolean.parseBoolean(stringValue);
+	     }
+	     return false; 
+	 }
+    
     
     
 }

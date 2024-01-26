@@ -42,7 +42,7 @@
 		    <label for="username" class="form-label">帳號</label>
 		    <div class="input-group has-validation">
 		      <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
-		      <input type="text" class="form-control" id="username" name="username" placeholder="請輸入帳號" value="John"  required>
+		      <input type="text" class="form-control" id="username" name="username" placeholder="請輸入帳號" value=""  required>
 		      <div class="invalid-feedback">
 		        請輸入帳號!
 		      </div>
@@ -53,7 +53,7 @@
 		    <label for="password" class="form-label">密碼</label>
 		    <div class="input-group has-validation">
 		      <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-		      <input type="password" class="form-control" id="password" name="password" placeholder="請輸入密碼" value="pass123" required>
+		      <input type="password" class="form-control" id="password" name="password" placeholder="請輸入密碼" value="" required>
 		      <div class="invalid-feedback">
 		        請輸入密碼!
 		      </div>

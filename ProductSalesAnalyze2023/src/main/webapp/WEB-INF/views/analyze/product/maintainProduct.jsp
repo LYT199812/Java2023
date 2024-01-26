@@ -84,6 +84,20 @@
   </table>
 </div>
 
+<!-- 批次新增商品，匯入成功or失敗訊息 -->
+<c:if test="${not empty successMessage}">
+    <script>
+        alert('${successMessage}');
+    </script>
+</c:if>
+
+<c:if test="${not empty errorMessage}">
+    <script>
+        alert('${errorMessage}');
+    </script>
+</c:if>
+
+<!-- --------------------------------------------------------------------- -->
 <script>
     // 請確保在這裡定義了名為 edit 的函式
     function edit(productId) {
@@ -96,11 +110,11 @@
 <!-- 編輯 Modal -->
 <!-- 
 <c:forEach items="${ products }" var="product">
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">編輯${product.productId}資訊</h5>
+        <h5 class="modal-title" id="ModalLabel">編輯${product.productId}資訊</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
