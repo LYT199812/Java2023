@@ -42,7 +42,7 @@
 		    <label for="username" class="form-label">帳號</label>
 		    <div class="input-group has-validation">
 		      <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
-		      <input type="text" class="form-control" id="username" name="username" placeholder="請輸入帳號" value=""  required>
+		      <input type="text" class="form-control" id="username" name="username" placeholder="請輸入帳號" value="Amy"  required>
 		      <div class="invalid-feedback">
 		        請輸入帳號!
 		      </div>
@@ -53,7 +53,7 @@
 		    <label for="password" class="form-label">密碼</label>
 		    <div class="input-group has-validation">
 		      <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-		      <input type="password" class="form-control" id="password" name="password" placeholder="請輸入密碼" value="" required>
+		      <input type="password" class="form-control" id="password" name="password" placeholder="請輸入密碼" value="pass789" required>
 		      <div class="invalid-feedback">
 		        請輸入密碼!
 		      </div>
@@ -64,7 +64,7 @@
 		  <div class="mt-3 ">
 		    <label for="verificationCode">驗證碼</label>
 		    <div class="d-flex">
-			    <input type="text" class="form-control" id="code" name="code" placeholder="請輸入驗證碼" required>
+			    <input type="text" class="form-control" id="code" name="code" placeholder="請輸入驗證碼" >
 			    <img src="./getcode" alt="驗證碼" valign="middle" class="d-flex">
 			</div>
 		  </div>

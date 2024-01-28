@@ -44,7 +44,7 @@
 	    </div>
 	    <div class="col chartBox">
 	    <h2>月增率</h2>
-	    <h1>20%</h1>
+	    <h1>${ formattedGrowthRate }</h1>
 	    </div>
    </div>
    <div class="row mt-4">

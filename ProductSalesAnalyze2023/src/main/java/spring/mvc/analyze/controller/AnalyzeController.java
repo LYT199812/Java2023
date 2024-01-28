@@ -120,14 +120,14 @@ public class AnalyzeController {
 	@PostMapping("/login")
 	public String login(@RequestParam(value ="username") String username, 
 						@RequestParam(value = "password") String password,
-						@RequestParam("code") String code,
+						//@RequestParam("code") String code,
 						HttpSession session, Model model) {
 		// 比對驗證碼
-			if (!code.equals(session.getAttribute("code")+"")) {//session.getAttribute("code")原本是物件，加 +"" java會自動拆裝箱轉成字串的來比對
-				session.invalidate(); // session 過期失效
-				model.addAttribute("loginMessage", "驗證碼錯誤!");
-				return "analyze/login";
-			}
+//			if (!code.equals(session.getAttribute("code")+"")) {//session.getAttribute("code")原本是物件，加 +"" java會自動拆裝箱轉成字串的來比對
+//				session.invalidate(); // session 過期失效
+//				model.addAttribute("loginMessage", "驗證碼錯誤!");
+//				return "analyze/login";
+//			}
 		
 		// 根據 username 查找 user 物件
 		Optional<User> userOpt = dao.findUserByUsername(username);

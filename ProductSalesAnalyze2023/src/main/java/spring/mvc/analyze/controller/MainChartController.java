@@ -102,6 +102,42 @@ public class MainChartController {
                 .mapToInt(SalesData::getEcSalesPrice)
                 .sum();
 		
+        // 計算月增率
+        // 獲取前一個月份的銷售數據
+        List<SalesData> salesDatasPreMonthDatas = salesDataDao.findAllSalesDatas();
+        LocalDate currentDate = LocalDate.now();
+        int currentYear = currentDate.getYear();
+
+        // 計算前一個月的開始日期
+        LocalDate startOfPreviousMonth = currentDate.minusMonths(1).withDayOfMonth(1);
+
+        salesDatasPreMonthDatas = salesDatasPreMonthDatas.stream()
+                .filter(s -> {
+                    Instant instant = ((java.sql.Date) s.getEcSalesDate()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant();
+                    LocalDate saleDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
+                    
+                    // 檢查銷售日期是否在前一個月
+                    return saleDate.isAfter(startOfPreviousMonth.minusDays(1)) && saleDate.isBefore(currentDate.withDayOfMonth(1));
+                })
+                .collect(Collectors.toList());
+        
+        
+        
+        int previousMonthtotalSalesFigures = salesDatasPreMonthDatas.stream()
+                .mapToInt(SalesData::getEcSalesPrice)
+                .sum();
+        System.out.println("前一個月的銷售金額:"+previousMonthtotalSalesFigures);
+        
+        // 計算月增率
+        String formattedGrowthRate;
+        if (previousMonthtotalSalesFigures != 0) {
+            double growthRate = ((totalSalesFigures - previousMonthtotalSalesFigures) / previousMonthtotalSalesFigures) * 100;
+            formattedGrowthRate = String.format("%.2f%%", growthRate);
+        } else {
+            // 防止分母為0的情況
+        	formattedGrowthRate = null;
+        }
+
         // 計算當月訂單數
         int orderSaleCount = 0;
         int orderRefundCount = 0;
@@ -296,6 +332,7 @@ public class MainChartController {
 		model.addAttribute("salesDataByBrandForCharts", new Gson().toJson(salesDataByBrandDtos)); // 合併當月、品牌資訊
 		model.addAttribute("salesDataByTypeAndDateForCharts", new Gson().toJson(salesDataByTypeAndDateDtos)); // 合併當日取月、分類資訊
 		model.addAttribute("salesDataBySubTypeForCharts", new Gson().toJson(salesDataBySubTypeDtos)); // 合併當月、中分類資訊
+		model.addAttribute("formattedGrowthRate", formattedGrowthRate); // 月增率
 		
 		
 		return "/analyze/main";
@@ -371,45 +408,5 @@ public class MainChartController {
 				}
 		
 	}
-	
-	// -----------------------------------------------------------------------------------
-	 //計算月增率
-	 public String calculateMonthlyGrowth() {
-	        // 假設您有一個方法獲取當前月份和前一個月份的銷售數據列表
-	        List<SalesData> currentMonthSales = getCurrentMonthSalesData();
-	        List<SalesData> previousMonthSales = getPreviousMonthSalesData();
-	
-	        // 計算當前月份和前一個月份的總銷售額
-	        double currentMonthTotalSales = calculateTotalSales(currentMonthSales);
-	        double previousMonthTotalSales = calculateTotalSales(previousMonthSales);
-	
-	        // 計算月增率
-	        if (previousMonthTotalSales != 0) {
-	            double growthRate = ((currentMonthTotalSales - previousMonthTotalSales) / previousMonthTotalSales) * 100;
-	            return String.format("%.2f%%", growthRate);
-	        } else {
-	            // 防止分母為0的情況
-	            return null;
-	        }
-	    }
-	
-	    // 請根據您的應用程序邏輯實現以下方法
-	    private List<SalesData> getCurrentMonthSalesData() {
-	        // 實現獲取當前月份銷售數據的邏輯
-	        // ...
-	        return null;
-	    }
-	
-	    private List<SalesData> getPreviousMonthSalesData() {
-	        // 實現獲取前一個月份銷售數據的邏輯
-	        // ...
-	        return null;
-	    }
-	
-	    private double calculateTotalSales(List<SalesData> salesDataList) {
-	        // 實現計算總銷售額的邏輯
-	        // ...
-	        return 0.0;
-	    }
-	
+	 
 }
