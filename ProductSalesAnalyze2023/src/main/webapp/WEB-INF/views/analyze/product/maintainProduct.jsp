@@ -69,7 +69,7 @@
           <button class="btn btn-primary" id="editButton" >編輯</button>
           </a>
           
-          <a href="${ pageContext.request.contextPath }/mvc/analyze/product/deleteProduct/${product.productId}">
+          <a href="${ pageContext.request.contextPath }/mvc/analyze/product/deleteProduct/${product.productId}" onclick="confirmDelete('${ product.productId }', event)">
 	          <form action="${ pageContext.request.contextPath }/mvc/analyze/product/deleteProduct/${product.productId}" method="post">
 		          <input type="hidden" name="_method" value="delete">
 		          <button class="btn btn-danger ms-2" id="deleteButton">刪除</button>
@@ -104,6 +104,20 @@
         // 执行相应的编辑操作，可以使用 productId 参数
         console.log('Edit function called with productId:', productId);
     }
+    
+    
+    function confirmDelete(productId, event) {
+        // 使用 confirm 函數顯示確認視窗
+        const confirmed = window.confirm("確定要刪除嗎？");
+
+        // 如果確認，提交表單；否則取消
+        if (!confirmed) {
+            // 使用者取消刪除，可以額外顯示提示訊息
+            event.preventDefault();
+        }
+    }
+
+    
 </script>
 
 
