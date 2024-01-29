@@ -7,6 +7,9 @@ function initTable(data) {
 	// 相同型號 合併 銷售數量 + 銷售額
 	let productIds = [...new Set(data.map(s => s.productId))];
 	analyzeSalesDatas = [];
+	// 遞增的數字序列
+	let numberCounter = 1;
+	
 	for (let productId of productIds) {
 	    let salesList = data.filter(s => s.productId === productId);
 	    let qty = salesList.reduce((sum, s) => sum + s.sales, 0);
@@ -14,6 +17,7 @@ function initTable(data) {
 	    let salesData = { ...salesList[0] }; 
 	    salesData.sales = qty;
 	    salesData.salesFigures = price;
+	    salesData.number = numberCounter++; // 使用遞增的數字序列
 	    analyzeSalesDatas.push(salesData);
 	}
    
@@ -154,14 +158,16 @@ function initBrandTable(data) {
     if (Array.isArray(data)) {
         // 相同品牌、同館別、同分類 合併 銷售數量 + 銷售額 + 平台庫存 + 總庫存
 
+		let rowNumber = 1; // 初始序號
+
         data.forEach(sale => {
-            let key = `${sale.brand}_${sale.productDepartment}_${sale.productType}_${sale.date}`;
+            let key = `${sale.brand}_${sale.productDepartment}_${sale.productType}`;
             if (!brandGroups[key]) {
                 brandGroups[key] = {
                     brand: sale.brand, // 新增品牌資訊
                     productDepartment: sale.productDepartment, // 新增部門資訊
                     productType: sale.productType, // 新增類型資訊
-                    date: sale.date,
+                    //date: sale.date,
                     sales: 0,
                     salesFigures: 0,
                     //yoy: sale.yoy,
@@ -178,9 +184,9 @@ function initBrandTable(data) {
         // 將資料插入表格
         Object.keys(brandGroups).forEach(key => {
             const row = tableBody.insertRow();
-            const [brand, department, type, date] = key.split('_');
+            const [brand, department, type] = key.split('_');
 
-            row.insertCell(0).textContent = ''; // 暫時不處理 number
+            row.insertCell(0).textContent = rowNumber++; // 插入序號
             row.insertCell(1).textContent = brandGroups[key].brand; // 顯示品牌資訊
             row.insertCell(2).textContent = brandGroups[key].productDepartment; // 顯示部門資訊
             row.insertCell(3).textContent = brandGroups[key].productType; // 顯示類型資訊

@@ -37,8 +37,9 @@
 	            <li><a class="dropdown-item" href="${ pageContext.request.contextPath }/mvc/analyze/eccommerce/1">MOMO</a></li>
 	            <li><a class="dropdown-item" href="${ pageContext.request.contextPath }/mvc/analyze/eccommerce/2"">PChome</a></li>
 	            <li><a class="dropdown-item" href="${ pageContext.request.contextPath }/mvc/analyze/eccommerce/3">蝦皮</a></li>
+	            <!-- 
 	            <li><hr class="dropdown-divider"></li>
-	            <li><a class="dropdown-item" href="#">ALL</a></li>
+	             -->
 	          </ul>
         	</li>
 
@@ -100,9 +101,6 @@
 		            </li>
 		            <li class="nav-item">
 		                <a class="nav-link text-light" href="${ pageContext.request.contextPath }/mvc/analyze/eccommerce/3">蝦皮</a>
-		            </li>
-		            <li class="nav-item">
-		                <a class="nav-link text-light" href="#">ALL</a>
 		            </li>
 	            </div>
 	        `;

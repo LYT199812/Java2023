@@ -96,14 +96,14 @@ public class ProductController {
 	}
 	
 	/**
-	 * http://localhost:8080/ProductSalesAnalyze2023/mvc/analyze/product/editProduct2/A108?errorMessage=errorTest
+	 * http://localhost:8080/ProductSalesAnalyze2023/mvc/analyze/product/editProduct/A108?errorMessage=errorTest
 	 * @param productId
 	 * @param errorMessage
 	 * @param model
 	 * @return
 	 */
 	// product editProduct (取的預設資料 2)
-	@GetMapping("/editProduct2/{productId}")
+	@GetMapping("/editProduct/{productId}")
 	public String editProduct(
 			@PathVariable("productId") String productId,
 			@RequestParam(name = "errorMessage", required = false, defaultValue = "") String errorMessage,
@@ -135,7 +135,7 @@ public class ProductController {
         model.addAttribute("productTypes", productTypes);
         model.addAttribute("productSubTypes", productSubTypes);
         model.addAttribute("productBrands", productBrands);
-		return "analyze/product/editProduct2";
+		return "analyze/product/editProduct";
 	}
 	
 	
@@ -169,7 +169,7 @@ public class ProductController {
 			stockServiceImpl.updateProduct(formData);
 		} catch (StockQtyInquientException e) {
 			String urlInfoString = String.format("%s?errorMessage=%s", formData.get("productId"),URLEncoder.encode(e.getMessage()));
-			return "redirect:/mvc/analyze/product/editProduct2/"+urlInfoString;
+			return "redirect:/mvc/analyze/product/editProduct/"+urlInfoString;
 		}
 		return "redirect:/mvc/analyze/product/maintainProduct";
 	}

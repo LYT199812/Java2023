@@ -131,12 +131,14 @@ public class MainChartController {
         // 計算月增率
         String formattedGrowthRate;
         if (previousMonthtotalSalesFigures != 0) {
-            double growthRate = ((totalSalesFigures - previousMonthtotalSalesFigures) / previousMonthtotalSalesFigures) * 100;
+            double growthRate = ((double)(totalSalesFigures - previousMonthtotalSalesFigures) / previousMonthtotalSalesFigures) * 100;
+            double growthRate2 = ((double)(33256 - 21274) / 21274) * 100;
             formattedGrowthRate = String.format("%.2f%%", growthRate);
         } else {
             // 防止分母為0的情況
         	formattedGrowthRate = null;
         }
+        System.out.println("月增率:" + formattedGrowthRate);
 
         // 計算當月訂單數
         int orderSaleCount = 0;

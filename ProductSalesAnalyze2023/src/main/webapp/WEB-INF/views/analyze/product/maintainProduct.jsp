@@ -65,7 +65,7 @@
         <td>
         
         <div class="d-flex">
-          <a href="${ pageContext.request.contextPath }/mvc/analyze/product/editProduct2/${product.productId}">
+          <a href="${ pageContext.request.contextPath }/mvc/analyze/product/editProduct/${product.productId}">
           <button class="btn btn-primary" id="editButton" >編輯</button>
           </a>
           

@@ -114,7 +114,7 @@ public class EccommerceController {
 					             .get();
 			
 			SalesDataDto salesDataDto = new SalesDataDto();
-			salesDataDto.setNumber((i+1));
+			//salesDataDto.setNumber((i+1));
 			salesDataDto.setProductId(salesData.getProductId());
 			salesDataDto.setProductName(product.getProductName());
 			salesDataDto.setBrand(productBrand.getName());
