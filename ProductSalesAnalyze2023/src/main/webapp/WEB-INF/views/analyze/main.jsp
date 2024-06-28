@@ -31,15 +31,15 @@
 <div class="container mt-4 mb-5">
     <div class="row">
 	    <div class="col chartBox me-4">
-			<h2>總銷售額</h2>
+			<h2>月總銷售額</h2>
 			<h1>${ totalSalesFigures }</h1>			
 		</div>
 	    <div class="col chartBox me-4">
-	    	<h2>總訂單數</h2>
+	    	<h2>月總訂單數</h2>
 	    	<h1>${ orderCount }</h1>
 	    </div>
 	    <div class="col chartBox me-4">
-	    	<h2>平均客單</h2>
+	    	<h2>月平均客單</h2>
 	    	<h1>${ AOV }</h1>
 	    </div>
 	    <div class="col chartBox">

@@ -154,7 +154,13 @@ public class MainChartController {
         int orderCount = orderSaleCount - orderRefundCount;
         
         // 計算當月平均客單
-        double AOV = totalSalesFigures / orderCount;
+        //double AOV = totalSalesFigures / orderCount;
+        double AOV;
+        if (orderCount == 0) {
+        	AOV = 0;
+        } else {
+        	AOV = totalSalesFigures / orderCount;
+        }
 		
 		// 相同平台 合併 銷售數量 + 銷售額
 		List<SalesData> analyzeSalesDatas = new ArrayList<SalesData>();         // 處理後的數據 (邏輯：相同平台 合併 銷售數量 + 銷售額)	
