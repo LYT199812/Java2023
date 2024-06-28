@@ -84,7 +84,6 @@
 					<option value="商品" selected>模式</option>
 					<option value="商品">商品</option>
 					<option value="品牌">品牌</option>
-					<option value="分類">分類</option>
 				</select>
 			</div>
 			<div class="col-md-2">
