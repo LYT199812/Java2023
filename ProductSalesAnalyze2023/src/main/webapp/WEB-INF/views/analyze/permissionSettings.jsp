@@ -142,7 +142,7 @@
             $.ajax({
                 type: "POST", // 使用POST方法表示新增
                 contentType: "application/json",
-                url: "/ProductSalesAnalyze2023/mvc/analyze/user/mantain", // 修改為你的後端控制器的URL
+                url: "/ProductSalesAnalyze2023/mvc/analyze/user/mantain", 
                 data: JSON.stringify(userData),
                 success: function (response) {
                 	
@@ -155,7 +155,7 @@
                 },
                 error: function (error) {
                     console.error("新增員工失敗", error);
-                    // 處理新增失敗的情況
+                    
                 }
             });
         }
@@ -164,7 +164,7 @@
             // 使用Ajax發送請求到後端獲取員工資訊
             $.ajax({
                 type: "GET",
-                url: "/ProductSalesAnalyze2023/mvc/analyze/user/mantain/" + userId, // 根据你的后端路由来修改URL
+                url: "/ProductSalesAnalyze2023/mvc/analyze/user/mantain/" + userId, 
                 success: function (user) {
                 	console.log(user);
                     // 將員工資訊填入編輯表單
@@ -192,13 +192,13 @@
                 type: "DELETE",
                 url: "/ProductSalesAnalyze2023/mvc/analyze/user/mantain/" + userId, 
                 success: function (response) {
-                    // 刪除成功後的處理，例如刷新列表等
+                    
                     loadEmployeeList();
                 },
                 error: function (error) {
                     console.log(response);
                     console.error("刪除員工失敗", error);
-                    // 處理刪除失敗的情況
+                    
                 }
             });
         }
@@ -219,18 +219,16 @@
                 $.ajax({
                     type: "PUT", // 使用PUT方法表示更新
                     contentType: "application/json",
-                    url: "/ProductSalesAnalyze2023/mvc/analyze/user/mantain/" + userId, // 修改為你的後端控制器的URL
+                    url: "/ProductSalesAnalyze2023/mvc/analyze/user/mantain/" + userId, // 修改為後端控制器的URL
                     data: JSON.stringify(userData),
                     success: function (users) {
                     	console.log(users);
-                        // 更新成功後的處理，例如關閉Modal等
-                        // ...
                         $("#editEmployeeModal").modal("hide");
                         loadEmployeeList(); // 重新載入員工列表
                     },
                     error: function (error) {
                         console.error("更新員工失敗", error);
-                        // 處理更新失敗的情況
+                        
                     }
                 });
             } else {
@@ -248,18 +246,18 @@
             // 使用Ajax發送請求到後端重新載入員工列表
             $.ajax({
                 type: "GET",
-                url: "/ProductSalesAnalyze2023/mvc/analyze/user/getAllUsers",  // 根据你的后端路由来修改URL
+                url: "/ProductSalesAnalyze2023/mvc/analyze/user/getAllUsers",  // 根據後端路由来修改URL
                 //headers: {
                 //    'Accept': 'application/json' // 期望的回應內容是 JSON
                 //},
                 success: function (response) {
-                    // 清空员工列表
+                    // 清空員工列表
                 	console.log(response);
                     //$("#userListTable").empty();
                     $("#userListTable").html("");
                     console.log($("#userListTable").html());
 
-                    // 遍历响应中的员工数据，并添加到列表中
+                    // 遍歷響應中的員工數據，並添加到列表中
                     for (var i = 0; i < response.length; i++) {
                         var user = response[i];
                         //$("#userListTable").append(`<tr><td>${user.userId}</td><td>${user.username}</td><td>${user.level.levelName}</td><td><button class="btn btn-warning btn-sm" onclick="editEmployee(${user.userId})">編輯</button><button class="btn btn-danger btn-sm" onclick="deleteEmployee(${user.userId})">刪除</button></td></tr>`);
@@ -268,8 +266,8 @@
                         console.log(userListTable)
                 },
                 error: function (error) {
-                    console.error("加载员工列表失败", error);
-                    // 处理加载失败的情况
+                    console.error("員工列表加載失败", error);
+                    
                 }
             });
         }

@@ -40,7 +40,7 @@
 			enctype="multipart/form-data">
 			<div class="p-2 bd-highlight">
 				<div class="input-group d-flex">
-				 <!-- 动态设置 ecId 值 -->
+				 <!-- 動態設置 ecId 值 -->
 	            <input type="hidden" id="ecId" name="ecId" value="${ecId}">
 				<!-- 
 				 <input type="hidden" name="originalUri" value="${request.getRequestURI()}" />
@@ -161,10 +161,10 @@
 			<!-- 表格總計 -->
 		    <tfoot>
 		        <tr>
+		        	<!-- 如果有其他欄位，調整 colspan 的值 -->
 		            <td colspan="9">總計：</td>
 		            <td id="totalSalesQty" class="text-danger">></td>
 		            <td id="totalSalesFigures" class="text-danger">></td>
-		             <!-- 如果有其他欄位，調整 colspan 的值 -->
 		        </tr>
 		    </tfoot>
 		</table>
@@ -180,7 +180,6 @@
 					<th>產品分類</th>
 					<th>銷售量</th>
 					<th>銷售額</th>
-					<!-- 其他欄位... -->
 				</tr>
 			</thead>
 			<!-- 表格內容 -->
@@ -193,7 +192,6 @@
 		            <td colspan="4">總計：</td>
 		            <td id="brandTotalSalesQty" class="text-danger">></td>
 		            <td id="brandTotalSalesFigures" class="text-danger">></td>
-		             <!-- 如果有其他欄位，調整 colspan 的值 -->
 		        </tr>
 		    </tfoot>
 		</table>

@@ -59,7 +59,7 @@ public class MainChartController {
                 .collect(Collectors.groupingBy(s -> s.getEcommerce().getName(),
                         Collectors.groupingBy(s -> {
                             String date = sdf.format(s.getEcSalesDate());
-                            return date.substring(0, 7);  // 只保留年月部分
+                            return date.substring(0, 7);  // 只保留年月部分(YYYY-MM)，從0開始提取字串到第7個位置前
                         })));
         
 		// 從分析過後的 analyze sales data， 轉成 sales data dto，將分組過後的資料，加總銷售量&銷售額
