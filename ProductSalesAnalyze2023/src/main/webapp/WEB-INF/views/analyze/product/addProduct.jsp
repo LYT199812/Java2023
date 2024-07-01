@@ -52,7 +52,7 @@
         <div class="mb-3">
             <label for="brand" class="form-label">品牌</label>
 	        <div class="input-group has-validation">
-	            <input type="text" class="form-control" id="productBrand" name="productBrand" placeholder="輸入商品品牌" required>
+	            <input type="text" class="form-control" id="productBrandId" name="productBrandId" placeholder="輸入商品品牌" required>
 		        <div class="invalid-feedback">
 					 請輸入商品品牌!
 				</div>
