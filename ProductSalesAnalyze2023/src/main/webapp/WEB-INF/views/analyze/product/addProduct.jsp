@@ -112,6 +112,7 @@
         	</div>
         </div>
         
+        <!-- 
         <div class="mb-3">
           <label for="productLaunch" class="form-label">有上架的電商平台</label>
           <div id="error-message" class="error-message" style="display: none; color: red;">
@@ -126,7 +127,46 @@
 			  <label class="form-check-label" for="inlineCheckbox3">蝦皮</label>
 		  </div>
 		</div>
+		 -->
 		
+        <!-- 庫存 -->
+        <div class="mb-3">
+            <label for="productQty" class="form-label">總庫存</label>
+            <div class="input-group has-validation">
+	            <input type="number" class="form-control" id="productQty" name="productQty" placeholder="輸入商品總庫存" required>
+	        	<div class="invalid-feedback">
+						請輸入商品總庫存!
+				</div>
+		   	</div>
+        </div>
+        <div class="mb-3">
+            <label for="ecProductQtyMO" class="form-label">Momo庫存</label>
+            <div class="input-group has-validation">
+	            <input type="number" class="form-control" id="ecProductQtyMO" name="ecProductQtyMO" placeholder="輸入商品Momo庫存" required>
+	        	<div class="invalid-feedback">
+						請輸入商品Momo庫存!
+				</div>
+		   	</div>
+        </div>
+        <div class="mb-3">
+            <label for="ecProductQtyPC" class="form-label">PChome庫存</label>
+            <div class="input-group has-validation">
+	            <input type="number" class="form-control" id="ecProductQtyPC" name="ecProductQtyPC" placeholder="輸入商品PChome庫存" required>
+	        	<div class="invalid-feedback">
+						請輸入商品PChome庫存!
+				</div>
+		   	</div>
+        </div>
+        <div class="mb-3">
+            <label for="ecProductQtySP" class="form-label">蝦皮庫存</label>
+            <div class="input-group has-validation">
+	            <input type="number" class="form-control" id="ecProductQtySP" name="ecProductQtySP" placeholder="輸入商品蝦皮庫存" required>
+	        	<div class="invalid-feedback">
+						請輸入商品蝦皮庫存!
+				</div>
+		   	</div>
+        </div>
+        
         
         <button type="submit" class="btn btn-primary mb-5" onclick="validateForm();validateRadio();">新增商品</button>
     </form>

@@ -140,12 +140,56 @@ public class ProductController {
 	
 	
 	// 新增商品
-	@PostMapping("/addProduct")
-	public String addProduct(@ModelAttribute Product product,  
-							 HttpSession session) {
-		productDao.addProduct(product);
-		return "analyze/product/addProduct";
-	}
+//	@PostMapping("/addProduct")
+//	public String addProduct(@ModelAttribute Product product,  
+//							 HttpSession session) {
+//		productDao.addProduct(product);
+//		return "analyze/product/addProduct";
+//	}
+	
+	//新增商品
+    @PostMapping("/addProduct")
+    public String addProduct(@ModelAttribute Product product, 
+                             @RequestParam("ecProductQtyMO") int ecProductQtyMO,
+                             @RequestParam("ecProductQtyPC") int ecProductQtyPC,
+                             @RequestParam("ecProductQtySP") int ecProductQtySP,
+                             HttpSession session,
+                             Model model) {
+        try {
+            // 新增商品
+            productDao.addProduct(product);
+            
+            // 新增MOMO庫存
+            Stock momoStock = new Stock();
+            momoStock.setProductId(product.getProductId());
+            momoStock.setEcId(1); // MOMO的ecId
+            momoStock.setEcProductQty(ecProductQtyMO);
+            stockDao.addStock(momoStock);
+
+            // 新增PC庫存
+            Stock pcStock = new Stock();
+            pcStock.setProductId(product.getProductId());
+            pcStock.setEcId(2); // PC的ecId
+            pcStock.setEcProductQty(ecProductQtyPC);
+            stockDao.addStock(pcStock);
+
+            // 新增SP庫存
+            Stock spStock = new Stock();
+            spStock.setProductId(product.getProductId());
+            spStock.setEcId(3); // SP的ecId
+            spStock.setEcProductQty(ecProductQtySP);
+            stockDao.addStock(spStock);
+
+            
+            return "redirect:/mvc/analyze/product/maintainProduct";
+        } catch (Exception e) {
+            model.addAttribute("error", "新增商品失敗: " + e.getMessage());
+            return "analyze/product/addProduct";
+        }
+    }
+
+	
+	
 	
 	/**
 	 * {
