@@ -229,21 +229,21 @@ public class ProductController {
 	
 	
 	// 產品列表基礎資料
-	private void addBasicModel(Model model) {
-		List<Product> products = productDao.findAllProducts();
-		List<ProductType> productTypes =productTypeDao.findAllProductTypes();
-		List<ProductSubType> productSubTypes =productTypeDao.findAllProductSubTypes();
-		List<ProductBrand> productBrands = productBrandDao.findAllProductBrands();
-		List<Stock> stocks = stockDao.findAllStocks();
-		List<Ecommerce> ecommerces = ecommerceDao.findAllEcommerces();
-		
-		model.addAttribute("products", products); // 將產品資料傳給 jsp
-		model.addAttribute("productTypes", productTypes); // 將大分類資料傳給 jsp
-		model.addAttribute("productSubTypes", productSubTypes); // 將中分類資料傳給 jsp
-		model.addAttribute("productBrands", productBrands); // 將品牌資料傳給 jsp
-		model.addAttribute("stocks", stocks); // 取得目前最新 stocks 資料
-		model.addAttribute("ecommerces", ecommerces); // 取得目前最新 ecommerces 資料
-	}
+//	private void addBasicModel(Model model) {
+//		List<Product> products = productDao.findAllProducts();
+//		List<ProductType> productTypes =productTypeDao.findAllProductTypes();
+//		List<ProductSubType> productSubTypes =productTypeDao.findAllProductSubTypes();
+//		List<ProductBrand> productBrands = productBrandDao.findAllProductBrands();
+//		List<Stock> stocks = stockDao.findAllStocks();
+//		List<Ecommerce> ecommerces = ecommerceDao.findAllEcommerces();
+//		
+//		model.addAttribute("products", products); // 將產品資料傳給 jsp
+//		model.addAttribute("productTypes", productTypes); // 將大分類資料傳給 jsp
+//		model.addAttribute("productSubTypes", productSubTypes); // 將中分類資料傳給 jsp
+//		model.addAttribute("productBrands", productBrands); // 將品牌資料傳給 jsp
+//		model.addAttribute("stocks", stocks); // 取得目前最新 stocks 資料
+//		model.addAttribute("ecommerces", ecommerces); // 取得目前最新 ecommerces 資料
+//	}
 	
 	
 	 //----------------------------------------------------------------------------------------

@@ -43,7 +43,7 @@ import spring.mvc.analyze.entity.User;
 
 @Controller
 @RequestMapping("/analyze")
-public class AnalyzeController {
+public class LoginController {
 	
 	@Autowired
 	private AnalyzeDao dao;
@@ -183,10 +183,10 @@ public class AnalyzeController {
 //	}
 	
 	// product maintainProduct
-	@GetMapping("/maintainProduct")
-	public String maintainProduct(Model model) {
-		return "analyze/product/maintainProduct"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
-	}
+//	@GetMapping("/maintainProduct")
+//	public String maintainProduct(Model model) {
+//		return "analyze/product/maintainProduct"; // 這邊的路徑是實際上檔案位於的位置(內部路徑)
+//	}
 		
 	// 權限設定
 //	@GetMapping("/permissionSettings")
